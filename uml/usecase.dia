@@ -255,7 +255,7 @@
         <dia:point val="12.0155,-17.32"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="11.9655,-17.37;21.0455,-14.07"/>
+        <dia:rectangle val="11.9655,-17.37;19.7705,-14.07"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -264,7 +264,7 @@
         <dia:point val="12.0155,-17.32"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="8.9800000000000004"/>
+        <dia:real val="7.7050000000000001"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="3.2000000000000002"/>
@@ -278,8 +278,8 @@
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#Отказаться 
-от контракта#</dia:string>
+            <dia:string>#Отклонить 
+контракт#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -288,7 +288,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="16.5055,-15.925"/>
+            <dia:point val="15.868,-15.925"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000ff"/>
@@ -332,11 +332,11 @@
         <dia:point val="1.49812,-11.4053"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="1.43685,-14.6499;13.3919,-11.344"/>
+        <dia:rectangle val="1.43671,-14.65;13.2053,-11.3439"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
         <dia:point val="1.49812,-11.4053"/>
-        <dia:point val="13.3306,-14.5886"/>
+        <dia:point val="13.1439,-14.5886"/>
       </dia:attribute>
       <dia:attribute name="numcp">
         <dia:int val="1"/>
@@ -1463,16 +1463,16 @@
     </dia:object>
     <dia:object type="UML - Usecase" version="0" id="O33">
       <dia:attribute name="obj_pos">
-        <dia:point val="24.5,-18.345"/>
+        <dia:point val="23.2614,-21.5106"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="24.45,-18.395;34.5275,-14.9692"/>
+        <dia:rectangle val="23.2114,-21.5606;33.2889,-18.1347"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="24.5,-18.345"/>
+        <dia:point val="23.2614,-21.5106"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="9.9775000000000009"/>
@@ -1498,7 +1498,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="29.4887,-16.4871"/>
+            <dia:point val="28.2502,-19.6526"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000ff"/>
@@ -1674,11 +1674,11 @@
         <dia:point val="46.5195,-10.2694"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="32.9516,-15.5709;46.5842,-10.2047"/>
+        <dia:rectangle val="31.7096,-18.74;46.5877,-10.2012"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
         <dia:point val="46.5195,-10.2694"/>
-        <dia:point val="33.0163,-15.5062"/>
+        <dia:point val="31.7778,-18.6718"/>
       </dia:attribute>
       <dia:attribute name="numcp">
         <dia:int val="1"/>
@@ -1686,6 +1686,82 @@
       <dia:connections>
         <dia:connection handle="0" to="O18" connection="3"/>
         <dia:connection handle="1" to="O33" connection="7"/>
+      </dia:connections>
+    </dia:object>
+    <dia:object type="UML - Usecase" version="0" id="O39">
+      <dia:attribute name="obj_pos">
+        <dia:point val="24.8697,-16.3348"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="24.8197,-16.3848;33.9322,-13.2806"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="elem_corner">
+        <dia:point val="24.8697,-16.3348"/>
+      </dia:attribute>
+      <dia:attribute name="elem_width">
+        <dia:real val="9.0124999999999993"/>
+      </dia:attribute>
+      <dia:attribute name="elem_height">
+        <dia:real val="3.0041666666666664"/>
+      </dia:attribute>
+      <dia:attribute name="collaboration">
+        <dia:boolean val="false"/>
+      </dia:attribute>
+      <dia:attribute name="text_outside">
+        <dia:boolean val="false"/>
+      </dia:attribute>
+      <dia:attribute name="text">
+        <dia:composite type="text">
+          <dia:attribute name="string">
+            <dia:string>#Изменить контракт#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="font">
+            <dia:font family="sans" style="0" name="Helvetica"/>
+          </dia:attribute>
+          <dia:attribute name="height">
+            <dia:real val="0.80000000000000004"/>
+          </dia:attribute>
+          <dia:attribute name="pos">
+            <dia:point val="29.376,-14.6377"/>
+          </dia:attribute>
+          <dia:attribute name="color">
+            <dia:color val="#000000ff"/>
+          </dia:attribute>
+          <dia:attribute name="alignment">
+            <dia:enum val="1"/>
+          </dia:attribute>
+        </dia:composite>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000ff"/>
+      </dia:attribute>
+      <dia:attribute name="fill_colour">
+        <dia:color val="#ffffffff"/>
+      </dia:attribute>
+    </dia:object>
+    <dia:object type="Standard - Line" version="0" id="O40">
+      <dia:attribute name="obj_pos">
+        <dia:point val="46.5195,-10.2694"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="32.5017,-13.8312;46.5802,-10.2088"/>
+      </dia:attribute>
+      <dia:attribute name="conn_endpoints">
+        <dia:point val="46.5195,-10.2694"/>
+        <dia:point val="32.5624,-13.7706"/>
+      </dia:attribute>
+      <dia:attribute name="numcp">
+        <dia:int val="1"/>
+      </dia:attribute>
+      <dia:connections>
+        <dia:connection handle="0" to="O18" connection="3"/>
+        <dia:connection handle="1" to="O39" connection="7"/>
       </dia:connections>
     </dia:object>
   </dia:layer>

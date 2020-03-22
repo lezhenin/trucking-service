@@ -649,20 +649,20 @@
     </dia:object>
     <dia:object type="UML - Message" version="0" id="O10">
       <dia:attribute name="obj_pos">
-        <dia:point val="13.5067,21.1458"/>
+        <dia:point val="13.5067,19.6458"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="13.4567,20.7371;38.3339,21.8415"/>
+        <dia:rectangle val="13.4567,19.2514;38.4646,20.3487"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
-        <dia:point val="13.5067,21.1458"/>
-        <dia:point val="38.2838,21.1371"/>
+        <dia:point val="13.5067,19.6458"/>
+        <dia:point val="38.4145,19.6514"/>
       </dia:attribute>
       <dia:attribute name="text">
-        <dia:string>#approveContract#</dia:string>
+        <dia:string>#refuseContract#</dia:string>
       </dia:attribute>
       <dia:attribute name="type">
         <dia:enum val="0"/>
@@ -677,7 +677,7 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:attribute name="text_pos">
-        <dia:point val="25.8953,21.6415"/>
+        <dia:point val="25.9606,20.1487"/>
       </dia:attribute>
       <dia:attribute name="line_width">
         <dia:real val="0.10000000000000001"/>
@@ -686,25 +686,25 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O0" connection="81"/>
+        <dia:connection handle="0" to="O0" connection="78"/>
       </dia:connections>
     </dia:object>
     <dia:object type="UML - Message" version="0" id="O11">
       <dia:attribute name="obj_pos">
-        <dia:point val="29.9731,22.5984"/>
+        <dia:point val="29.9731,21.0984"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="29.9231,22.2028;38.3471,23.3006"/>
+        <dia:rectangle val="29.9231,20.6963;38.4373,21.7974"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
-        <dia:point val="29.9731,22.5984"/>
-        <dia:point val="38.2969,22.6028"/>
+        <dia:point val="29.9731,21.0984"/>
+        <dia:point val="38.3872,21.0963"/>
       </dia:attribute>
       <dia:attribute name="text">
-        <dia:string>#approveContract#</dia:string>
+        <dia:string>#updateContract#</dia:string>
       </dia:attribute>
       <dia:attribute name="type">
         <dia:enum val="0"/>
@@ -719,7 +719,7 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:attribute name="text_pos">
-        <dia:point val="34.135,23.1006"/>
+        <dia:point val="34.1802,21.5974"/>
       </dia:attribute>
       <dia:attribute name="line_width">
         <dia:real val="0.10000000000000001"/>
@@ -728,7 +728,7 @@
         <dia:color val="#000000ff"/>
       </dia:attribute>
       <dia:connections>
-        <dia:connection handle="0" to="O4" connection="85"/>
+        <dia:connection handle="0" to="O4" connection="82"/>
       </dia:connections>
     </dia:object>
     <dia:object type="UML - Message" version="0" id="O12">
@@ -1026,6 +1026,84 @@
       </dia:attribute>
       <dia:attribute name="line_style">
         <dia:enum val="4"/>
+      </dia:attribute>
+    </dia:object>
+    <dia:object type="UML - Message" version="0" id="O19">
+      <dia:attribute name="obj_pos">
+        <dia:point val="47.2134,22.4275"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="38.9694,22.0285;47.2634,23.128"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="conn_endpoints">
+        <dia:point val="47.2134,22.4275"/>
+        <dia:point val="39.0194,22.4285"/>
+      </dia:attribute>
+      <dia:attribute name="text">
+        <dia:string>#approveContract#</dia:string>
+      </dia:attribute>
+      <dia:attribute name="type">
+        <dia:enum val="0"/>
+      </dia:attribute>
+      <dia:attribute name="text_font">
+        <dia:font family="sans" style="0" name="Helvetica"/>
+      </dia:attribute>
+      <dia:attribute name="text_height">
+        <dia:real val="0.80000000000000004"/>
+      </dia:attribute>
+      <dia:attribute name="text_colour">
+        <dia:color val="#000000ff"/>
+      </dia:attribute>
+      <dia:attribute name="text_pos">
+        <dia:point val="43.1164,22.928"/>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000ff"/>
+      </dia:attribute>
+    </dia:object>
+    <dia:object type="UML - Message" version="0" id="O20">
+      <dia:attribute name="obj_pos">
+        <dia:point val="13.491,22.8501"/>
+      </dia:attribute>
+      <dia:attribute name="obj_bb">
+        <dia:rectangle val="13.441,22.4556;38.4489,23.5529"/>
+      </dia:attribute>
+      <dia:attribute name="meta">
+        <dia:composite type="dict"/>
+      </dia:attribute>
+      <dia:attribute name="conn_endpoints">
+        <dia:point val="13.491,22.8501"/>
+        <dia:point val="38.3988,22.8556"/>
+      </dia:attribute>
+      <dia:attribute name="text">
+        <dia:string>#approveContract#</dia:string>
+      </dia:attribute>
+      <dia:attribute name="type">
+        <dia:enum val="0"/>
+      </dia:attribute>
+      <dia:attribute name="text_font">
+        <dia:font family="sans" style="0" name="Helvetica"/>
+      </dia:attribute>
+      <dia:attribute name="text_height">
+        <dia:real val="0.80000000000000004"/>
+      </dia:attribute>
+      <dia:attribute name="text_colour">
+        <dia:color val="#000000ff"/>
+      </dia:attribute>
+      <dia:attribute name="text_pos">
+        <dia:point val="25.945,23.3529"/>
+      </dia:attribute>
+      <dia:attribute name="line_width">
+        <dia:real val="0.10000000000000001"/>
+      </dia:attribute>
+      <dia:attribute name="line_colour">
+        <dia:color val="#000000ff"/>
       </dia:attribute>
     </dia:object>
   </dia:layer>
