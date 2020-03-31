@@ -70,7 +70,7 @@
           <dia:boolean val="false"/>
         </dia:attribute>
         <dia:attribute name="snap-to-grid">
-          <dia:boolean val="false"/>
+          <dia:boolean val="true"/>
         </dia:attribute>
         <dia:attribute name="snap-to-object">
           <dia:boolean val="true"/>
@@ -1574,7 +1574,7 @@
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="multipicity_b">
-        <dia:string>#*#</dia:string>
+        <dia:string>#1#</dia:string>
       </dia:attribute>
       <dia:attribute name="visibility_b">
         <dia:enum val="3"/>
@@ -2466,7 +2466,7 @@
         <dia:point val="16,4.9"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="11.995,4.14;16.75,5.74"/>
+        <dia:rectangle val="11.995,4.1;16.05,5.74"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -2483,7 +2483,7 @@
         <dia:enum val="0"/>
       </dia:attribute>
       <dia:attribute name="orth_autoroute">
-        <dia:boolean val="true"/>
+        <dia:boolean val="false"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>##</dia:string>
@@ -2495,7 +2495,7 @@
         <dia:boolean val="false"/>
       </dia:attribute>
       <dia:attribute name="assoc_type">
-        <dia:enum val="2"/>
+        <dia:enum val="0"/>
       </dia:attribute>
       <dia:attribute name="role_a">
         <dia:string>##</dia:string>
@@ -2504,7 +2504,7 @@
         <dia:string>#1#</dia:string>
       </dia:attribute>
       <dia:attribute name="visibility_a">
-        <dia:enum val="3"/>
+        <dia:enum val="2"/>
       </dia:attribute>
       <dia:attribute name="show_arrow_a">
         <dia:boolean val="false"/>
@@ -2519,7 +2519,7 @@
         <dia:enum val="3"/>
       </dia:attribute>
       <dia:attribute name="show_arrow_b">
-        <dia:boolean val="false"/>
+        <dia:boolean val="true"/>
       </dia:attribute>
       <dia:attribute name="text_font">
         <dia:font family="monospace" style="0" name="Courier"/>
@@ -2546,15 +2546,15 @@
         <dia:point val="20.3825,5.7"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="19.6325,2.94;25.05,6.54"/>
+        <dia:rectangle val="20.3325,2.9;25.05,6.54"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
         <dia:point val="20.3825,5.7"/>
-        <dia:point val="23,5.7"/>
-        <dia:point val="23,3.7"/>
+        <dia:point val="22.5,5.7"/>
+        <dia:point val="22.5,3.7"/>
         <dia:point val="25,3.7"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -2569,19 +2569,19 @@
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="direction">
-        <dia:enum val="1"/>
+        <dia:enum val="2"/>
       </dia:attribute>
       <dia:attribute name="show_direction">
         <dia:boolean val="false"/>
       </dia:attribute>
       <dia:attribute name="assoc_type">
-        <dia:enum val="2"/>
+        <dia:enum val="0"/>
       </dia:attribute>
       <dia:attribute name="role_a">
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="multipicity_a">
-        <dia:string>#*#</dia:string>
+        <dia:string>#0..*#</dia:string>
       </dia:attribute>
       <dia:attribute name="visibility_a">
         <dia:enum val="3"/>
@@ -2599,7 +2599,7 @@
         <dia:enum val="3"/>
       </dia:attribute>
       <dia:attribute name="show_arrow_b">
-        <dia:boolean val="false"/>
+        <dia:boolean val="true"/>
       </dia:attribute>
       <dia:attribute name="text_font">
         <dia:font family="monospace" style="0" name="Courier"/>
@@ -2626,15 +2626,15 @@
         <dia:point val="20.3825,6.5"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="19.6325,5.74;25.05,12.04"/>
+        <dia:rectangle val="20.3325,5.74;25.05,12.04"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
         <dia:point val="20.3825,6.5"/>
-        <dia:point val="23,6.5"/>
-        <dia:point val="23,11.2"/>
+        <dia:point val="22.5,6.5"/>
+        <dia:point val="22.5,11.2"/>
         <dia:point val="25,11.2"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
@@ -2649,19 +2649,19 @@
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="direction">
-        <dia:enum val="1"/>
+        <dia:enum val="2"/>
       </dia:attribute>
       <dia:attribute name="show_direction">
         <dia:boolean val="false"/>
       </dia:attribute>
       <dia:attribute name="assoc_type">
-        <dia:enum val="2"/>
+        <dia:enum val="0"/>
       </dia:attribute>
       <dia:attribute name="role_a">
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="multipicity_a">
-        <dia:string>#*#</dia:string>
+        <dia:string>#0..*#</dia:string>
       </dia:attribute>
       <dia:attribute name="visibility_a">
         <dia:enum val="3"/>
@@ -2679,7 +2679,7 @@
         <dia:enum val="3"/>
       </dia:attribute>
       <dia:attribute name="show_arrow_b">
-        <dia:boolean val="false"/>
+        <dia:boolean val="true"/>
       </dia:attribute>
       <dia:attribute name="text_font">
         <dia:font family="monospace" style="0" name="Courier"/>
@@ -2706,7 +2706,7 @@
         <dia:point val="12.045,6.1"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="11.295,5.34;25.05,20.34"/>
+        <dia:rectangle val="11.995,5.34;25.05,20.34"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -2729,19 +2729,19 @@
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="direction">
-        <dia:enum val="1"/>
+        <dia:enum val="2"/>
       </dia:attribute>
       <dia:attribute name="show_direction">
         <dia:boolean val="false"/>
       </dia:attribute>
       <dia:attribute name="assoc_type">
-        <dia:enum val="2"/>
+        <dia:enum val="0"/>
       </dia:attribute>
       <dia:attribute name="role_a">
         <dia:string>##</dia:string>
       </dia:attribute>
       <dia:attribute name="multipicity_a">
-        <dia:string>#*#</dia:string>
+        <dia:string>#0..*#</dia:string>
       </dia:attribute>
       <dia:attribute name="visibility_a">
         <dia:enum val="3"/>
@@ -2759,7 +2759,7 @@
         <dia:enum val="3"/>
       </dia:attribute>
       <dia:attribute name="show_arrow_b">
-        <dia:boolean val="false"/>
+        <dia:boolean val="true"/>
       </dia:attribute>
       <dia:attribute name="text_font">
         <dia:font family="monospace" style="0" name="Courier"/>
