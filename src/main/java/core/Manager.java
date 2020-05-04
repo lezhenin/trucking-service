@@ -17,7 +17,10 @@ public class Manager {
     }
 
     public List<Order> getOrders() {
-        return RepositorySingleton.getInstance().getOrderRepository().getAll();
+        return RepositorySingleton
+                .getInstance()
+                .getOrderRepository()
+                .getAll();
     }
 
 
