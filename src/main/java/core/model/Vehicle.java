@@ -1,6 +1,8 @@
-package core;
+package core.model;
 
-public class Vehicle {
+import core.repository.RepositoryItem;
+
+public class Vehicle extends RepositoryItem {
 
     private String model;
 

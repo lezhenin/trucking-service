@@ -1,9 +1,11 @@
 package core.repository;
 
+import core.repository.list.OrderListRepository;
+
 public class RepositorySingleton {
 
     private static RepositorySingleton instance;
-    private OrderRepository orderRepository = new ListOrderRepository();
+    private OrderRepository orderRepository = new OrderListRepository();
 
 
     private RepositorySingleton(){}

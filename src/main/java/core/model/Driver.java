@@ -1,6 +1,8 @@
-package core;
+package core.model;
 
-public class Driver {
+import core.repository.RepositoryItem;
+
+public class Driver extends RepositoryItem {
 
     private Contacts contacts;
     private Vehicle vehicle;

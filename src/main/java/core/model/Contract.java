@@ -1,8 +1,10 @@
-package core;
+package core.model;
+
+import core.repository.RepositoryItem;
 
 import java.util.EnumSet;
 
-public class Contract {
+public class Contract extends RepositoryItem {
 
     enum ContractState {
         APPROVED_BY_DRIVER,

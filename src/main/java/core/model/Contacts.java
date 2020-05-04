@@ -1,6 +1,8 @@
-package core;
+package core.model;
 
-public class Contacts {
+import core.repository.RepositoryItem;
+
+public class Contacts extends RepositoryItem {
 
     private String firstName;
     private String lastName;

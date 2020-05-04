@@ -1,6 +1,8 @@
-package core;
+package core.model;
 
-public class Order {
+import core.repository.RepositoryItem;
+
+public class Order extends RepositoryItem {
 
     enum OrderState {
         PUBLISHED,

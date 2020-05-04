@@ -1,10 +1,11 @@
-package core;
+package core.model;
 
+import core.repository.RepositoryItem;
 import core.repository.RepositorySingleton;
 
 import java.util.List;
 
-public class Manager {
+public class Manager extends RepositoryItem {
 
     private Contacts contacts;
 

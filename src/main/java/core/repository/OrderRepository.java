@@ -1,7 +1,7 @@
 package core.repository;
 
-import core.Client;
-import core.Order;
+import core.model.Client;
+import core.model.Order;
 
 import java.util.List;
 
