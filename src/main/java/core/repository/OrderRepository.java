@@ -4,12 +4,14 @@ import core.model.Client;
 import core.model.Order;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public interface OrderRepository {
+public class OrderRepository
+        extends ListRepository<Order> {
 
-    void add(Order order);
-    void remove(Order order);
-    List<Order> getAll();
-    List<Order> getByClient(Client client);
-
+    public List<Order> getByClient(final Client client) {
+        return itemList.stream().
+                filter(order -> order.getClient().getId() == client.getId())
+                .collect(Collectors.toList());
+    }
 }

@@ -1,6 +1,4 @@
-package core.repository.list;
-
-import core.repository.RepositoryItem;
+package core.repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,10 @@ public class ListRepository<G extends RepositoryItem> {
     public void add(G item) {
         itemList.add(item);
         item.setId(idCounter++);
+    }
+
+    public void update(G item) {
+        // do nothing ?
     }
 
     public void remove(G item) {
