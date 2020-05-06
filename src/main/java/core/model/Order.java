@@ -75,4 +75,8 @@ public class Order extends RepositoryItem {
     public OrderState getState() {
         return state;
     }
+
+    void setState(OrderState state) {
+        this.state = state;
+    }
 }

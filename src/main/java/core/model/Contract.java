@@ -2,31 +2,90 @@ package core.model;
 
 import core.repository.RepositoryItem;
 
+import java.util.EnumMap;
 import java.util.EnumSet;
+
 
 public class Contract extends RepositoryItem {
 
-    enum ContractState {
-        APPROVED_BY_DRIVER,
-        APPROVED_BY_CLIENT,
-        REFUSED_BY_DRIVER,
-        REFUSED_BY_CLIENT,
+    static class Participant extends RepositoryItem {
+        private final ParticipantRole type;
+
+        public Participant(ParticipantRole type) {
+            this.type = type;
+        }
+
+        public void approveContract(Contract contract) throws Exception {
+            checkParticipation(contract);
+            checkAgreement(contract);
+            contract.agreementMap.put(this.type, true);
+        }
+
+        public void refuseContract(Contract contract) throws Exception {
+            checkParticipation(contract);
+            checkAgreement(contract);
+            contract.agreementMap.put(this.type, false);
+        }
+
+        public void completeContract(Contract contract) throws Exception {
+            checkParticipation(contract);
+            checkCompletion(contract);
+            contract.completionSet.add(this.type);
+        }
+
+
+        private void checkCompletion(Contract contract) throws Exception {
+            if (contract.completionSet.contains(this.type)) {
+                throw new Exception();
+            }
+            for (ParticipantRole role: ParticipantRole.values()) {
+                if (
+                        !contract.agreementMap.containsKey(role) ||
+                        !contract.agreementMap.get(role)
+                ) {
+                    throw new Exception();
+                }
+            }
+        }
+
+        private void checkAgreement(Contract contract) throws Exception {
+            if (contract.agreementMap.containsKey(this.type)) {
+                throw new Exception();
+            }
+        }
+
+        private void checkParticipation(Contract contract) throws Exception {
+            if (contract.participants.get(this.type).getId() != this.getId()) {
+                throw new Exception();
+            }
+        }
     }
 
-    private Order order;
-    private Driver driver;
-    private Manager manager;
+    enum ParticipantRole {
+        CLIENT,
+        DRIVER
+    }
 
-    private int payment;
+    private final Order order;
+    private final Driver driver;
+    private final Manager manager;
 
-    private EnumSet<ContractState> state;
+    private final EnumMap<ParticipantRole, Participant> participants = new EnumMap<>(ParticipantRole.class);
+    private final EnumMap<ParticipantRole, Boolean> agreementMap = new EnumMap<>(ParticipantRole.class);
+    private final EnumSet<ParticipantRole> completionSet = EnumSet.noneOf(ParticipantRole.class);
+
+    private final int payment;
 
     public Contract(Order order, Driver driver, Manager manager, int payment) {
+
         this.order = order;
         this.driver = driver;
         this.manager = manager;
         this.payment = payment;
-        this.state = EnumSet.noneOf(ContractState.class);
+
+        this.participants.put(ParticipantRole.CLIENT, order.getClient());
+        this.participants.put(ParticipantRole.DRIVER, driver);
+
     }
 
     public Order getOrder() {
@@ -45,7 +104,7 @@ public class Contract extends RepositoryItem {
         return payment;
     }
 
-    public EnumSet<ContractState> getState() {
-        return state;
-    }
+
 }
+
+
