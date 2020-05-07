@@ -5,6 +5,7 @@ public class RepositorySingleton {
     private static RepositorySingleton instance;
     private final OrderRepository orderRepository = new OrderRepository();
     private final ContractRepository contractRepository = new ContractRepository();
+    private final DriverRepository driverRepository = new DriverRepository();
 
 
     private RepositorySingleton(){}
@@ -22,5 +23,9 @@ public class RepositorySingleton {
 
     public ContractRepository getContractRepository() {
         return contractRepository;
+    }
+
+    public DriverRepository getDriverRepository() {
+        return driverRepository;
     }
 }

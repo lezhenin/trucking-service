@@ -41,5 +41,12 @@ public class Manager extends RepositoryItem {
                 .getAll();
     }
 
+    public List<Driver> getDrivers () {
+        return RepositorySingleton
+                .getInstance()
+                .getDriverRepository()
+                .getAll();
+    }
+
 
 }
