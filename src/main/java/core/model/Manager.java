@@ -20,7 +20,7 @@ public class Manager extends RepositoryItem {
     public void createContract(Contract contract) {
 
         Order order = contract.getOrder();
-        order.setState(Order.OrderState.PROCESSED);
+        order.setState(Order.State.PROCESSED);
 
         RepositorySingleton
                 .getInstance()
@@ -32,6 +32,14 @@ public class Manager extends RepositoryItem {
                 .getContractRepository()
                 .add(contract);
 
+    }
+
+    // todo mb rename: this complete is not the same as Client's or Driver's complete
+    public void completeContract(Contract contract) throws Exception {
+        if (!contract.isComplete()) {
+            throw new Exception();
+        }
+        contract.getOrder().setState(Order.State.COMPLETED);
     }
 
     public List<Order> getOrders() {

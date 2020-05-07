@@ -4,10 +4,10 @@ import core.repository.RepositoryItem;
 
 public class Order extends RepositoryItem {
 
-    enum OrderState {
+    public enum State {
         PUBLISHED,
         PROCESSED,
-        DONE
+        COMPLETED
     }
 
     private Client client;
@@ -23,7 +23,7 @@ public class Order extends RepositoryItem {
     // todo appropriate type
     private String deadline;
 
-    private OrderState state;
+    private State state;
 
     public Order(
             Client client, int cargoWeight, int cargoHeight, int cargoWidth, int cargoLength,
@@ -37,7 +37,7 @@ public class Order extends RepositoryItem {
         this.shippingAddress = shippingAddress;
         this.loadingAddress = loadingAddress;
         this.deadline = deadline;
-        this.state = OrderState.PUBLISHED;
+        this.state = State.PUBLISHED;
     }
 
     public Client getClient() {
@@ -72,11 +72,11 @@ public class Order extends RepositoryItem {
         return deadline;
     }
 
-    public OrderState getState() {
+    public State getState() {
         return state;
     }
 
-    void setState(OrderState state) {
+    void setState(State state) {
         this.state = state;
     }
 }

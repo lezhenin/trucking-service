@@ -104,6 +104,15 @@ public class Contract extends RepositoryItem {
         return payment;
     }
 
+    public boolean isComplete() {
+        for (ParticipantRole role: ParticipantRole.values()) {
+            if (!this.completionSet.contains(role)) {
+                return false;
+            }
+        }
+        return  true;
+    }
+
 
 }
 
