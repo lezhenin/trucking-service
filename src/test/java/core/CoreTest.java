@@ -46,6 +46,7 @@ public class CoreTest {
         );
 
         client.createOrder(order);
+        assertEquals(1, client.getOrders().size());
 
         assertEquals(order.getState(), Order.State.PUBLISHED);
 
