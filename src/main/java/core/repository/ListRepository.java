@@ -26,4 +26,8 @@ public class ListRepository<G extends RepositoryItem> {
         return new ArrayList<G>(itemList);
     }
 
+    void clear() {
+        itemList.clear();
+    }
+
 }

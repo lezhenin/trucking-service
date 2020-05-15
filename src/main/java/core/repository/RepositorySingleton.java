@@ -7,7 +7,6 @@ public class RepositorySingleton {
     private final ContractRepository contractRepository = new ContractRepository();
     private final DriverRepository driverRepository = new DriverRepository();
 
-
     private RepositorySingleton(){}
 
     public static RepositorySingleton getInstance() {
@@ -28,4 +27,12 @@ public class RepositorySingleton {
     public DriverRepository getDriverRepository() {
         return driverRepository;
     }
+
+    public void clear() {
+        orderRepository.clear();
+        contractRepository.clear();
+        contractRepository.clear();
+        driverRepository.clear();
+    }
+
 }
