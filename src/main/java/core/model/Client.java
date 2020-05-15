@@ -24,6 +24,18 @@ public class Client extends Contract.Participant {
                 .add(order);
     }
 
+    // can remove only unprocessed order
+    public void removeOrder(Order order) throws Exception {
+        if (order.getState() != Order.State.PUBLISHED) {
+            throw new Exception();
+        }
+
+        RepositorySingleton
+                .getInstance()
+                .getOrderRepository()
+                .remove(order);
+    }
+
     public List<Order> getOrders() {
         return RepositorySingleton
                 .getInstance()
