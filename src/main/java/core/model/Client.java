@@ -33,7 +33,7 @@ public class Client extends Contract.Participant {
         RepositorySingleton
                 .getInstance()
                 .getOrderRepository()
-                .remove(order);
+                .add(order);
     }
 
     public List<Order> getOrders() {
