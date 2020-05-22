@@ -2,6 +2,10 @@ package core.model;
 
 import core.repository.RepositoryItem;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="ClientOrder")
 public class Order extends RepositoryItem {
 
     public enum State {
@@ -10,7 +14,7 @@ public class Order extends RepositoryItem {
         COMPLETED
     }
 
-    private Client client;
+    @ManyToOne private Client client;
 
     private int cargoWeight;
     private int cargoHeight;
@@ -21,9 +25,9 @@ public class Order extends RepositoryItem {
     private String loadingAddress;
 
     // todo appropriate type
-    private String deadline;
+    private String deadliness;
 
-    private State state;
+    private State orderState;
 
     public Order(
             Client client, int cargoWeight, int cargoHeight, int cargoWidth, int cargoLength,
@@ -36,9 +40,11 @@ public class Order extends RepositoryItem {
         this.cargoLength = cargoLength;
         this.shippingAddress = shippingAddress;
         this.loadingAddress = loadingAddress;
-        this.deadline = deadline;
-        this.state = State.PUBLISHED;
+        this.deadliness = deadline;
+        this.orderState = State.PUBLISHED;
     }
+
+    protected Order() { }
 
     public Client getClient() {
         return client;
@@ -69,14 +75,14 @@ public class Order extends RepositoryItem {
     }
 
     public String getDeadline() {
-        return deadline;
+        return deadliness;
     }
 
     public State getState() {
-        return state;
+        return orderState;
     }
 
-    void setState(State state) {
-        this.state = state;
+    void setState(State orderState) {
+        this.orderState = orderState;
     }
 }

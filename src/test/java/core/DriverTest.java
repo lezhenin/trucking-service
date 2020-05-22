@@ -18,6 +18,7 @@ public class DriverTest {
     void init() {
         RepositorySingleton.getInstance().clear();
         RepositorySingleton.getInstance().getDriverRepository().add(driver);
+        RepositorySingleton.getInstance().getClientRepository().add(client);
     }
 
 

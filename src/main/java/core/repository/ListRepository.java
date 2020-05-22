@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ListRepository<G extends RepositoryItem> {
 
-    private int idCounter = 0;
+    private Long idCounter = 0L;
 
     List<G> itemList = new ArrayList<G>();
 

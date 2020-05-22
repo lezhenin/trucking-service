@@ -2,6 +2,10 @@ package core.model;
 
 import core.repository.RepositoryItem;
 
+import javax.persistence.*;
+
+
+@Entity
 public class Vehicle extends RepositoryItem {
 
     private String model;
@@ -18,6 +22,8 @@ public class Vehicle extends RepositoryItem {
         this.maxCargoWidth = maxCargoWidth;
         this.maxCargoLength = maxCargoLength;
     }
+
+    protected Vehicle() { }
 
     public String getModel() {
         return model;

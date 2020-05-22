@@ -21,6 +21,7 @@ public class ClientTest {
     void init() {
         RepositorySingleton.getInstance().clear();
         RepositorySingleton.getInstance().getDriverRepository().add(driver);
+        RepositorySingleton.getInstance().getClientRepository().add(client);
     }
 
     @Test

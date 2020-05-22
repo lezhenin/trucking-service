@@ -1,14 +1,18 @@
 package core.repository;
 
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class RepositoryItem {
 
-    private int id;
+    @Id @GeneratedValue private Long id;
 
-    protected int getId() {
+    public Long getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

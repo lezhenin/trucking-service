@@ -3,15 +3,20 @@ package core.model;
 import core.repository.RepositoryItem;
 import core.repository.RepositorySingleton;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import java.util.List;
 
+@Entity
 public class Manager extends RepositoryItem {
 
-    private final Contacts contacts;
+    @Embedded private Contacts contacts;
 
     public Manager(Contacts contacts) {
         this.contacts = contacts;
     }
+
+    protected Manager() { }
 
     public Contacts getContacts() {
         return contacts;
@@ -36,7 +41,7 @@ public class Manager extends RepositoryItem {
 
     // todo mb rename: this complete is not the same as Client's or Driver's complete
     public void completeContract(Contract contract) throws Exception {
-        if (!contract.isComplete()) {
+        if (!contract.isCompleted()) {
             throw new Exception();
         }
         contract.getOrder().setState(Order.State.COMPLETED);

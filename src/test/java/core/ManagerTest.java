@@ -10,7 +10,6 @@ import java.util.List;
 import static core.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ManagerTest {
 
     private static final Manager manager = new Manager(generateContacts());
@@ -23,6 +22,7 @@ public class ManagerTest {
     void init() {
         RepositorySingleton.getInstance().clear();
         RepositorySingleton.getInstance().getDriverRepository().add(driver);
+        RepositorySingleton.getInstance().getClientRepository().add(client);
     }
 
 
@@ -37,7 +37,7 @@ public class ManagerTest {
 
         assertEquals(Order.State.PROCESSED, order.getState());
 
-        assertFalse(contract.isComplete());
+        assertFalse(contract.isCompleted());
 
         List<Contract> clientContracts = client.getContracts();
         List<Contract> driverContracts = driver.getContracts();

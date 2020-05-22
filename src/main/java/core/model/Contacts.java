@@ -2,6 +2,9 @@ package core.model;
 
 import core.repository.RepositoryItem;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Contacts extends RepositoryItem {
 
     private String firstName;
@@ -15,6 +18,8 @@ public class Contacts extends RepositoryItem {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+
+    protected Contacts() { }
 
     public String getFirstName() {
         return firstName;

@@ -6,6 +6,7 @@ public class RepositorySingleton {
     private final OrderRepository orderRepository = new OrderRepository();
     private final ContractRepository contractRepository = new ContractRepository();
     private final DriverRepository driverRepository = new DriverRepository();
+    private final ClientRepository clientRepository = new ClientRepository();
 
     private RepositorySingleton(){}
 
@@ -28,11 +29,16 @@ public class RepositorySingleton {
         return driverRepository;
     }
 
+    public ClientRepository getClientRepository() {
+        return clientRepository;
+    }
+
     public void clear() {
         orderRepository.clear();
         contractRepository.clear();
         contractRepository.clear();
         driverRepository.clear();
+        clientRepository.clear();
     }
 
 }
