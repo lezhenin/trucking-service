@@ -2,37 +2,59 @@ package core;
 
 import core.model.*;
 import core.model.Order;
-import core.repository.RepositorySingleton;
+import core.repository.*;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
 import static core.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@SpringBootTest
+@ContextConfiguration(classes = { ApplicationConfiguration.class })
 public class ManagerTest {
 
-    private static final Manager manager = new Manager(generateContacts());
-    private static final Driver driver = new Driver(generateContacts(), null);
-    private static final Client client = new Client(generateContacts());
+    @Autowired private OrderRepository orderRepository;
+    @Autowired private ContractRepository contractRepository;
+    @Autowired private DriverRepository driverRepository;
+    @Autowired private ClientRepository clientRepository;
+    @Autowired private ManagerRepository managerRepository;
 
-    private static Contract contract;
+    private void setRepositories() {
+        RepositorySingleton.getInstance().setOrderRepository(orderRepository);
+        RepositorySingleton.getInstance().setContractRepository(contractRepository);
+        RepositorySingleton.getInstance().setDriverRepository(driverRepository);
+        RepositorySingleton.getInstance().setClientRepository(clientRepository);
+        RepositorySingleton.getInstance().setManagerRepository(managerRepository);
+    }
 
     @BeforeEach
     void init() {
+        setRepositories();
         RepositorySingleton.getInstance().clear();
-        RepositorySingleton.getInstance().getDriverRepository().add(driver);
-        RepositorySingleton.getInstance().getClientRepository().add(client);
     }
 
 
     @Test
     void test_createContract() {
 
+        Client client = new Client(generateContacts());
+        RepositorySingleton.getInstance().getClientRepository().save(client);
+
+        Driver driver = new Driver(generateContacts(), null);
+        RepositorySingleton.getInstance().getDriverRepository().save(driver);
+
+        Manager manager = new Manager(generateContacts());
+        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+
         Order order = generateOrder(client);
         client.createOrder(order);
 
-        contract = generateContract(order, driver, manager);
+        Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
         assertEquals(Order.State.PROCESSED, order.getState());
@@ -45,17 +67,26 @@ public class ManagerTest {
         assertEquals(1, clientContracts.size());
         assertEquals(1, driverContracts.size());
 
-        assertEquals(contract, clientContracts.get(0));
-        assertEquals(contract, driverContracts.get(0));
+        assertEquals(contract.getId(), clientContracts.get(0).getId());
+        assertEquals(contract.getId(), driverContracts.get(0).getId());
     }
 
     @Test
     void test_completeContract_before_completion() {
 
+        Client client = new Client(generateContacts());
+        RepositorySingleton.getInstance().getClientRepository().save(client);
+
+        Driver driver = new Driver(generateContacts(), null);
+        RepositorySingleton.getInstance().getDriverRepository().save(driver);
+
+        Manager manager = new Manager(generateContacts());
+        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+
         Order order = generateOrder(client);
         client.createOrder(order);
 
-        contract = generateContract(order, driver, manager);
+        Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
         assertThrows(Exception.class, () -> manager.completeContract(contract));
@@ -64,10 +95,19 @@ public class ManagerTest {
     @Test
     void test_completeContract_after_partial_completion() {
 
+        Client client = new Client(generateContacts());
+        RepositorySingleton.getInstance().getClientRepository().save(client);
+
+        Driver driver = new Driver(generateContacts(), null);
+        RepositorySingleton.getInstance().getDriverRepository().save(driver);
+
+        Manager manager = new Manager(generateContacts());
+        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+
         Order order = generateOrder(client);
         client.createOrder(order);
 
-        contract = generateContract(order, driver, manager);
+        Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
         assertDoesNotThrow(() -> {
@@ -86,10 +126,19 @@ public class ManagerTest {
     @Test
     void test_completeContract_after_completion() {
 
+        Client client = new Client(generateContacts());
+        RepositorySingleton.getInstance().getClientRepository().save(client);
+
+        Driver driver = new Driver(generateContacts(), null);
+        RepositorySingleton.getInstance().getDriverRepository().save(driver);
+
+        Manager manager = new Manager(generateContacts());
+        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+
         Order order = generateOrder(client);
         client.createOrder(order);
 
-        contract = generateContract(order, driver, manager);
+        Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
         assertDoesNotThrow(() -> {

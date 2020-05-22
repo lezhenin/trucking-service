@@ -1,5 +1,12 @@
 package core.repository;
 
 import core.model.Client;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class ClientRepository extends ListRepository<Client> { }
+import java.util.List;
+
+@Repository
+public interface ClientRepository extends CrudRepository<Client, Long> {
+    List<Client> findAll();
+}

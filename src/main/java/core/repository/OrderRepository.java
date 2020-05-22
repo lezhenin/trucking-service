@@ -2,17 +2,11 @@ package core.repository;
 
 import core.model.Client;
 import core.model.Order;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class OrderRepository
-        extends ListRepository<Order> {
-
-    public List<Order> getByClient(final Client client) {
-        return itemList.stream().
-                filter(order -> Objects.equals(order.getClient().getId(), client.getId()))
-                .collect(Collectors.toList());
-    }
+public interface OrderRepository extends CrudRepository<Order, Long> {
+    List<Order> findAllByClient(Client client);
+    List<Order> findAll();
 }

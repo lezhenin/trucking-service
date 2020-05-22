@@ -15,6 +15,7 @@ public class Contract extends RepositoryItem {
     }
 
     @OneToOne private Order order;
+    @OneToOne private Client client;
     @OneToOne private Driver driver;
     @OneToOne private Manager manager;
 
@@ -25,6 +26,7 @@ public class Contract extends RepositoryItem {
 
     public Contract(Order order, Driver driver, Manager manager, int payment) {
         this.order = order;
+        this.client = order.getClient();
         this.driver = driver;
         this.manager = manager;
         this.payment = payment;
@@ -39,7 +41,7 @@ public class Contract extends RepositoryItem {
     }
 
     public Client getClient() {
-        return order.getClient();
+        return client;
     }
 
     public Driver getDriver() {

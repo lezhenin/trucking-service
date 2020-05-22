@@ -2,9 +2,8 @@ package core.repository;
 
 import javax.persistence.*;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class RepositoryItem {
+@MappedSuperclass
+public abstract class RepositoryItem {
 
     @Id @GeneratedValue private Long id;
 

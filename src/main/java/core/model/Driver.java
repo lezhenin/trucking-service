@@ -3,6 +3,7 @@ package core.model;
 import core.repository.RepositoryItem;
 import core.repository.RepositorySingleton;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -31,10 +32,9 @@ public class Driver extends RepositoryItem {
     }
 
     public List<Contract> getContracts() {
-        return RepositorySingleton
-                .getInstance()
+        return RepositorySingleton.getInstance()
                 .getContractRepository()
-                .getByDriver(this);
+                .findAllByDriver(this);
     }
 
     public void approveContract(Contract contract) throws Exception {
@@ -44,7 +44,11 @@ public class Driver extends RepositoryItem {
         if (contract.getDriverStatus() != Contract.Status.NONE) {
             throw new Exception();
         }
+
         contract.setDriverStatus(Contract.Status.APPROVED);
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
     }
 
     public void refuseContract(Contract contract) throws Exception {
@@ -54,7 +58,11 @@ public class Driver extends RepositoryItem {
         if (contract.getDriverStatus() != Contract.Status.NONE) {
             throw new Exception();
         }
+
         contract.setDriverStatus(Contract.Status.REFUSED);
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
     }
 
     public void completeContract(Contract contract) throws Exception {
@@ -72,7 +80,11 @@ public class Driver extends RepositoryItem {
         if (contract.getDriverStatus() == Contract.Status.COMPLETED) {
             throw new Exception();
         }
+
         contract.setDriverStatus(Contract.Status.COMPLETED);
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
     }
 
 }

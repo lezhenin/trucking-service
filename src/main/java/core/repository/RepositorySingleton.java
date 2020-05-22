@@ -1,14 +1,20 @@
 package core.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class RepositorySingleton {
 
     private static RepositorySingleton instance;
-    private final OrderRepository orderRepository = new OrderRepository();
-    private final ContractRepository contractRepository = new ContractRepository();
-    private final DriverRepository driverRepository = new DriverRepository();
-    private final ClientRepository clientRepository = new ClientRepository();
 
-    private RepositorySingleton(){}
+    private OrderRepository orderRepository;
+    private ContractRepository contractRepository;
+    private DriverRepository driverRepository;
+    private ClientRepository clientRepository;
+    private ManagerRepository managerRepository;
+
+    private RepositorySingleton() { }
 
     public static RepositorySingleton getInstance() {
         if (instance == null) {
@@ -33,12 +39,36 @@ public class RepositorySingleton {
         return clientRepository;
     }
 
+    public ManagerRepository getManagerRepository() {
+        return managerRepository;
+    }
+
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
+    public void setContractRepository(ContractRepository contractRepository) {
+        this.contractRepository = contractRepository;
+    }
+
+    public void setDriverRepository(DriverRepository driverRepository) {
+        this.driverRepository = driverRepository;
+    }
+
+    public void setClientRepository(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
+    public void setManagerRepository(ManagerRepository managerRepository) {
+        this.managerRepository = managerRepository;
+    }
+
     public void clear() {
-        orderRepository.clear();
-        contractRepository.clear();
-        contractRepository.clear();
-        driverRepository.clear();
-        clientRepository.clear();
+        contractRepository.deleteAll();
+        orderRepository.deleteAll();
+        driverRepository.deleteAll();
+        clientRepository.deleteAll();
+        managerRepository.deleteAll();
     }
 
 }

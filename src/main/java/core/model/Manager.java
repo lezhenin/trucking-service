@@ -24,18 +24,16 @@ public class Manager extends RepositoryItem {
 
     public void createContract(Contract contract) {
 
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
+
         Order order = contract.getOrder();
         order.setState(Order.State.PROCESSED);
 
-        RepositorySingleton
-                .getInstance()
+        RepositorySingleton.getInstance()
                 .getOrderRepository()
-                .update(order);
-
-        RepositorySingleton
-                .getInstance()
-                .getContractRepository()
-                .add(contract);
+                .save(order);
 
     }
 
@@ -44,21 +42,25 @@ public class Manager extends RepositoryItem {
         if (!contract.isCompleted()) {
             throw new Exception();
         }
-        contract.getOrder().setState(Order.State.COMPLETED);
+
+        Order order = contract.getOrder();
+        order.setState(Order.State.COMPLETED);
+        RepositorySingleton.getInstance()
+                .getOrderRepository()
+                .save(order);
+
     }
 
     public List<Order> getOrders() {
-        return RepositorySingleton
-                .getInstance()
+        return RepositorySingleton.getInstance()
                 .getOrderRepository()
-                .getAll();
+                .findAll();
     }
 
     public List<Driver> getDrivers () {
-        return RepositorySingleton
-                .getInstance()
+        return RepositorySingleton.getInstance()
                 .getDriverRepository()
-                .getAll();
+                .findAll();
     }
 
 

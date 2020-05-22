@@ -23,10 +23,9 @@ public class Client extends RepositoryItem {
     }
 
     public void createOrder(Order order) {
-        RepositorySingleton
-                .getInstance()
+        RepositorySingleton.getInstance()
                 .getOrderRepository()
-                .add(order);
+                .save(order);
     }
 
     // can remove only unprocessed order
@@ -35,24 +34,21 @@ public class Client extends RepositoryItem {
             throw new Exception();
         }
 
-        RepositorySingleton
-                .getInstance()
+        RepositorySingleton.getInstance()
                 .getOrderRepository()
-                .remove(order);
+                .delete(order);
     }
 
     public List<Order> getOrders() {
-        return RepositorySingleton
-                .getInstance()
+        return RepositorySingleton.getInstance()
                 .getOrderRepository()
-                .getByClient(this);
+                .findAllByClient(this);
     }
 
     public List<Contract> getContracts() {
-        return RepositorySingleton
-                .getInstance()
+        return RepositorySingleton.getInstance()
                 .getContractRepository()
-                .getByClient(this);
+                .findAllByClient(this);
     }
 
     public void approveContract(Contract contract) throws Exception {
@@ -62,7 +58,11 @@ public class Client extends RepositoryItem {
         if (contract.getClientStatus() != Contract.Status.NONE) {
             throw new Exception();
         }
+
         contract.setClientStatus(Contract.Status.APPROVED);
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
     }
 
     public void refuseContract(Contract contract) throws Exception {
@@ -72,7 +72,11 @@ public class Client extends RepositoryItem {
         if (contract.getClientStatus() != Contract.Status.NONE) {
             throw new Exception();
         }
+
         contract.setClientStatus(Contract.Status.REFUSED);
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
     }
 
     public void completeContract(Contract contract) throws Exception {
@@ -90,6 +94,10 @@ public class Client extends RepositoryItem {
         if (contract.getClientStatus() == Contract.Status.COMPLETED) {
             throw new Exception();
         }
+
         contract.setClientStatus(Contract.Status.COMPLETED);
+        RepositorySingleton.getInstance()
+                .getContractRepository()
+                .save(contract);
     }
 }
