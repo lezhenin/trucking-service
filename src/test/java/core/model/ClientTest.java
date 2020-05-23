@@ -1,6 +1,6 @@
-package core;
+package core.model;
 
-import core.model.*;
+import core.ApplicationConfiguration;
 import core.repository.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
-import static core.TestUtils.*;
+import static core.model.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
