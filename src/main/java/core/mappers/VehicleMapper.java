@@ -1,4 +1,4 @@
-package core.gateway;
+package core.mappers;
 
 
 import core.model.Vehicle;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VehicleTableGateway {
+public class VehicleMapper {
 
     private static final String sqlInsertTemplate =
             "INSERT INTO Vehicle (model, maxCargoWeight, maxCargoHeight, maxCargoWidth, maxCargoLength)" +
@@ -36,7 +36,7 @@ public class VehicleTableGateway {
 
     private final Connection connection;
 
-    public VehicleTableGateway(Connection connection) {
+    public VehicleMapper(Connection connection) {
         this.connection = connection;
     }
 

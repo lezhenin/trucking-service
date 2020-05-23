@@ -1,4 +1,4 @@
-package core.gateway;
+package core.mappers;
 
 
 import core.model.Vehicle;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class VehicleTableGatewayTest {
+public class VehicleMapperTest {
 
     static final String JDBC_DRIVER = "org.h2.Driver";
     static final String DB_URL = "jdbc:h2:~/testmapper";
@@ -66,7 +66,7 @@ public class VehicleTableGatewayTest {
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
         assertNull(vehicle.getId());
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
 
         assertEquals(5, vehicle.getMaxCargoWeight());
@@ -82,7 +82,7 @@ public class VehicleTableGatewayTest {
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
         assertNull(vehicle.getId());
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
 
         Vehicle newVehicle  = new Vehicle("a", 3, 15, 17, 21);
@@ -106,7 +106,7 @@ public class VehicleTableGatewayTest {
 
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
 
         assertTrue(mapper.existById(vehicle.getId()));
@@ -120,7 +120,7 @@ public class VehicleTableGatewayTest {
 
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
 
         Optional<Vehicle> optional = mapper.selectById(vehicle.getId());
@@ -143,7 +143,7 @@ public class VehicleTableGatewayTest {
         Vehicle vehicleOne = new Vehicle("a", 5, 10, 15, 20);
         Vehicle vehicleTwo = new Vehicle("b", 5, 15, 33, 25);
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicleOne);
         mapper.insert(vehicleTwo);
 
@@ -161,7 +161,7 @@ public class VehicleTableGatewayTest {
 
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
 
         assertTrue(mapper.existById(vehicle.getId()));
@@ -178,7 +178,7 @@ public class VehicleTableGatewayTest {
         Vehicle vehicleOne = new Vehicle("a", 5, 10, 15, 20);
         Vehicle vehicleTwo = new Vehicle("b", 5, 15, 33, 25);
 
-        VehicleTableGateway mapper = new VehicleTableGateway(connection);
+        VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicleOne);
         mapper.insert(vehicleTwo);
 
