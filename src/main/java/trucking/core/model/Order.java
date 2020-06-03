@@ -25,7 +25,7 @@ public class Order extends RepositoryItem {
     private String loadingAddress;
 
     // todo appropriate type
-    private String deadliness;
+    private String deadline;
 
     private State orderState;
 
@@ -40,7 +40,7 @@ public class Order extends RepositoryItem {
         this.cargoLength = cargoLength;
         this.shippingAddress = shippingAddress;
         this.loadingAddress = loadingAddress;
-        this.deadliness = deadline;
+        this.deadline = deadline;
         this.orderState = State.PUBLISHED;
     }
 
@@ -75,14 +75,14 @@ public class Order extends RepositoryItem {
     }
 
     public String getDeadline() {
-        return deadliness;
+        return deadline;
     }
 
     public State getState() {
         return orderState;
     }
 
-    void setState(State orderState) {
+    public void setState(State orderState) {
         this.orderState = orderState;
     }
 }

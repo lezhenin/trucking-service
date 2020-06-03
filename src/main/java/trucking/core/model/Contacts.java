@@ -5,12 +5,14 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Contacts {
 
+    private String username;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
 
-    public Contacts(String firstName, String lastName, String phoneNumber, String email) {
+    public Contacts(String username, String firstName, String lastName, String phoneNumber, String email) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -18,6 +20,10 @@ public class Contacts {
     }
 
     protected Contacts() { }
+
+    public String getUsername() {
+        return username;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -33,6 +39,10 @@ public class Contacts {
 
     public String getEmail() {
         return email;
+    }
+
+    private void setUsername(String username) {
+        this.username = username;
     }
 
     private void setFirstName(String firstName) {

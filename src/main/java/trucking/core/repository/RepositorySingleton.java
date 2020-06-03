@@ -1,8 +1,6 @@
 package trucking.core.repository;
 
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class RepositorySingleton {
 
     private static RepositorySingleton instance;
@@ -12,6 +10,7 @@ public class RepositorySingleton {
     private DriverRepository driverRepository;
     private ClientRepository clientRepository;
     private ManagerRepository managerRepository;
+    private VehicleRepository vehicleRepository;
 
     private RepositorySingleton() { }
 
@@ -42,6 +41,10 @@ public class RepositorySingleton {
         return managerRepository;
     }
 
+    public VehicleRepository getVehicleRepository() {
+        return vehicleRepository;
+    }
+
     public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
@@ -60,6 +63,10 @@ public class RepositorySingleton {
 
     public void setManagerRepository(ManagerRepository managerRepository) {
         this.managerRepository = managerRepository;
+    }
+
+    public void setVehicleRepository(VehicleRepository vehicleRepository) {
+        this.vehicleRepository = vehicleRepository;
     }
 
     public void clear() {

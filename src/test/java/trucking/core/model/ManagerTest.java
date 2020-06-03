@@ -3,7 +3,6 @@ package trucking.core.model;
 import trucking.ApplicationConfiguration;
 import trucking.core.repository.*;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -17,23 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = { ApplicationConfiguration.class })
 public class ManagerTest {
 
-    @Autowired private OrderRepository orderRepository;
-    @Autowired private ContractRepository contractRepository;
-    @Autowired private DriverRepository driverRepository;
-    @Autowired private ClientRepository clientRepository;
-    @Autowired private ManagerRepository managerRepository;
-
-    private void setRepositories() {
-        RepositorySingleton.getInstance().setOrderRepository(orderRepository);
-        RepositorySingleton.getInstance().setContractRepository(contractRepository);
-        RepositorySingleton.getInstance().setDriverRepository(driverRepository);
-        RepositorySingleton.getInstance().setClientRepository(clientRepository);
-        RepositorySingleton.getInstance().setManagerRepository(managerRepository);
-    }
-
     @BeforeEach
     void init() {
-        setRepositories();
         RepositorySingleton.getInstance().clear();
     }
 

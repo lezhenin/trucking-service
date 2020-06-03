@@ -1,5 +1,7 @@
 package trucking;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -10,6 +12,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import trucking.core.model.Client;
+import trucking.core.model.Contacts;
+import trucking.core.model.Driver;
+import trucking.core.model.Manager;
+import trucking.core.repository.*;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -17,8 +24,22 @@ import javax.sql.DataSource;
 @Configuration
 @EnableJpaRepositories
 @EnableTransactionManagement
-public
-class ApplicationConfiguration {
+public class ApplicationConfiguration {
+
+    @Bean
+    public CommandLineRunner run(
+            OrderRepository orderRepository, ClientRepository clientRepository,
+            DriverRepository driverRepository, ContractRepository contractRepository,
+            ManagerRepository managerRepository
+    ) {
+        return args -> {
+            RepositorySingleton.getInstance().setOrderRepository(orderRepository);
+            RepositorySingleton.getInstance().setContractRepository(contractRepository);
+            RepositorySingleton.getInstance().setDriverRepository(driverRepository);
+            RepositorySingleton.getInstance().setClientRepository(clientRepository);
+            RepositorySingleton.getInstance().setManagerRepository(managerRepository);
+        };
+    }
 
     @Bean
     public DataSource dataSource() {
@@ -36,7 +57,7 @@ class ApplicationConfiguration {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("trucking.core");
+        factory.setPackagesToScan("trucking");
         factory.setDataSource(dataSource());
         return factory;
     }

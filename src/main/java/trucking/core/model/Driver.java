@@ -6,6 +6,7 @@ import trucking.core.repository.RepositorySingleton;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+
 import java.util.List;
 
 @Entity

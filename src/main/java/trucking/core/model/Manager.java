@@ -63,5 +63,11 @@ public class Manager extends RepositoryItem {
                 .findAll();
     }
 
+    public List<Contract> getContracts() {
+        return RepositorySingleton.getInstance()
+                .getContractRepository()
+                .findAllByManager(this);
+    }
+
 
 }
