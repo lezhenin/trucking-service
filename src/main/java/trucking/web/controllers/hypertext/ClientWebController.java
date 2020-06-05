@@ -1,52 +1,39 @@
 package trucking.web.controllers.hypertext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import trucking.model.Client;
 import trucking.model.Contract;
-import trucking.model.Order;
-import trucking.repository.ClientRepository;
-import trucking.repository.ContractRepository;
-import trucking.repository.OrderRepository;
 import trucking.web.security.UsernameIdMapper;
 import trucking.web.datatransfer.*;
+import trucking.web.services.ClientService;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/client")
 public class ClientWebController {
 
-    private final OrderRepository orderRepository;
-    private final ClientRepository clientRepository;
-    private final ContractRepository contractRepository;
-
+    private final ClientService clientService;
     private final UsernameIdMapper usernameIdMapper;
 
-    public ClientWebController(OrderRepository orderRepository, ClientRepository clientRepository, ContractRepository contractRepository, UsernameIdMapper usernameIdMapper) {
-        this.orderRepository = orderRepository;
-        this.clientRepository = clientRepository;
-        this.contractRepository = contractRepository;
+    public ClientWebController(
+            @Autowired ClientService clientService,
+            @Autowired UsernameIdMapper usernameIdMapper
+    ) {
+        this.clientService = clientService;
         this.usernameIdMapper = usernameIdMapper;
     }
 
     @RequestMapping({"/orders"})
     public String orders(Principal principal, Model model) {
         Long id = usernameIdMapper.map(principal);
-        Client client = clientRepository.findById(id).get();
-
-        List<Order> orders = orderRepository.findAllByClient(client);
-        System.out.println("here");
-        System.out.println(orders.size());
-        List<OrderData> orderDataList =
-                orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
-
+        List<OrderData> orderDataList = clientService.getOrders(id);
         NewOrderData newOrderData = new NewOrderData();
         OrderData orderData = new OrderData();
-
         model.addAttribute("orderDataList", orderDataList);
         model.addAttribute("newOrderData", newOrderData);
         model.addAttribute("orderData", orderData);
@@ -57,34 +44,22 @@ public class ClientWebController {
     @RequestMapping(value = {"/orders"}, params = {"create"})
     public String createOrder(Principal principal, NewOrderData newOrderData) {
         Long id = usernameIdMapper.map(principal);
-        Client client = clientRepository.findById(id).get();
-        Order order = DataObjectMapper.orderFromData(newOrderData, client);
-        client.createOrder(order);
-        orderRepository.save(order);
+        clientService.createOrder(id, newOrderData);
         return "redirect:/client/orders";
     }
 
     @RequestMapping(value = {"/orders"}, params = {"remove"})
     public String removeOrder(Principal principal, OrderData orderData) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        Client client = clientRepository.findById(id).get();
-        Order order = orderRepository.findById(orderData.getId()).get();
-        client.removeOrder(order);
-        orderRepository.delete(order);
+        clientService.removeOrder(id, orderData.getId());
         return "redirect:/client/orders";
     }
 
     @RequestMapping({"/contracts"})
     public String contracts(Principal principal, Model model) {
         Long id = usernameIdMapper.map(principal);
-        Client client = clientRepository.findById(id).get();
-
-        List<Contract> orders = contractRepository.findAllByClient(client);
-        List<ContractData> contractDataList =
-                orders.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
-
+        List<ContractData> contractDataList = clientService.getContracts(id);
         ContractData contractData = new ContractData();
-
         model.addAttribute("contractDataList", contractDataList);
         model.addAttribute("contractData", contractData);
         return "/client/contracts";
@@ -93,23 +68,14 @@ public class ClientWebController {
     @RequestMapping(value = {"/contracts"}, params = {"update"})
     public String updateContract(Principal principal, ContractData contractData, @RequestParam("update") String action) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        Client client = clientRepository.findById(id).get();
-        Contract contract = contractRepository.findById(contractData.getId()).get();
-
-        switch (action) {
-            case "approve":
-                client.approveContract(contract);
-                break;
-            case "refuse":
-                client.refuseContract(contract);
-                break;
-            case "complete":
-                client.completeContract(contract);
-                break;
+        //noinspection IfCanBeSwitch
+        if (action.equals("approve")) {
+            clientService.approveContract(id, contractData.getId());
+        } else if (action.equals("refuse")) {
+            clientService.refuseContract(id, contractData.getId());
+        } else if (action.equals("complete")) {
+            clientService.completeContract(id, contractData.getId());
         }
-
-        contractRepository.save(contract);
-
         return "redirect:/client/contracts";
     }
 }
