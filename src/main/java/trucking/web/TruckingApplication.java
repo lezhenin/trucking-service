@@ -40,7 +40,8 @@ public class TruckingApplication {
     public CommandLineRunner run2(
             OrderRepository orderRepository, ClientRepository clientRepository,
             DriverRepository driverRepository, ContractRepository contractRepository,
-            ManagerRepository managerRepository, UsernameIdMapper usernameIdMapper
+            ManagerRepository managerRepository, VehicleRepository vehicleRepository,
+            UsernameIdMapper usernameIdMapper
     ) {
         return args -> {
 
@@ -54,8 +55,11 @@ public class TruckingApplication {
             Order order1 = new Order(client, 5, 51, 5, 5, "b", "a", "d");
             client.createOrder(order1);
 
+            Vehicle vehicle = new Vehicle("scania", 5000, 200, 200, 300);
+            vehicleRepository.save(vehicle);
+
             Contacts driverContacts = new Contacts("driver", "number1", "c", "d");
-            Driver driver = new Driver(driverContacts, null);
+            Driver driver = new Driver(driverContacts, vehicle);
             driverRepository.save(driver);
             usernameIdMapper.put("driver", driver.getId());
 

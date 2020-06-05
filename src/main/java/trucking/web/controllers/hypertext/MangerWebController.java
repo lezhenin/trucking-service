@@ -68,7 +68,7 @@ public class MangerWebController {
     }
 
     @RequestMapping(value = {"/contracts"}, params = {"create"})
-    public String CreateContract(Principal principal, NewContractData newContractData, BindingResult result) {
+    public String createContract(Principal principal, NewContractData newContractData, BindingResult result) {
         Long id = usernameIdMapper.map(principal);
         Manager manager = managerRepository.findById(id).get();
         Order order = orderRepository.findById(newContractData.getOrderId()).get();
@@ -78,5 +78,17 @@ public class MangerWebController {
         return "redirect:/manager/contracts";
     }
 
+    @RequestMapping({"/drivers"})
+    public String drivers(Principal principal, Model model) {
+        Long id = usernameIdMapper.map(principal);
+        Manager manager = managerRepository.findById(id).get();
+
+        List<Driver> drivers = manager.getDrivers();
+        List<DriverData> driverDataList = drivers.stream().map(DataObjectMapper::dataFromDriver).collect(Collectors.toList());
+
+        model.addAttribute("driverDataList", driverDataList);
+
+        return "/manager/drivers";
+    }
 
 }

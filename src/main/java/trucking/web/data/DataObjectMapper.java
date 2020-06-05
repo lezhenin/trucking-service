@@ -24,4 +24,14 @@ public class DataObjectMapper {
         return new Contract(order, driver, manager, data.getPayment());
     }
 
+    public static VehicleData dataFromVehicle(Vehicle vehicle) {
+        return new VehicleData(vehicle.getModel(), vehicle.getMaxCargoWeight(), vehicle.getMaxCargoWeight(),
+                vehicle.getMaxCargoWidth(), vehicle.getMaxCargoLength());
+    }
+
+    public static DriverData dataFromDriver(Driver driver) {
+        return new DriverData(driver.getId(), driver.getContacts().getFirstName(), driver.getContacts().getLastName(),
+                dataFromVehicle(driver.getVehicle()));
+    }
+
 }

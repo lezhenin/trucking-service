@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>All Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+
+<div>
+    <img src="/images/trucklogo.png" alt="Truck logo" title="Truck logo"
+         th:src="@{/images/trucklogo.png}"/>
+</div>
+
+<div>
+    <a th:href="@{/manager/orders}">Orders</a>
+    <a th:href="@{/manager/contracts}">Contracts</a>
+    <a th:href="@{/manager/drivers}">Drivers</a>
+</div>
+
+<div class="truckingitemlist" th:unless="${#lists.isEmpty(driverDataList)}">
+
+    <h2>List of orders</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Driver Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Vehicle model</th>
+            <th>Max cargo weight</th>
+            <th>Max cargo size</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="driver : ${driverDataList}">
+            <td th:text="${{driver.id}}">0</td>
+            <td th:text="${{driver.firstName}}">0</td>
+            <td th:text="${{driver.lastName}}">0</td>
+            <td th:text="${{driver.vehicle.model}}"></td>
+            <td th:text="${{driver.vehicle.maxCargoWeight}}"></td>
+            <td th:text="${#strings.concat('(', driver.vehicle.maxCargoLength, ', ', driver.vehicle.maxCargoWidth, ', ', driver.vehicle.maxCargoHeight, ')')}">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
