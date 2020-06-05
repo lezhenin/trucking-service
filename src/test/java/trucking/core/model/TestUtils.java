@@ -7,7 +7,6 @@ public class TestUtils {
     static Contacts generateContacts() {
         int number = contactCounter++;
         return new Contacts(
-                "user" + number,
                 "name" + number,
                 "lastname" + number,
                 "8800"+ number,
