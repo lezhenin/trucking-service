@@ -18,7 +18,9 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/client/**").hasAnyRole("CLIENT")
                 .antMatchers("/api/client/").hasAnyRole("CLIENT")
                 .antMatchers("/driver/**").hasAnyRole("DRIVER")
+                .antMatchers("/api/driver/**").hasAnyRole("DRIVER")
                 .antMatchers("/manager/**").hasAnyRole("MANAGER")
+                .antMatchers("/api/manager/**").hasAnyRole("MANAGER")
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
