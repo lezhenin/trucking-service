@@ -3,15 +3,14 @@ package trucking.web.controllers.hypertext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import trucking.core.model.Client;
-import trucking.core.model.Contract;
-import trucking.core.model.Manager;
-import trucking.core.model.Order;
-import trucking.core.repository.ClientRepository;
-import trucking.core.repository.ContractRepository;
-import trucking.core.repository.OrderRepository;
-import trucking.web.UsernameIdMapper;
-import trucking.web.data.*;
+import trucking.model.Client;
+import trucking.model.Contract;
+import trucking.model.Order;
+import trucking.repository.ClientRepository;
+import trucking.repository.ContractRepository;
+import trucking.repository.OrderRepository;
+import trucking.web.security.UsernameIdMapper;
+import trucking.web.datatransfer.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -52,7 +51,7 @@ public class ClientWebController {
     }
 
 
-    @RequestMapping(value={"/orders"}, params={"create"})
+    @RequestMapping(value = {"/orders"}, params = {"create"})
     public String createOrder(Principal principal, NewOrderData newOrderData) {
         Long id = usernameIdMapper.map(principal);
         Client client = clientRepository.findById(id).get();
@@ -62,7 +61,7 @@ public class ClientWebController {
         return "redirect:/client/orders";
     }
 
-    @RequestMapping(value={"/orders"}, params={"remove"})
+    @RequestMapping(value = {"/orders"}, params = {"remove"})
     public String removeOrder(Principal principal, OrderData orderData) throws Exception {
         Long id = usernameIdMapper.map(principal);
         Client client = clientRepository.findById(id).get();
@@ -86,7 +85,7 @@ public class ClientWebController {
         return "/client/contracts";
     }
 
-    @RequestMapping(value={"/contracts"}, params={"update"})
+    @RequestMapping(value = {"/contracts"}, params = {"update"})
     public String updateContract(Principal principal, ContractData contractData, @RequestParam("update") String action) throws Exception {
         Long id = usernameIdMapper.map(principal);
         Client client = clientRepository.findById(id).get();

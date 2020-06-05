@@ -3,18 +3,17 @@ package trucking.web.controllers.hypertext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
-import trucking.core.model.Contract;
-import trucking.core.model.Driver;
-import trucking.core.model.Manager;
-import trucking.core.model.Order;
-import trucking.core.repository.ContractRepository;
-import trucking.core.repository.DriverRepository;
-import trucking.core.repository.ManagerRepository;
-import trucking.core.repository.OrderRepository;
-import trucking.web.UsernameIdMapper;
-import trucking.web.data.*;
+import trucking.model.Contract;
+import trucking.model.Driver;
+import trucking.model.Manager;
+import trucking.model.Order;
+import trucking.repository.ContractRepository;
+import trucking.repository.DriverRepository;
+import trucking.repository.ManagerRepository;
+import trucking.repository.OrderRepository;
+import trucking.web.security.UsernameIdMapper;
+import trucking.web.datatransfer.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -26,15 +25,13 @@ public class MangerWebController {
 
     private final OrderRepository orderRepository;
     private final ManagerRepository managerRepository;
-    private final ContractRepository contractRepository;
     private final DriverRepository driverRepository;
 
     private final UsernameIdMapper usernameIdMapper;
 
-    public MangerWebController(OrderRepository orderRepository, ManagerRepository managerRepository, ContractRepository contractRepository,  DriverRepository driverRepository, UsernameIdMapper usernameIdMapper) {
+    public MangerWebController(OrderRepository orderRepository, ManagerRepository managerRepository,  DriverRepository driverRepository, UsernameIdMapper usernameIdMapper) {
         this.orderRepository = orderRepository;
         this.managerRepository = managerRepository;
-        this.contractRepository = contractRepository;
         this.driverRepository = driverRepository;
         this.usernameIdMapper = usernameIdMapper;
     }
