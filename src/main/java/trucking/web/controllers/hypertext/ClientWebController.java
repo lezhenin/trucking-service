@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import trucking.core.model.Client;
+import trucking.core.model.Contract;
+import trucking.core.model.Manager;
 import trucking.core.model.Order;
 import trucking.core.repository.ClientRepository;
 import trucking.core.repository.ContractRepository;
 import trucking.core.repository.OrderRepository;
 import trucking.web.UsernameIdMapper;
-import trucking.web.data.DataObjectMapper;
-import trucking.web.data.NewOrderData;
-import trucking.web.data.OrderData;
+import trucking.web.data.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -69,5 +69,41 @@ public class ClientWebController {
         Order order = orderRepository.findById(orderData.getId()).get();
         client.removeOrder(order);
         return "redirect:/client/orders";
+    }
+
+    @RequestMapping({"/contracts"})
+    public String contracts(Principal principal, Model model) {
+        Long id = usernameIdMapper.map(principal);
+        Client client = clientRepository.findById(id).get();
+
+        List<Contract> orders = client.getContracts();
+        List<ContractData> contractDataList = orders.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
+
+        ContractData contractData = new ContractData();
+
+        model.addAttribute("contractDataList", contractDataList);
+        model.addAttribute("contractData", contractData);
+        return "/client/contracts";
+    }
+
+    @RequestMapping(value={"/contracts"}, params={"update"})
+    public String updateContract(Principal principal, ContractData contractData, @RequestParam("update") String action) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        Client client = clientRepository.findById(id).get();
+        Contract contract = contractRepository.findById(contractData.getId()).get();
+
+        switch (action) {
+            case "approve":
+                client.approveContract(contract);
+                break;
+            case "refuse":
+                client.refuseContract(contract);
+                break;
+            case "complete":
+                client.completeContract(contract);
+                break;
+        }
+
+        return "redirect:/client/contracts";
     }
 }
