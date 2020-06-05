@@ -15,10 +15,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import trucking.core.model.Client;
-import trucking.core.model.Contacts;
-import trucking.core.model.Manager;
-import trucking.core.model.Order;
+import trucking.core.model.*;
 import trucking.core.repository.*;
 
 
@@ -52,17 +49,24 @@ public class TruckingApplication {
             clientRepository.save(client);
             usernameIdMapper.put("client", client.getId());
 
-            client.createOrder(
-                    new Order(client, 5, 5, 5, 5, "a", "b", "d")
-            );
-            client.createOrder(
-                    new Order(client, 5, 51, 5, 5, "b", "a", "d")
-            );
+            Order order = new Order(client, 5, 5, 5, 5, "a", "b", "d");
+            client.createOrder(order);
+            Order order1 = new Order(client, 5, 51, 5, 5, "b", "a", "d");
+            client.createOrder(order1);
+
+            Contacts driverContacts = new Contacts("driver", "number1", "c", "d");
+            Driver driver = new Driver(driverContacts, null);
+            driverRepository.save(driver);
+            usernameIdMapper.put("driver", driver.getId());
+
+            System.out.println(driver.getId());
 
             Contacts managerContacts = new Contacts("manager", "number1", "c", "d");
             Manager manager = new Manager(managerContacts);
             managerRepository.save(manager);
             usernameIdMapper.put("manager", manager.getId());
+
+            manager.createContract(new Contract(order, driver, manager, 1000));
 
         };
     }
