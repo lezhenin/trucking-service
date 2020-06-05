@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>All Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+
+<div>
+    <img src="/images/trucklogo.png" alt="Truck logo" title="Truck logo"
+         th:src="@{/images/trucklogo.png}"/>
+</div>
+
+<div>
+    <a th:href="@{/manager/orders}">Orders</a>
+    <a th:href="@{/manager/contracts}">Contracts</a>
+</div>
+
+<div class="truckingitemlist" th:unless="${#lists.isEmpty(orderDataList)}">
+
+    <h2>List of orders</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Order Id</th>
+            <th>Client Id</th>
+            <th>Cargo weight</th>
+            <th>Cargo size</th>
+            <th>Loading address</th>
+            <th>Shipping address</th>
+            <th>State</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderDataList}">
+            <td th:text="${{order.id}}">0</td>
+            <td th:text="${{order.clientId}}">0</td>
+            <td th:text="${{order.cargoWeight}}">0</td>
+            <td th:text="${#strings.concat('(', order.cargoLength, ', ', order.cargoWidth, ', ', order.cargoHeight, ')')}">0</td>
+            <td th:text="${{order.loadingAddress}}"></td>
+            <td th:text="${{order.shippingAddress}}"></td>
+            <td th:text="${{order.orderState}}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

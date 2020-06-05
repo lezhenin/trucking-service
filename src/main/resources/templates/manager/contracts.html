@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Manager Contracts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+
+<div>
+    <img src="/images/trucklogo.png" alt="Truck logo" title="Truck logo"
+         th:src="@{/images/trucklogo.png}"/>
+</div>
+
+<div>
+    <a th:href="@{/manager/orders}">Orders</a>
+    <a th:href="@{/manager/contracts}">Contracts</a>
+</div>
+
+<div class="truckingitemlist" th:unless="${#lists.isEmpty(contractDataList)}">
+
+    <h2>List of contracts</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Contract Id</th>
+            <th>Order Id</th>
+            <th>Client Id</th>
+            <th>Client Status</th>
+            <th>Driver Id</th>
+            <th>Driver Status</th>
+            <th>Payment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contract : ${contractDataList}">
+            <td th:text="${{contract.id}}">0</td>
+            <td th:text="${{contract.orderId}}">0</td>
+            <td th:text="${{contract.clientId}}">0</td>
+            <td th:text="${{contract.clientStatus}}"></td>
+            <td th:text="${{contract.driverId}}">0</td>
+            <td th:text="${{contract.driverStatus}}"></td>
+            <td th:text="${{contract.payment}}">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+
+    <h2>Create new contract</h2>
+
+    <form action="#" th:action="@{/manager/contracts}" th:object="${newContractData}" method="post">
+
+        <fieldset>
+
+            <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
+                <li th:each="err : ${#fields.errors('*')}">Input is incorrect</li>
+            </ul>
+
+            <div>
+                <label th:for="${#ids.next('orderId')}">Order Id:</label>
+                <input type="number" th:field="*{orderId}" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label th:for="${#ids.next('driverId')}">Driver Id:</label>
+                <input type="number" th:field="*{driverId}" th:errorclass="fieldError" />
+            </div>
+
+            <div>
+                <label th:for="${#ids.next('payment')}">Payment:</label>
+                <input type="number" th:field="*{payment}" th:errorclass="fieldError" />
+            </div>
+
+            <div class="submit">
+                <button type="submit" name="create">Create Contract</button>
+            </div>
+
+        </fieldset>
+
+    </form>
+
+</div>
+
+
+</body>
+</html>
