@@ -22,21 +22,6 @@ import javax.sql.DataSource;
 public class JpaConfiguration {
 
     @Bean
-    public CommandLineRunner run(
-            OrderRepository orderRepository, ClientRepository clientRepository,
-            DriverRepository driverRepository, ContractRepository contractRepository,
-            ManagerRepository managerRepository
-    ) {
-        return args -> {
-            RepositorySingleton.getInstance().setOrderRepository(orderRepository);
-            RepositorySingleton.getInstance().setContractRepository(contractRepository);
-            RepositorySingleton.getInstance().setDriverRepository(driverRepository);
-            RepositorySingleton.getInstance().setClientRepository(clientRepository);
-            RepositorySingleton.getInstance().setManagerRepository(managerRepository);
-        };
-    }
-
-    @Bean
     public DataSource dataSource() {
 
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();

@@ -38,8 +38,11 @@ public class ClientWebController {
         Long id = usernameIdMapper.map(principal);
         Client client = clientRepository.findById(id).get();
 
-        List<Order> orders = client.getOrders();
-        List<OrderData> orderDataList = orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
+        List<Order> orders = orderRepository.findAllByClient(client);
+        System.out.println("here");
+        System.out.println(orders.size());
+        List<OrderData> orderDataList =
+                orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
 
         NewOrderData newOrderData = new NewOrderData();
         OrderData orderData = new OrderData();
@@ -56,8 +59,8 @@ public class ClientWebController {
         Long id = usernameIdMapper.map(principal);
         Client client = clientRepository.findById(id).get();
         Order order = DataObjectMapper.orderFromData(newOrderData, client);
-        orderRepository.save(order);
         client.createOrder(order);
+        orderRepository.save(order);
         return "redirect:/client/orders";
     }
 
@@ -67,6 +70,7 @@ public class ClientWebController {
         Client client = clientRepository.findById(id).get();
         Order order = orderRepository.findById(orderData.getId()).get();
         client.removeOrder(order);
+        orderRepository.delete(order);
         return "redirect:/client/orders";
     }
 
@@ -75,8 +79,9 @@ public class ClientWebController {
         Long id = usernameIdMapper.map(principal);
         Client client = clientRepository.findById(id).get();
 
-        List<Contract> orders = client.getContracts();
-        List<ContractData> contractDataList = orders.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
+        List<Contract> orders = contractRepository.findAllByClient(client);
+        List<ContractData> contractDataList =
+                orders.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
 
         ContractData contractData = new ContractData();
 
@@ -102,6 +107,8 @@ public class ClientWebController {
                 client.completeContract(contract);
                 break;
         }
+
+        contractRepository.save(contract);
 
         return "redirect:/client/contracts";
     }

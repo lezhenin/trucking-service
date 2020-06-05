@@ -1,72 +1,41 @@
 package trucking.model;
 
-import trucking.JpaConfiguration;
-import trucking.repository.*;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-
-import java.util.List;
 
 import static trucking.model.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ContextConfiguration(classes = { JpaConfiguration.class })
 public class ClientTest {
-
-    @BeforeEach
-    void init() {
-        RepositorySingleton.getInstance().clear();
-    }
-
+    
     @Test
     void test_createOrder() {
 
         Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
+        client.setId(0L);
+        
         Order order = generateOrder(client);
-        client.createOrder(order);
-
-        assertEquals(Order.State.PUBLISHED, order.getState());
-
-        List<Order> orders = client.getOrders();
-        assertEquals(1, orders.size());
-        assertEquals(order.getId(), orders.get(0).getId());
+        order.setId(1L);
+        assertDoesNotThrow(() -> client.createOrder(order));
 
     }
 
     @Test
     void test_removeOrder_before_processing() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
+        Client client = generateClient();
         Order order = generateOrder(client);
         client.createOrder(order);
 
         assertDoesNotThrow(() -> client.removeOrder(order));
-
-        List<Order> orders = client.getOrders();
-        assertEquals(0, orders.size());
-
+        
     }
 
     @Test
     void test_removeOrder_after_processing() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
-        Driver driver = new Driver(generateContacts(), null);
-        RepositorySingleton.getInstance().getDriverRepository().save(driver);
-
-        Manager manager = new Manager(generateContacts());
-        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
 
         Order order = generateOrder(client);
         client.createOrder(order);
@@ -76,23 +45,15 @@ public class ClientTest {
 
         assertThrows(Exception.class, () -> client.removeOrder(order));
 
-        List<Order> orders = client.getOrders();
-        assertEquals(1, orders.size());
-        assertEquals(order.getId(), orders.get(0).getId());
-
     }
 
     @Test
     void test_approveContract() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
 
-        Driver driver = new Driver(generateContacts(), null);
-        RepositorySingleton.getInstance().getDriverRepository().save(driver);
-
-        Manager manager = new Manager(generateContacts());
-        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
 
         Order order = generateOrder(client);
         client.createOrder(order);
@@ -109,14 +70,9 @@ public class ClientTest {
     @Test
     void test_refuseContract() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
-        Driver driver = new Driver(generateContacts(), null);
-        RepositorySingleton.getInstance().getDriverRepository().save(driver);
-
-        Manager manager = new Manager(generateContacts());
-        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
 
         Order order = generateOrder(client);
         client.createOrder(order);
@@ -133,14 +89,9 @@ public class ClientTest {
     @Test
     void test_completeContract_before_agreement() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
-        Driver driver = new Driver(generateContacts(), null);
-        RepositorySingleton.getInstance().getDriverRepository().save(driver);
-
-        Manager manager = new Manager(generateContacts());
-        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
 
         Order order = generateOrder(client);
         client.createOrder(order);
@@ -156,14 +107,9 @@ public class ClientTest {
     @Test
     void test_completeContract_after_approveContract() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
-        Driver driver = new Driver(generateContacts(), null);
-        RepositorySingleton.getInstance().getDriverRepository().save(driver);
-
-        Manager manager = new Manager(generateContacts());
-        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
 
         Order order = generateOrder(client);
         client.createOrder(order);
@@ -172,9 +118,7 @@ public class ClientTest {
         manager.createContract(contract);
 
         assertDoesNotThrow(() -> client.approveContract(contract));
-
         assertDoesNotThrow(() -> driver.approveContract(contract));
-
         assertDoesNotThrow(() -> client.completeContract(contract));
 
     }
@@ -182,14 +126,9 @@ public class ClientTest {
     @Test
     void test_completeContract_after_refuseContract() {
 
-        Client client = new Client(generateContacts());
-        RepositorySingleton.getInstance().getClientRepository().save(client);
-
-        Driver driver = new Driver(generateContacts(), null);
-        RepositorySingleton.getInstance().getDriverRepository().save(driver);
-
-        Manager manager = new Manager(generateContacts());
-        RepositorySingleton.getInstance().getManagerRepository().save(manager);
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
 
         Order order = generateOrder(client);
         client.createOrder(order);
@@ -198,9 +137,7 @@ public class ClientTest {
         manager.createContract(contract);
 
         assertDoesNotThrow(() -> client.refuseContract(contract));
-
         assertDoesNotThrow(() -> driver.approveContract(contract));
-
         assertThrows(Exception.class, () -> client.completeContract(contract));
 
     }

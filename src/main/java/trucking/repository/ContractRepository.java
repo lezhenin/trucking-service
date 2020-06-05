@@ -14,4 +14,5 @@ public interface ContractRepository extends CrudRepository<Contract, Long> {
     List<Contract> findAllByManager(Manager manager);
     List<Contract> findAllByClient(Client client);
     List<Contract> findAllByDriver(Driver driver);
+    List<Contract> findAll();
 }

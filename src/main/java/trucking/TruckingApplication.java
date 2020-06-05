@@ -16,7 +16,6 @@ import trucking.web.security.UsernameIdMapper;
 
 
 @SpringBootApplication
-//@ComponentScan(value = "trucking.configuration")
 public class TruckingApplication {
 
     @Bean
@@ -48,8 +47,10 @@ public class TruckingApplication {
 
             Order order = new Order(client, 5, 5, 5, 5, "a", "b", "d");
             client.createOrder(order);
+            orderRepository.save(order);
             Order order1 = new Order(client, 5, 51, 5, 5, "b", "a", "d");
             client.createOrder(order1);
+            orderRepository.save(order1);
 
             Vehicle vehicle = new Vehicle("scania", 5000, 200, 200, 300);
             vehicleRepository.save(vehicle);
@@ -59,14 +60,16 @@ public class TruckingApplication {
             driverRepository.save(driver);
             usernameIdMapper.put("driver", driver.getId());
 
-            System.out.println(driver.getId());
-
             Contacts managerContacts = new Contacts("manager", "number1", "c", "d");
             Manager manager = new Manager(managerContacts);
             managerRepository.save(manager);
             usernameIdMapper.put("manager", manager.getId());
 
-            manager.createContract(new Contract(order, driver, manager, 1000));
+            Contract contract = new Contract(order, driver, manager, 1000);
+            manager.createContract(contract);
+            orderRepository.save(order);
+            contractRepository.save(contract);
+
 
         };
     }

@@ -1,13 +1,11 @@
 package trucking.model;
 
 import trucking.repository.RepositoryItem;
-import trucking.repository.RepositorySingleton;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
-import java.util.List;
 
 @Entity
 public class Driver extends RepositoryItem {
@@ -31,12 +29,6 @@ public class Driver extends RepositoryItem {
         return vehicle;
     }
 
-    public List<Contract> getContracts() {
-        return RepositorySingleton.getInstance()
-                .getContractRepository()
-                .findAllByDriver(this);
-    }
-
     public void approveContract(Contract contract) throws Exception {
         if (!contract.getDriver().getId().equals(this.getId())) {
             throw new Exception();
@@ -46,9 +38,6 @@ public class Driver extends RepositoryItem {
         }
 
         contract.setDriverStatus(Contract.Status.APPROVED);
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
     }
 
     public void refuseContract(Contract contract) throws Exception {
@@ -60,9 +49,6 @@ public class Driver extends RepositoryItem {
         }
 
         contract.setDriverStatus(Contract.Status.REFUSED);
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
     }
 
     public void completeContract(Contract contract) throws Exception {
@@ -82,9 +68,6 @@ public class Driver extends RepositoryItem {
         }
 
         contract.setDriverStatus(Contract.Status.COMPLETED);
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
     }
 
 }

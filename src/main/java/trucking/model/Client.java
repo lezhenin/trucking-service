@@ -1,11 +1,9 @@
 package trucking.model;
 
 import trucking.repository.RepositoryItem;
-import trucking.repository.RepositorySingleton;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import java.util.List;
 
 @Entity
 public class Client extends RepositoryItem {
@@ -23,9 +21,6 @@ public class Client extends RepositoryItem {
     }
 
     public void createOrder(Order order) {
-        RepositorySingleton.getInstance()
-                .getOrderRepository()
-                .save(order);
     }
 
     // can remove only unprocessed order
@@ -33,22 +28,6 @@ public class Client extends RepositoryItem {
         if (order.getState() != Order.State.PUBLISHED) {
             throw new Exception();
         }
-
-        RepositorySingleton.getInstance()
-                .getOrderRepository()
-                .delete(order);
-    }
-
-    public List<Order> getOrders() {
-        return RepositorySingleton.getInstance()
-                .getOrderRepository()
-                .findAllByClient(this);
-    }
-
-    public List<Contract> getContracts() {
-        return RepositorySingleton.getInstance()
-                .getContractRepository()
-                .findAllByClient(this);
     }
 
     public void approveContract(Contract contract) throws Exception {
@@ -60,9 +39,6 @@ public class Client extends RepositoryItem {
         }
 
         contract.setClientStatus(Contract.Status.APPROVED);
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
     }
 
     public void refuseContract(Contract contract) throws Exception {
@@ -74,9 +50,6 @@ public class Client extends RepositoryItem {
         }
 
         contract.setClientStatus(Contract.Status.REFUSED);
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
     }
 
     public void completeContract(Contract contract) throws Exception {
@@ -96,8 +69,5 @@ public class Client extends RepositoryItem {
         }
 
         contract.setClientStatus(Contract.Status.COMPLETED);
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
     }
 }

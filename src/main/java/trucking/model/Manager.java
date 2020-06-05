@@ -1,11 +1,9 @@
 package trucking.model;
 
 import trucking.repository.RepositoryItem;
-import trucking.repository.RepositorySingleton;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import java.util.List;
 
 @Entity
 public class Manager extends RepositoryItem {
@@ -23,18 +21,8 @@ public class Manager extends RepositoryItem {
     }
 
     public void createContract(Contract contract) {
-
-        RepositorySingleton.getInstance()
-                .getContractRepository()
-                .save(contract);
-
         Order order = contract.getOrder();
         order.setState(Order.State.PROCESSED);
-
-        RepositorySingleton.getInstance()
-                .getOrderRepository()
-                .save(order);
-
     }
 
     // todo mb rename: this complete is not the same as Client's or Driver's complete
@@ -45,29 +33,6 @@ public class Manager extends RepositoryItem {
 
         Order order = contract.getOrder();
         order.setState(Order.State.COMPLETED);
-        RepositorySingleton.getInstance()
-                .getOrderRepository()
-                .save(order);
-
     }
-
-    public List<Order> getOrders() {
-        return RepositorySingleton.getInstance()
-                .getOrderRepository()
-                .findAll();
-    }
-
-    public List<Driver> getDrivers () {
-        return RepositorySingleton.getInstance()
-                .getDriverRepository()
-                .findAll();
-    }
-
-    public List<Contract> getContracts() {
-        return RepositorySingleton.getInstance()
-                .getContractRepository()
-                .findAllByManager(this);
-    }
-
 
 }

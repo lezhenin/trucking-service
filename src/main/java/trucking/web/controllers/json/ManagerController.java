@@ -1,7 +1,9 @@
 package trucking.web.controllers.json;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 import trucking.model.*;
 import trucking.repository.*;
 import trucking.web.security.UsernameIdMapper;
@@ -34,18 +36,21 @@ public class ManagerController {
     List<ContractData> getContracts(Principal principal) {
         Long id = usernameIdMapper.map(principal);
         Manager manager = managerRepository.findById(id).get();
-        return manager.getContracts().stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
+        List<Contract> contracts = contractRepository.findAllByManager(manager);
+        return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
     }
 
     @PostMapping("/createContract")
+    @Transactional
     ContractData createOrder(Principal principal, @RequestBody NewContractData contractData) {
         Long id = usernameIdMapper.map(principal);
         Manager manager = managerRepository.findById(id).get();
         Order order = orderRepository.findById(contractData.getOrderId()).get();
         Driver driver = driverRepository.findById(contractData.getDriverId()).get();
         Contract contract = DataObjectMapper.contractFromData(contractData, order, driver, manager);
-        contractRepository.save(contract);
         manager.createContract(contract);
+        contractRepository.save(contract);
+        orderRepository.save(order);
         return DataObjectMapper.dataFromContract(contract);
     }
 
@@ -53,14 +58,16 @@ public class ManagerController {
     List<OrderData> getOrders(Principal principal) {
         Long id = usernameIdMapper.map(principal);
         Manager manager = managerRepository.findById(id).get();
-        return manager.getOrders().stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
     @GetMapping("/drivers")
     List<DriverData> getDrivers(Principal principal) {
         Long id = usernameIdMapper.map(principal);
         Manager manager = managerRepository.findById(id).get();
-        return manager.getDrivers().stream().map(DataObjectMapper::dataFromDriver).collect(Collectors.toList());
+        List<Driver> drivers = driverRepository.findAll();
+        return drivers.stream().map(DataObjectMapper::dataFromDriver).collect(Collectors.toList());
     }
 
 }

@@ -41,7 +41,7 @@ public class DriverWebController {
         Long id = usernameIdMapper.map(principal);
         Driver driver = driverRepository.findById(id).get();
 
-        List<Contract> contracts = driver.getContracts();
+        List<Contract> contracts = contractRepository.findAllByDriver(driver);
         List<Order> orders =
                 contracts.stream().map(Contract::getOrder).collect(Collectors.toList());
         List<OrderData> orderDataList =
@@ -57,7 +57,7 @@ public class DriverWebController {
         Long id = usernameIdMapper.map(principal);
         Driver driver = driverRepository.findById(id).get();
 
-        List<Contract> orders = driver.getContracts();
+        List<Contract> orders = contractRepository.findAllByDriver(driver);
         List<ContractData> contractDataList =
                 orders.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
 
@@ -85,6 +85,8 @@ public class DriverWebController {
                 driver.completeContract(contract);
                 break;
         }
+
+        contractRepository.save(contract);
 
         return "redirect:/driver/contracts";
     }
