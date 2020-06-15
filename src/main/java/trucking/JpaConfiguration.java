@@ -4,6 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,6 +24,19 @@ import javax.sql.DataSource;
 @EnableJpaRepositories
 @EnableTransactionManagement
 public class JpaConfiguration {
+
+    @Bean
+    public RepositoryRestConfigurer repositoryRestConfigurer() {
+
+        return new RepositoryRestConfigurerAdapter() {
+
+            @Override
+            public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+                config.setBasePath("/api/rest");
+                config.setRepositoryDetectionStrategy(RepositoryDetectionStrategy.RepositoryDetectionStrategies.ALL);
+            }
+        };
+    }
 
     @Bean
     public DataSource dataSource() {

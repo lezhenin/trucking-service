@@ -1,73 +1,27 @@
 package trucking.model;
 
-import trucking.repository.RepositoryItem;
-
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 
 @Entity
-public class Driver extends RepositoryItem {
-
-    @Embedded private Contacts contacts;
+public class Driver extends ContractParticipant {
 
     @OneToOne private Vehicle vehicle;
 
-    public Driver(Contacts contacts, Vehicle vehicle) {
-        this.contacts = contacts;
+    public Driver(
+            String firstName, String lastName, String phoneNumber, String email, Vehicle vehicle
+    ) {
+        super(firstName, lastName, phoneNumber, email, Contract.ParticipantRole.DRIVER);
         this.vehicle = vehicle;
     }
 
-    protected Driver() { }
-
-    public Contacts getContacts() {
-        return contacts;
+    protected Driver() {
+        super(Contract.ParticipantRole.DRIVER);
     }
 
     public Vehicle getVehicle() {
         return vehicle;
-    }
-
-    public void approveContract(Contract contract) throws Exception {
-        if (!contract.getDriver().getId().equals(this.getId())) {
-            throw new Exception();
-        }
-        if (contract.getDriverStatus() != Contract.Status.NONE) {
-            throw new Exception();
-        }
-
-        contract.setDriverStatus(Contract.Status.APPROVED);
-    }
-
-    public void refuseContract(Contract contract) throws Exception {
-        if (!contract.getDriver().getId().equals(this.getId())) {
-            throw new Exception();
-        }
-        if (contract.getDriverStatus() != Contract.Status.NONE) {
-            throw new Exception();
-        }
-
-        contract.setDriverStatus(Contract.Status.REFUSED);
-    }
-
-    public void completeContract(Contract contract) throws Exception {
-        if (!contract.getDriver().getId().equals(this.getId())) {
-            throw new Exception();
-        }
-        if (contract.getDriverStatus() == Contract.Status.NONE ||
-                contract.getDriverStatus() == Contract.Status.REFUSED) {
-            throw new Exception();
-        }
-        if (contract.getClientStatus() == Contract.Status.NONE ||
-                contract.getClientStatus() == Contract.Status.REFUSED) {
-            throw new Exception();
-        }
-        if (contract.getDriverStatus() == Contract.Status.COMPLETED) {
-            throw new Exception();
-        }
-
-        contract.setDriverStatus(Contract.Status.COMPLETED);
     }
 
 }

@@ -3,9 +3,16 @@ package trucking.model;
 import trucking.repository.RepositoryItem;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
-public class Contract extends RepositoryItem {
+public  class Contract extends RepositoryItem {
+
+    public enum ParticipantRole {
+        CLIENT, DRIVER
+    }
 
     public enum Status {
         NONE,
@@ -15,12 +22,17 @@ public class Contract extends RepositoryItem {
     }
 
     @OneToOne private Order order;
-    @OneToOne private Client client;
-    @OneToOne private Driver driver;
-    @OneToOne private Manager manager;
+    @ManyToOne private Client client;
+    @ManyToOne private Driver driver;
+    @ManyToOne private Manager manager;
 
     private Status clientStatus;
     private Status driverStatus;
+
+    @Transient
+    private Map<ParticipantRole, Status> participantStatus;
+    @Transient
+    private Map<ParticipantRole, ContractParticipant> participants;
 
     private int payment;
 
@@ -32,9 +44,20 @@ public class Contract extends RepositoryItem {
         this.payment = payment;
         this.clientStatus = Status.NONE;
         this.driverStatus = Status.NONE;
+        this.initStatusMap();
     }
 
     protected Contract() { }
+
+    @PostLoad
+    private void initStatusMap(){
+        this.participants = new HashMap<>();
+        this.participants.put(ParticipantRole.CLIENT, client);
+        this.participants.put(ParticipantRole.DRIVER, driver);
+        this.participantStatus = new HashMap<>();
+        this.participantStatus.put(ParticipantRole.CLIENT, clientStatus);
+        this.participantStatus.put(ParticipantRole.DRIVER, driverStatus);
+    }
 
     public Order getOrder() {
         return order;
@@ -73,8 +96,23 @@ public class Contract extends RepositoryItem {
     }
 
     public boolean isCompleted() {
-        return this.clientStatus == Status.COMPLETED &&
-                this.driverStatus == Status.COMPLETED;
+        return this.participantStatus.values().stream().allMatch(s -> s == Status.COMPLETED);
+    }
+
+    Map<ParticipantRole, ContractParticipant> getAllParticipants() {
+        return Collections.unmodifiableMap(participants);
+    }
+
+    Map<ParticipantRole, Status> getAllParticipantStatus() {
+        return Collections.unmodifiableMap(participantStatus);
+    }
+
+    Status getParticipantStatus(ParticipantRole role) {
+        return participantStatus.get(role);
+    }
+
+    void setParticipantStatus(ParticipantRole role, Status status) {
+        participantStatus.put(role, status);
     }
 
 

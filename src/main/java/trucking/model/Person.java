@@ -1,23 +1,27 @@
 package trucking.model;
 
-import javax.persistence.Embeddable;
+import trucking.repository.RepositoryItem;
 
-@Embeddable
-public class Contacts {
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+
+@Entity
+@Inheritance
+public class Person extends RepositoryItem {
 
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
 
-    public Contacts(String firstName, String lastName, String phoneNumber, String email) {
+    public Person(String firstName, String lastName, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
 
-    protected Contacts() { }
+    protected Person() { }
 
     public String getFirstName() {
         return firstName;

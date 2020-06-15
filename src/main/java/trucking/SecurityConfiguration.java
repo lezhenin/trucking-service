@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
@@ -14,15 +13,19 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers("/client/**").hasAnyRole("CLIENT")
                 .antMatchers("/api/client/").hasAnyRole("CLIENT")
                 .antMatchers("/driver/**").hasAnyRole("DRIVER")
                 .antMatchers("/api/driver/**").hasAnyRole("DRIVER")
                 .antMatchers("/manager/**").hasAnyRole("MANAGER")
                 .antMatchers("/api/manager/**").hasAnyRole("MANAGER")
-                .and().httpBasic()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .and()
+                .httpBasic()
+            .and()
+                .formLogin()
+                .loginPage("/login");
     }
 
     @Autowired

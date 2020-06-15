@@ -6,7 +6,7 @@ public class DataObjectMapper {
 
     public static OrderData dataFromOrder(Order order) {
         return new OrderData(order.getId(), order.getCargoWeight(), order.getCargoHeight(), order.getCargoWidth(),
-                order.getCargoLength(), order.getLoadingAddress(), order.getLoadingAddress(), order.getDeadline(),
+                order.getCargoLength(), order.getShippingAddress(), order.getLoadingAddress(), order.getDeadline(),
                 order.getClient().getId(), order.getState());
     }
 
@@ -30,7 +30,7 @@ public class DataObjectMapper {
     }
 
     public static DriverData dataFromDriver(Driver driver) {
-        return new DriverData(driver.getId(), driver.getContacts().getFirstName(), driver.getContacts().getLastName(),
+        return new DriverData(driver.getId(), driver.getFirstName(), driver.getLastName(),
                 dataFromVehicle(driver.getVehicle()));
     }
 

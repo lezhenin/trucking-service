@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Trucking Service</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+<div>
+    <img src="/images/trucklogo.png" alt="Truck logo" title="Truck logo"
+         th:src="@{/images/trucklogo.png}"/>
+</div>
+<div>
+
+<h1>Login page</h1>
+
+    <form action="#" th:action="@{/login}" method="post">
+
+    <fieldset>
+
+            <div>
+                <label for="username">Username</label>:
+                <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+            </div>
+
+            <div>
+                <label for="password">Password</label>:
+                <input type="password" id="password" name="password" /> <br />
+            </div>
+
+            <div class="submit">
+                <button type="submit" name="login">Log in</button>
+            </div>
+
+    </fieldset>
+
+    </form>
+
+</div>
+</body>
+</html>

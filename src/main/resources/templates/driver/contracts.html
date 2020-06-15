@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Client Contracts</title>
+    <title>Driver Contracts</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/stsm.css}"/>
 </head>
@@ -14,9 +14,9 @@
 </div>
 
 <div>
-    You are logged in as client:
-    <a th:href="@{/client/orders}">Orders</a>
-    <a th:href="@{/client/contracts}">Contracts</a>
+    You are logged in as driver:
+    <a th:href="@{/driver/orders}">Orders</a>
+    <a th:href="@{/driver/contracts}">Contracts</a>
 </div>
 
 <div class="truckingitemlist" th:unless="${#lists.isEmpty(contractDataList)}">
@@ -56,7 +56,7 @@
 
     <h2>Update contract status</h2>
 
-    <form action="#" th:action="@{/client/contracts}" th:object="${contractData}" method="post">
+    <form action="#" th:action="@{/driver/contracts}" th:object="${contractData}" method="post">
 
         <fieldset>
 

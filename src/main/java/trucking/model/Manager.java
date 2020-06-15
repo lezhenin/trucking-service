@@ -1,24 +1,15 @@
 package trucking.model;
 
-import trucking.repository.RepositoryItem;
-
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 @Entity
-public class Manager extends RepositoryItem {
+public class Manager extends Person {
 
-    @Embedded private Contacts contacts;
-
-    public Manager(Contacts contacts) {
-        this.contacts = contacts;
+    public Manager(String firstName, String lastName, String phoneNumber, String email) {
+        super(firstName, lastName, phoneNumber, email);
     }
 
-    protected Manager() { }
-
-    public Contacts getContacts() {
-        return contacts;
-    }
+    protected Manager() { super(); }
 
     public void createContract(Contract contract) {
         Order order = contract.getOrder();

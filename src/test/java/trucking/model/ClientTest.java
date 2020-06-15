@@ -10,11 +10,8 @@ public class ClientTest {
     @Test
     void test_createOrder() {
 
-        Client client = new Client(generateContacts());
-        client.setId(0L);
-        
+        Client client = generateClient();
         Order order = generateOrder(client);
-        order.setId(1L);
         assertDoesNotThrow(() -> client.createOrder(order));
 
     }

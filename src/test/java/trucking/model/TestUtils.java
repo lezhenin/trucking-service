@@ -2,19 +2,7 @@ package trucking.model;
 
 public class TestUtils {
 
-    private static int contactCounter = 0;
     private static Long idCounter = 1L;
-
-    static Contacts generateContacts() {
-        int number = contactCounter++;
-        return new Contacts(
-                "name" + number,
-                "lastname" + number,
-                "8800"+ number,
-                number + "@m.com"
-        );
-    }
-
 
     static Order generateOrder(Client client) {
         Order order = new Order(
@@ -38,20 +26,23 @@ public class TestUtils {
     }
     
     static Client generateClient() {
-        Client client = new Client(generateContacts());
-        client.setId(idCounter++);
+        Long id = idCounter++;
+        Client client = new Client("name" + id, "lastname" + id, "8800"+ id, id + "@m.com");
+        client.setId(id);
         return client;
     }
 
     static Driver generateDriver() {
-        Driver driver = new Driver(generateContacts(), null);
-        driver.setId(idCounter++);
+        Long id = idCounter++;
+        Driver driver = new Driver("name" + id, "lastname" + id, "8800"+ id, id + "@m.com", null);
+        driver.setId(id);
         return driver;
     }
     
     static Manager generateManager() {
-        Manager manager = new Manager(generateContacts());
-        manager.setId(idCounter++);
+        Long id = idCounter++;
+        Manager manager = new Manager("name" + id, "lastname" + id, "8800"+ id, id + "@m.com");
+        manager.setId(id);
         return manager;
     }
 

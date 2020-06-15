@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Trucking Service</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/stsm.css}"/>
+</head>
+<body>
+
+<div>
+    <img src="/images/trucklogo.png" alt="Truck logo" title="Truck logo"
+         th:src="@{/images/trucklogo.png}"/>
+</div>
+<div sec:authorize="isAnonymous()">
+    You are not logged in: <a th:href="@{/login}">Login</a>
+</div>
+<div sec:authorize="hasRole('CLIENT')">
+    You are logged in as client:
+    <a th:href="@{/client/orders}">Orders</a>
+    <a th:href="@{/client/contracts}">Contracts</a>
+</div>
+<div sec:authorize="hasRole('DRIVER')">
+    You are logged in as driver:
+    <a th:href="@{/driver/orders}">Orders</a>
+    <a th:href="@{/driver/contracts}">Contracts</a>
+</div>
+<div sec:authorize="hasRole('MANAGER')">
+    You are logged in as manager:
+    <a th:href="@{/manager/orders}">Orders</a>
+    <a th:href="@{/manager/contracts}">Contracts</a>
+    <a th:href="@{/manager/drivers}">Drivers</a>
+</div>
+
+</body>
+</html>
