@@ -2,7 +2,6 @@ package trucking.web.controllers.hypertext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,10 +54,16 @@ public class MangerWebController {
     }
 
     @RequestMapping(value = {"/contracts"}, params = {"create"})
-    @Transactional
     public String createContract(Principal principal, NewContractData newContractData) {
         Long id = usernameIdMapper.map(principal);
         managerService.createContract(id, newContractData);
+        return "redirect:/manager/contracts";
+    }
+
+    @RequestMapping(value = {"/contracts"}, params = {"complete"})
+    public String createContract(Principal principal, long contractId) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        managerService.completeContract(id, contractId);
         return "redirect:/manager/contracts";
     }
 

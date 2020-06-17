@@ -34,10 +34,16 @@ public class ManagerController {
         return managerService.getContracts(id);
     }
 
-    @PostMapping("/createContract")
-    ContractData createOrder(Principal principal, @RequestBody NewContractData contractData) {
+    @PostMapping("/contracts")
+    ContractData createContract(Principal principal, @RequestBody NewContractData contractData) {
         Long id = usernameIdMapper.map(principal);
         return managerService.createContract(id, contractData);
+    }
+
+    @PostMapping("/contracts/{contractId}/complete")
+    ContractData createOrder(Principal principal, @PathVariable Long contractId) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        return managerService.completeContract(id, contractId);
     }
 
     @GetMapping("/orders")
