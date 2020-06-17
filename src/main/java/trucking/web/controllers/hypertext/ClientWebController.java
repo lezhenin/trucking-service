@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import trucking.model.Client;
-import trucking.model.Contract;
+
 import trucking.web.security.UsernameIdMapper;
 import trucking.web.datatransfer.*;
 import trucking.web.services.ClientService;
@@ -49,9 +48,9 @@ public class ClientWebController {
     }
 
     @RequestMapping(value = {"/orders"}, params = {"remove"})
-    public String removeOrder(Principal principal, OrderData orderData) throws Exception {
+    public String removeOrder(Principal principal, long orderId) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        clientService.removeOrder(id, orderData.getId());
+        clientService.removeOrder(id, orderId);
         return "redirect:/client/orders";
     }
 
@@ -66,15 +65,17 @@ public class ClientWebController {
     }
 
     @RequestMapping(value = {"/contracts"}, params = {"update"})
-    public String updateContract(Principal principal, ContractData contractData, @RequestParam("update") String action) throws Exception {
+    public String updateContract(Principal principal, long contractId, @RequestParam("update") String action) throws Exception {
+        System.out.println(contractId);
         Long id = usernameIdMapper.map(principal);
         //noinspection IfCanBeSwitch
         if (action.equals("approve")) {
-            clientService.approveContract(id, contractData.getId());
+            System.out.println("approve");
+            clientService.approveContract(id, contractId);
         } else if (action.equals("refuse")) {
-            clientService.refuseContract(id, contractData.getId());
+            clientService.refuseContract(id, contractId);
         } else if (action.equals("complete")) {
-            clientService.completeContract(id, contractData.getId());
+            clientService.completeContract(id, contractId);
         }
         return "redirect:/client/contracts";
     }

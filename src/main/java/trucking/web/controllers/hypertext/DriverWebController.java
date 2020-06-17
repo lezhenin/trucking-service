@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import trucking.web.security.UsernameIdMapper;
 import trucking.web.datatransfer.ContractData;
 import trucking.web.datatransfer.OrderData;
@@ -47,15 +48,15 @@ public class DriverWebController {
     }
 
     @RequestMapping(value = {"/contracts"}, params = {"update"})
-    public String updateContract(Principal principal, ContractData contractData, @RequestParam("update") String action) throws Exception {
+    public String updateContract(Principal principal, long contractId, @RequestParam("update") String action) throws Exception {
         Long id = usernameIdMapper.map(principal);
         //noinspection IfCanBeSwitch
         if (action.equals("approve")) {
-            driverService.approveContract(id, contractData.getId());
+            driverService.approveContract(id, contractId);
         } else if (action.equals("refuse")) {
-            driverService.refuseContract(id, contractData.getId());
+            driverService.refuseContract(id, contractId);
         } else if (action.equals("complete")) {
-            driverService.completeContract(id, contractData.getId());
+            driverService.completeContract(id, contractId);
         }
         return "redirect:/driver/contracts";
     }

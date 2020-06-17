@@ -56,17 +56,13 @@
 
     <h2>Update contract status</h2>
 
-    <form action="#" th:action="@{/client/contracts}" th:object="${contractData}" method="post">
+    <form action="#" th:action="@{/client/contracts}" method="post">
 
         <fieldset>
 
-            <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
-                <li th:each="err : ${#fields.errors('*')}">Input is incorrect</li>
-            </ul>
-
             <div>
-                <label th:for="${#ids.next('id')}">Contract Id:</label>
-                <input type="number" th:field="*{id}" th:errorclass="fieldError" />
+                <label for="contractId">Contract Id:</label>
+                <input type="number" id="contractId" name="contractId" />
             </div>
 
             <div class="submit">
