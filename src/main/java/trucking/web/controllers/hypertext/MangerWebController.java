@@ -54,7 +54,7 @@ public class MangerWebController {
     }
 
     @RequestMapping(value = {"/contracts"}, params = {"create"})
-    public String createContract(Principal principal, NewContractData newContractData) {
+    public String createContract(Principal principal, NewContractData newContractData) throws Exception {
         Long id = usernameIdMapper.map(principal);
         managerService.createContract(id, newContractData);
         return "redirect:/manager/contracts";

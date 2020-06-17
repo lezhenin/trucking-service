@@ -51,7 +51,7 @@ public class ManagerService {
         return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
     }
 
-    public ContractData createContract(Long managerId, NewContractData newContractData) {
+    public ContractData createContract(Long managerId, NewContractData newContractData) throws Exception {
         Manager manager = managerRepository.findById(managerId).get();
         Order order = orderRepository.findById(newContractData.getOrderId()).get();
         Driver driver = driverRepository.findById(newContractData.getDriverId()).get();

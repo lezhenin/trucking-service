@@ -34,7 +34,7 @@ public class TestUtils {
 
     static Driver generateDriver() {
         Long id = idCounter++;
-        Driver driver = new Driver("name" + id, "lastname" + id, "8800"+ id, id + "@m.com", null);
+        Driver driver = new Driver("name" + id, "lastname" + id, "8800"+ id, id + "@m.com", generateVehicle());
         driver.setId(id);
         return driver;
     }
@@ -46,4 +46,10 @@ public class TestUtils {
         return manager;
     }
 
+    static Vehicle generateVehicle() {
+        Long id = idCounter++;
+        Vehicle vehicle = new Vehicle("v" + id, 15, 150, 150, 150);
+        vehicle.setId(id);
+        return vehicle;
+    }
 }

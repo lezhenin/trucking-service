@@ -35,7 +35,7 @@ public class ManagerController {
     }
 
     @PostMapping("/contracts")
-    ContractData createContract(Principal principal, @RequestBody NewContractData contractData) {
+    ContractData createContract(Principal principal, @RequestBody NewContractData contractData) throws Exception {
         Long id = usernameIdMapper.map(principal);
         return managerService.createContract(id, contractData);
     }

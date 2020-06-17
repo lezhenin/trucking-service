@@ -20,10 +20,46 @@ public class ManagerTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertEquals(Order.State.PROCESSED, order.getState());
         assertFalse(contract.isCompleted());
+
+    }
+
+    @Test
+    void test_createContract_afterCompleteContract() {
+
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
+
+        Order order = generateOrder(client);
+        client.createOrder(order);
+
+        Contract contract = generateContract(order, driver, manager);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
+
+        assertEquals(Order.State.PROCESSED, order.getState());
+        assertFalse(contract.isCompleted());
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
+
+        assertDoesNotThrow(() -> {
+            client.approveContract(contract);
+            driver.approveContract(contract);
+        });
+
+        assertDoesNotThrow(() -> {
+            client.completeContract(contract);
+            driver.completeContract(contract);
+        });
+
+        assertDoesNotThrow(() -> manager.completeContract(contract));
+
+        assertThrows(Exception.class, () -> manager.createContract(contract));
 
     }
 
@@ -38,7 +74,8 @@ public class ManagerTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertThrows(Exception.class, () -> manager.completeContract(contract));
     }
@@ -54,7 +91,8 @@ public class ManagerTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertDoesNotThrow(() -> {
             client.approveContract(contract);
@@ -80,7 +118,8 @@ public class ManagerTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertDoesNotThrow(() -> {
             client.approveContract(contract);

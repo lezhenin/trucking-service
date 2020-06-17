@@ -11,8 +11,21 @@ public class Manager extends Person {
 
     protected Manager() { super(); }
 
-    public void createContract(Contract contract) {
+    public void createContract(Contract contract) throws Exception {
         Order order = contract.getOrder();
+
+        if (order.getState() == Order.State.COMPLETED) {
+            throw new Exception("Can't create contract: order already was completed");
+        }
+
+        Vehicle vehicle = contract.getDriver().getVehicle();
+        if (order.getCargoHeight() > vehicle.getMaxCargoHeight() ||
+                order.getCargoWidth() > vehicle.getMaxCargoHeight() ||
+                order.getCargoLength() > vehicle.getMaxCargoHeight() ||
+                order.getCargoWeight() > vehicle.getMaxCargoHeight()) {
+            throw new Exception("Can't create contract: cargo doesn't fit driver's vehicle");
+        }
+
         order.setState(Order.State.PROCESSED);
     }
 

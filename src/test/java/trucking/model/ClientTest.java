@@ -38,7 +38,8 @@ public class ClientTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertThrows(Exception.class, () -> client.removeOrder(order));
 
@@ -56,7 +57,8 @@ public class ClientTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertDoesNotThrow(() -> client.approveContract(contract));
         assertThrows(Exception.class, () -> client.approveContract(contract));
@@ -75,7 +77,8 @@ public class ClientTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertDoesNotThrow(() -> client.refuseContract(contract));
         assertThrows(Exception.class, () -> client.refuseContract(contract));
@@ -94,7 +97,8 @@ public class ClientTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertThrows(Exception.class, () -> client.completeContract(contract));
 
@@ -112,7 +116,8 @@ public class ClientTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertDoesNotThrow(() -> client.approveContract(contract));
         assertDoesNotThrow(() -> driver.approveContract(contract));
@@ -131,7 +136,8 @@ public class ClientTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-        manager.createContract(contract);
+
+        assertDoesNotThrow(() -> manager.createContract(contract));
 
         assertDoesNotThrow(() -> client.refuseContract(contract));
         assertDoesNotThrow(() -> driver.approveContract(contract));
