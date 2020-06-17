@@ -1,12 +1,10 @@
 package trucking.model;
 
-import trucking.repository.RepositoryItem;
-
 import javax.persistence.*;
 
 
 @Entity
-public class Vehicle extends RepositoryItem {
+public class Vehicle extends BaseEntity {
 
     private String model;
 

@@ -1,12 +1,10 @@
 package trucking.model;
 
-import trucking.repository.RepositoryItem;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name="ClientOrder")
-public class Order extends RepositoryItem {
+public class Order extends BaseEntity {
 
     public enum State {
         PUBLISHED,

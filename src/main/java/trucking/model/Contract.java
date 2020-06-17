@@ -1,16 +1,14 @@
 package trucking.model;
 
-import trucking.repository.RepositoryItem;
-
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public  class Contract extends RepositoryItem {
+public  class Contract extends BaseEntity {
 
-    public enum ParticipantRole {
+    public enum Role {
         CLIENT, DRIVER
     }
 
@@ -22,53 +20,38 @@ public  class Contract extends RepositoryItem {
     }
 
     @OneToOne private Order order;
-    @ManyToOne private Client client;
-    @ManyToOne private Driver driver;
     @ManyToOne private Manager manager;
-
-    private Status clientStatus;
-    private Status driverStatus;
-
-    @Transient
-    private Map<ParticipantRole, Status> participantStatus;
-    @Transient
-    private Map<ParticipantRole, ContractParticipant> participants;
+    @OneToMany(fetch = FetchType.EAGER) @MapKey(name = "role")
+    private Map<Role, Contractor> contractors;
+    @ElementCollection(fetch = FetchType.EAGER) @CollectionTable(name = "Contract_ContractorStatus")
+    private Map<Role, Status> contractorsStatus;
 
     private int payment;
 
     public Contract(Order order, Driver driver, Manager manager, int payment) {
         this.order = order;
-        this.client = order.getClient();
-        this.driver = driver;
         this.manager = manager;
         this.payment = payment;
-        this.clientStatus = Status.NONE;
-        this.driverStatus = Status.NONE;
-        this.initStatusMap();
+        this.contractors = new HashMap<>();
+        this.contractors.put(Role.CLIENT, order.getClient());
+        this.contractors.put(Role.DRIVER, driver);
+        this.contractorsStatus = new HashMap<>();
+        this.contractorsStatus.put(Role.CLIENT, Status.NONE);
+        this.contractorsStatus.put(Role.DRIVER, Status.NONE);
     }
 
     protected Contract() { }
-
-    @PostLoad
-    private void initStatusMap(){
-        this.participants = new HashMap<>();
-        this.participants.put(ParticipantRole.CLIENT, client);
-        this.participants.put(ParticipantRole.DRIVER, driver);
-        this.participantStatus = new HashMap<>();
-        this.participantStatus.put(ParticipantRole.CLIENT, clientStatus);
-        this.participantStatus.put(ParticipantRole.DRIVER, driverStatus);
-    }
 
     public Order getOrder() {
         return order;
     }
 
     public Client getClient() {
-        return client;
+        return (Client) contractors.get(Role.CLIENT);
     }
 
     public Driver getDriver() {
-        return driver;
+        return (Driver) contractors.get(Role.DRIVER);
     }
 
     public Manager getManager() {
@@ -80,39 +63,31 @@ public  class Contract extends RepositoryItem {
     }
 
     public Status getClientStatus() {
-        return clientStatus;
-    }
-
-    public void setClientStatus(Status clientStatus) {
-        this.clientStatus = clientStatus;
+        return getContractorStatus(Role.CLIENT);
     }
 
     public Status getDriverStatus() {
-        return driverStatus;
-    }
-
-    public void setDriverStatus(Status driverStatus) {
-        this.driverStatus = driverStatus;
+        return getContractorStatus(Role.DRIVER);
     }
 
     public boolean isCompleted() {
-        return this.participantStatus.values().stream().allMatch(s -> s == Status.COMPLETED);
+        return this.contractorsStatus.values().stream().allMatch(s -> s == Status.COMPLETED);
     }
 
-    Map<ParticipantRole, ContractParticipant> getAllParticipants() {
-        return Collections.unmodifiableMap(participants);
+    public Map<Role, Contractor> getContractors() {
+        return Collections.unmodifiableMap(contractors);
     }
 
-    Map<ParticipantRole, Status> getAllParticipantStatus() {
-        return Collections.unmodifiableMap(participantStatus);
+    Map<Role, Status> getContractorsStatus() {
+        return Collections.unmodifiableMap(contractorsStatus);
     }
 
-    Status getParticipantStatus(ParticipantRole role) {
-        return participantStatus.get(role);
+    Status getContractorStatus(Role role) {
+        return contractorsStatus.get(role);
     }
 
-    void setParticipantStatus(ParticipantRole role, Status status) {
-        participantStatus.put(role, status);
+    void setContractorStatus(Role role, Status status) {
+        contractorsStatus.put(role, status);
     }
 
 

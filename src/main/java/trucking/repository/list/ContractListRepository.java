@@ -1,17 +1,13 @@
 package trucking.repository.list;
 
-import trucking.model.Client;
-import trucking.model.Contract;
-import trucking.model.Driver;
-import trucking.model.Manager;
+import trucking.model.*;
+import trucking.repository.ClientRepository;
 import trucking.repository.ContractRepository;
-import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@NoRepositoryBean
 public class ContractListRepository extends CrudListRepository<Contract> implements ContractRepository {
 
     public List<Contract> findAllByManager(Manager manager) {
@@ -20,16 +16,12 @@ public class ContractListRepository extends CrudListRepository<Contract> impleme
                 .collect(Collectors.toList());
     }
 
-    public List<Contract> findAllByClient(Client client) {
+    public List<Contract> findAllByContractors(Contractor contractor) {
         return itemList.stream().
-                filter(contract -> Objects.equals(contract.getOrder().getClient().getId(), client.getId()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Contract> findAllByDriver(Driver driver) {
-        return itemList.stream().
-                filter(contract -> Objects.equals(contract.getDriver().getId(), driver.getId()))
-                .collect(Collectors.toList());
+                filter(contract -> {
+                    return contract.getContractors().values()
+                            .stream().anyMatch(c -> Objects.equals(c.getId(), contract.getId()));
+                }).collect(Collectors.toList());
     }
 
 }

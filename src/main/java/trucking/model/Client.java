@@ -3,14 +3,14 @@ package trucking.model;
 import javax.persistence.Entity;
 
 @Entity
-public class Client extends ContractParticipant {
+public class Client extends Contractor {
 
     public Client(String firstName, String lastName, String phoneNumber, String email) {
-        super(firstName, lastName, phoneNumber, email, Contract.ParticipantRole.CLIENT);
+        super(firstName, lastName, phoneNumber, email, Contract.Role.CLIENT);
     }
 
     protected Client() {
-        super(Contract.ParticipantRole.CLIENT);
+        super(Contract.Role.CLIENT);
     }
 
 

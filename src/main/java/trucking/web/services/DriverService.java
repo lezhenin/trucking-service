@@ -30,14 +30,14 @@ public class DriverService {
 
     public List<OrderData> getOrders(Long driverId) {
         Driver driver = driverRepository.findById(driverId).get();
-        List<Contract> contracts = contractRepository.findAllByDriver(driver);
+        List<Contract> contracts = contractRepository.findAllByContractors(driver);
         List<Order> orders = contracts.stream().map(Contract::getOrder).collect(Collectors.toList());
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
     public List<ContractData> getContracts(Long driverId) {
         Driver driver = driverRepository.findById(driverId).get();
-        List<Contract> contracts = contractRepository.findAllByDriver(driver);
+        List<Contract> contracts = contractRepository.findAllByContractors(driver);
         return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
     }
 

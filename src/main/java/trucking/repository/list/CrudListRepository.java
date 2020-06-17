@@ -1,6 +1,6 @@
 package trucking.repository.list;
 
-import trucking.repository.RepositoryItem;
+import trucking.model.BaseEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @NoRepositoryBean
-public class CrudListRepository<T extends RepositoryItem> implements CrudRepository<T, Long> {
+public class CrudListRepository<T extends BaseEntity> implements CrudRepository<T, Long> {
 
     private Long idCounter = 0L;
 

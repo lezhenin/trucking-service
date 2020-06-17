@@ -54,7 +54,7 @@ public class ClientService {
 
     public List<ContractData> getContracts(Long clientId) {
         Client client = clientRepository.findById(clientId).get();
-        List<Contract> contracts = contractRepository.findAllByClient(client);
+        List<Contract> contracts = contractRepository.findAllByContractors(client);
         return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
     }
 
