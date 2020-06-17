@@ -1,6 +1,6 @@
 package trucking.model;
 
-public class TestUtils {
+class TestUtils {
 
     private static Long idCounter = 1L;
 
