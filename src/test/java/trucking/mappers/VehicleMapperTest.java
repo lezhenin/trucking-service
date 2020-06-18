@@ -102,12 +102,53 @@ public class VehicleMapperTest {
     }
 
     @Test
+    void test_update_clearIdentityMap() throws SQLException {
+
+        Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
+        assertNull(vehicle.getId());
+
+        VehicleMapper mapper = new VehicleMapper(connection);
+        mapper.insert(vehicle);
+        mapper.identityMap.clear();
+
+        Vehicle newVehicle = new Vehicle("a", 3, 15, 17, 21);
+        newVehicle.setId(vehicle.getId());
+        mapper.update(newVehicle);
+        mapper.identityMap.clear();
+
+        Optional<Vehicle> optional = mapper.selectById(vehicle.getId());
+
+        assertTrue(optional.isPresent());
+        vehicle = optional.get();
+
+        assertEquals(3, vehicle.getMaxCargoWeight());
+        assertEquals(15, vehicle.getMaxCargoHeight());
+        assertEquals(17, vehicle.getMaxCargoWidth());
+        assertEquals(21, vehicle.getMaxCargoLength());
+
+    }
+
+    @Test
     void test_existsById() throws SQLException {
 
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
 
         VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
+
+        assertTrue(mapper.existById(vehicle.getId()));
+        assertFalse(mapper.existById(vehicle.getId() + 1));
+
+    }
+
+    @Test
+    void test_existsById_clearIdentityMap() throws SQLException {
+
+        Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
+
+        VehicleMapper mapper = new VehicleMapper(connection);
+        mapper.insert(vehicle);
+        mapper.identityMap.clear();
 
         assertTrue(mapper.existById(vehicle.getId()));
         assertFalse(mapper.existById(vehicle.getId() + 1));
@@ -121,9 +162,39 @@ public class VehicleMapperTest {
         Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
 
         VehicleMapper mapper = new VehicleMapper(connection);
+
         mapper.insert(vehicle);
 
-        Optional<Vehicle> optional = mapper.selectById(vehicle.getId());
+        Optional<Vehicle> optional = mapper.selectById(vehicle.getId() + 1);
+        assertFalse(optional.isPresent());
+
+        optional = mapper.selectById(vehicle.getId());
+        assertTrue(optional.isPresent());
+
+        Vehicle foundVehicle = optional.get();
+
+        assertEquals(vehicle.getId(), foundVehicle.getId());
+        assertEquals(vehicle.getModel(), foundVehicle.getModel());
+        assertEquals(vehicle.getMaxCargoWeight(), foundVehicle.getMaxCargoWeight());
+        assertEquals(vehicle.getMaxCargoHeight(), foundVehicle.getMaxCargoHeight());
+        assertEquals(vehicle.getMaxCargoWidth(), foundVehicle.getMaxCargoWidth());
+        assertEquals(vehicle.getMaxCargoLength(), foundVehicle.getMaxCargoLength());
+
+    }
+
+    @Test
+    void test_selectById_clearIdentityMap() throws SQLException {
+
+        Vehicle vehicle = new Vehicle("a", 5, 10, 15, 20);
+
+        VehicleMapper mapper = new VehicleMapper(connection);
+        mapper.insert(vehicle);
+        mapper.identityMap.clear();
+
+        Optional<Vehicle> optional = mapper.selectById(vehicle.getId() + 1);
+        assertFalse(optional.isPresent());
+
+        optional = mapper.selectById(vehicle.getId());
         assertTrue(optional.isPresent());
 
         Vehicle foundVehicle = optional.get();
@@ -147,7 +218,7 @@ public class VehicleMapperTest {
         mapper.insert(vehicleOne);
         mapper.insert(vehicleTwo);
 
-        List<Vehicle> result = mapper.select();
+        List<Vehicle> result = mapper.selectAll();
 
         assertEquals(2, result.size());
 
@@ -185,7 +256,7 @@ public class VehicleMapperTest {
         assertTrue(mapper.existById(vehicleOne.getId()));
         assertTrue(mapper.existById(vehicleTwo.getId()));
 
-        mapper.delete();
+        mapper.deleteAll();
 
         assertFalse(mapper.existById(vehicleOne.getId()));
         assertFalse(mapper.existById(vehicleTwo.getId()));

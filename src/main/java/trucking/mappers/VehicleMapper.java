@@ -8,102 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VehicleMapper {
-
-    private static final String sqlInsertTemplate =
-            "INSERT INTO Vehicle (model, maxCargoWeight, maxCargoHeight, maxCargoWidth, maxCargoLength)" +
-                    " VALUES (?, ?, ?, ?, ?);";
-
-    private static final String sqlUpdateTemplate =
-            "UPDATE Vehicle SET (model, maxCargoWeight, maxCargoHeight, maxCargoWidth, maxCargoLength) " +
-                    "= (?, ?, ?, ?, ?) WHERE id = ?;";
-
-    private static final String sqlSelectTemplate =
-            "SELECT * FROM Vehicle";
-
-    private static final String sqlSelectByIdTemplate =
-            "SELECT * FROM Vehicle WHERE id = ?";
-
-    private static final String sqlExistsByIdTemplate =
-            "SELECT 1 FROM Vehicle WHERE id = ?";
-
-    private static final String sqlDeleteByIdTemplate =
-            "DELETE FROM Vehicle WHERE id = ?";
-
-    private static final String sqlDeleteTemplate =
-            "DELETE FROM Vehicle";
-
-
-    private final Connection connection;
+public class VehicleMapper extends AbstractMapper<Vehicle> {
 
     public VehicleMapper(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
-
-    void insert(Vehicle vehicle) throws SQLException {
-
-        PreparedStatement statement = connection.prepareStatement(sqlInsertTemplate, Statement.RETURN_GENERATED_KEYS);
-        setValues(statement, vehicle, false);
-        statement.executeUpdate();
-
-        ResultSet resultSet = statement.getGeneratedKeys();
-        resultSet.next();
-        vehicle.setId(resultSet.getLong(1));
-
-    }
-
-    void update(Vehicle vehicle) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sqlUpdateTemplate);
-        setValues(statement, vehicle, true);
-        statement.executeUpdate();
-    }
-
-    List<Vehicle> select() throws SQLException {
-
-        List<Vehicle> result = new ArrayList<>();
-
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sqlSelectTemplate);
-        while (resultSet.next()) {
-            Vehicle vehicle = getValues(resultSet);
-            result.add(vehicle);
-        }
-
-        return result;
-    }
-
-    Optional<Vehicle> selectById(Long id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sqlSelectByIdTemplate);
-        statement.setLong(1, id);
-
-        ResultSet resultSet = statement.executeQuery();
-
-        if (!resultSet.next()) {
-            return Optional.empty();
-        }
-
-        Vehicle vehicle = getValues(resultSet);
-        return Optional.of(vehicle);
-    }
-
-    public boolean existById(Long id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sqlExistsByIdTemplate);
-        statement.setLong(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
-    }
-
-    public void deleteById(Long id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sqlDeleteByIdTemplate);
-        statement.setLong(1, id);
-        statement.executeUpdate();
-    }
-
-    public void delete() throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(sqlDeleteTemplate);
-    }
-
 
     protected void setValues(PreparedStatement statement, Vehicle vehicle, boolean setId) throws SQLException {
         statement.setString(1, vehicle.getModel());
@@ -116,7 +25,8 @@ public class VehicleMapper {
         }
     }
 
-    protected Vehicle getValues(ResultSet resultSet) throws SQLException {
+    @Override
+    protected Vehicle collectValues(ResultSet resultSet) throws SQLException {
         Vehicle vehicle = new Vehicle(
                 resultSet.getString(2),
                 resultSet.getInt(3),
@@ -125,6 +35,43 @@ public class VehicleMapper {
                 resultSet.getInt(6));
         vehicle.setId(resultSet.getLong(1));
         return vehicle;
+    }
+
+    @Override
+    protected String insertTemplate() {
+        return "INSERT INTO Vehicle (model, maxCargoWeight, maxCargoHeight, maxCargoWidth, maxCargoLength)" +
+               " VALUES (?, ?, ?, ?, ?);";
+    }
+
+    @Override
+    protected String updateTemplate() {
+        return "UPDATE Vehicle SET (model, maxCargoWeight, maxCargoHeight, maxCargoWidth, maxCargoLength) " +
+               "= (?, ?, ?, ?, ?) WHERE id = ?;";
+    }
+
+    @Override
+    protected String selectAllTemplate() {
+        return "SELECT * FROM Vehicle";
+    }
+
+    @Override
+    protected String selectByIdTemplate() {
+        return "SELECT * FROM Vehicle WHERE id = ?";
+    }
+
+    @Override
+    protected String existsByIdTemplate() {
+        return "SELECT 1 FROM Vehicle WHERE id = ?";
+    }
+
+    @Override
+    protected String deleteAllTemplate() {
+        return "DELETE FROM Vehicle";
+    }
+
+    @Override
+    protected String deleteByIdTemplate() {
+        return "DELETE FROM Vehicle WHERE id = ?";
     }
 
 }
