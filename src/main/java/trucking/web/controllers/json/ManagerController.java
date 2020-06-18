@@ -47,15 +47,13 @@ public class ManagerController {
     }
 
     @GetMapping("/orders")
-    List<OrderData> getOrders(Principal principal) {
-        Long id = usernameIdMapper.map(principal);
-        return managerService.getOrders(id);
+    List<OrderData> getOrders() {
+        return managerService.getOrders();
     }
 
     @GetMapping("/drivers")
-    List<DriverData> getDrivers(Principal principal) {
-        Long id = usernameIdMapper.map(principal);
-        return managerService.getDrivers(id);
+    List<DriverData> getDrivers() {
+        return managerService.getDrivers();
     }
 
 }

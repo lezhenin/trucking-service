@@ -61,11 +61,7 @@ public class ClientService {
     public ContractData approveContract(Long clientId, Long contractId) throws Exception {
         Client client = clientRepository.findById(clientId).get();
         Contract contract = contractRepository.findById(contractId).get();
-        System.out.println(client);
-        System.out.println(contract);
-        System.out.println(contract.getClientStatus());
         client.approveContract(contract);
-        System.out.println(contract.getClientStatus());
         contractRepository.save(contract);
         return DataObjectMapper.dataFromContract(contract);
     }

@@ -28,17 +28,15 @@ public class MangerWebController {
     }
 
     @RequestMapping({"/orders"})
-    public String orders(Principal principal, Model model) {
-        Long id = usernameIdMapper.map(principal);
-        List<OrderData> orderDataList = managerService.getOrders(id);
+    public String orders(Model model) {
+        List<OrderData> orderDataList = managerService.getOrders();
         model.addAttribute("orderDataList", orderDataList);
         return "/manager/orders";
     }
 
     @RequestMapping({"/drivers"})
-    public String drivers(Principal principal, Model model) {
-        Long id = usernameIdMapper.map(principal);
-        List<DriverData> driverDataList = managerService.getDrivers(id);
+    public String drivers(Model model) {
+        List<DriverData> driverDataList = managerService.getDrivers();
         model.addAttribute("driverDataList", driverDataList);
         return "/manager/drivers";
     }

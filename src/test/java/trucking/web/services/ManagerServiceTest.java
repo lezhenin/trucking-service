@@ -49,7 +49,7 @@ public class ManagerServiceTest {
         Manager manager = generateManager();
         managerRepository.save(manager);
 
-        List<OrderData> orders = managerService.getOrders(manager.getId());
+        List<OrderData> orders = managerService.getOrders();
         assertEquals(1, orders.size());
         assertEquals(order.getId(), orders.get(0).getId());
 
@@ -65,7 +65,7 @@ public class ManagerServiceTest {
         Manager manager = generateManager();
         managerRepository.save(manager);
 
-        List<DriverData> drivers = managerService.getDrivers(manager.getId());
+        List<DriverData> drivers = managerService.getDrivers();
         assertEquals(1, drivers.size());
         assertEquals(driver.getId(), drivers.get(0).getId());
 

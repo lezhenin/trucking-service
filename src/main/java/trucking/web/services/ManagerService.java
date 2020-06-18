@@ -33,14 +33,12 @@ public class ManagerService {
         this.driverRepository = driverRepository;
     }
 
-    public List<OrderData> getOrders(Long managerId) {
-        Manager manager = managerRepository.findById(managerId).get();
+    public List<OrderData> getOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
-    public List<DriverData> getDrivers(Long managerId) {
-        Manager manager = managerRepository.findById(managerId).get();
+    public List<DriverData> getDrivers() {
         List<Driver> drivers = driverRepository.findAll();
         return drivers.stream().map(DataObjectMapper::dataFromDriver).collect(Collectors.toList());
     }
