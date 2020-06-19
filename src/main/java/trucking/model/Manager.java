@@ -21,9 +21,9 @@ public class Manager extends Person {
 
         Vehicle vehicle = contract.getDriver().getVehicle();
         if (order.getCargoHeight() > vehicle.getMaxCargoHeight() ||
-                order.getCargoWidth() > vehicle.getMaxCargoHeight() ||
-                order.getCargoLength() > vehicle.getMaxCargoHeight() ||
-                order.getCargoWeight() > vehicle.getMaxCargoHeight()) {
+                order.getCargoWidth() > vehicle.getMaxCargoWidth() ||
+                order.getCargoLength() > vehicle.getMaxCargoLength() ||
+                order.getCargoWeight() > vehicle.getMaxCargoWeight()) {
             throw new Exception("Cargo doesn't fit driver's vehicle");
         }
 

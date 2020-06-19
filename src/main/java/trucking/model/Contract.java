@@ -21,7 +21,7 @@ public  class Contract extends Entity {
 
     @OneToOne private Order order;
     @ManyToOne private Manager manager;
-    @OneToMany(fetch = FetchType.EAGER) @MapKey(name = "role")
+    @ManyToMany(fetch = FetchType.EAGER) @MapKey(name = "role")
     private Map<Role, Contractor> contractors;
     @ElementCollection(fetch = FetchType.EAGER) @CollectionTable(name = "Contract_ContractorStatus")
     private Map<Role, Status> contractorsStatus;
