@@ -106,6 +106,41 @@ public class ManagerServiceTest {
     }
 
     @Test
+    void test_removeContract() throws Exception {
+
+        Client client = generateClient();
+        clientRepository.save(client);
+
+        Driver driver = generateDriver();
+        vehicleRepository.save(driver.getVehicle());
+        driverRepository.save(driver);
+
+        Manager manager = generateManager();
+        managerRepository.save(manager);
+
+        Order order = generateOrder(client);
+        orderRepository.save(order);
+
+        client.createOrder(order);
+        orderRepository.save(order);
+
+        Contract contract = generateContract(order, driver, manager);
+        manager.createContract(contract);
+        contractRepository.save(contract);
+        orderRepository.save(order);
+
+        client.refuseContract(contract);
+        contractRepository.save(contract);
+
+        assertTrue(contractRepository.existsById(contract.getId()));
+
+        managerService.removeContract(manager.getId(), contract.getId());
+
+        assertFalse(contractRepository.existsById(contract.getId()));
+
+    }
+
+    @Test
     void test_getContracts() throws Exception {
 
         Client client = generateClient();

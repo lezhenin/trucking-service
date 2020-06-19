@@ -71,7 +71,18 @@ public  class Contract extends Entity {
     }
 
     public boolean isCompleted() {
-        return this.contractorsStatus.values().stream().allMatch(s -> s == Status.COMPLETED);
+        return this.contractorsStatus.values()
+                .stream().allMatch(s -> s == Status.COMPLETED);
+    }
+
+    public boolean isApproved() {
+        return this.contractorsStatus.values()
+                .stream().allMatch(s -> s == Status.APPROVED || s == Contract.Status.COMPLETED);
+    }
+
+    public boolean isRefused() {
+        return this.contractorsStatus.values()
+                .stream().anyMatch(s -> s == Status.REFUSED);
     }
 
     public Map<Role, Contractor> getContractors() {

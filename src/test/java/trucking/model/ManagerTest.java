@@ -29,7 +29,7 @@ public class ManagerTest {
     }
 
     @Test
-    void test_createContract_afterCompleteContract() throws Exception {
+    void test_removeContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -45,7 +45,36 @@ public class ManagerTest {
         assertEquals(Order.State.PROCESSED, order.getState());
         assertFalse(contract.isCompleted());
 
+        assertThrows(Exception.class, () -> manager.removeContract(contract));
+
+        client.approveContract(contract);
+        assertThrows(Exception.class, () -> manager.removeContract(contract));
+
+        driver.refuseContract(contract);
+
+        assertDoesNotThrow(() -> manager.removeContract(contract));
+
+        assertEquals(Order.State.PUBLISHED, order.getState());
+        assertFalse(contract.isCompleted());
+
+    }
+
+    @Test
+    void test_createContract_afterCompleteContract() throws Exception {
+
+        Client client = generateClient();
+        Driver driver = generateDriver();
+        Manager manager = generateManager();
+
+        Order order = generateOrder(client);
+        client.createOrder(order);
+
+        Contract contract = generateContract(order, driver, manager);
+
         assertDoesNotThrow(() -> manager.createContract(contract));
+
+        assertEquals(Order.State.PROCESSED, order.getState());
+        assertFalse(contract.isCompleted());
 
         assertDoesNotThrow(() -> {
             client.approveContract(contract);

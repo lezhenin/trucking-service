@@ -40,8 +40,14 @@ public class ManagerController {
         return managerService.createContract(id, contractData);
     }
 
-    @PostMapping("/contracts/{contractId}/complete")
-    ContractData createOrder(Principal principal, @PathVariable Long contractId) throws Exception {
+    @DeleteMapping("/contracts/{contractId}")
+    ContractData removeContract(Principal principal, @PathVariable Long contractId) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        return managerService.removeContract(id, contractId);
+    }
+
+    @GetMapping("/contracts/{contractId}/complete")
+    ContractData completeContract(Principal principal, @PathVariable Long contractId) throws Exception {
         Long id = usernameIdMapper.map(principal);
         return managerService.completeContract(id, contractId);
     }

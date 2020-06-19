@@ -15,8 +15,8 @@ public class Manager extends Person {
     public void createContract(Contract contract) throws Exception {
         Order order = contract.getOrder();
 
-        if (order.getState() == Order.State.COMPLETED) {
-            throw new Exception("Order already has been completed");
+        if (order.getState() != Order.State.PUBLISHED) {
+            throw new Exception("Order already has been processed/completed");
         }
 
         if (order.getState() == Order.State.REMOVED) {
@@ -32,6 +32,14 @@ public class Manager extends Person {
         }
 
         order.setState(Order.State.PROCESSED);
+    }
+
+    public void removeContract(Contract contract) throws Exception {
+        if (!contract.isRefused()) {
+            throw new Exception("Contract haven't been refused");
+        }
+        Order order = contract.getOrder();
+        order.setState(Order.State.PUBLISHED);
     }
 
     public void completeContract(Contract contract) throws Exception {

@@ -58,6 +58,13 @@ public class MangerWebController {
         return "redirect:/manager/contracts";
     }
 
+    @RequestMapping(value = {"/contracts"}, params = {"remove"})
+    public String removeContract(Principal principal, long contractId) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        managerService.removeContract(id, contractId);
+        return "redirect:/manager/contracts";
+    }
+
     @RequestMapping(value = {"/contracts"}, params = {"complete"})
     public String createContract(Principal principal, long contractId) throws Exception {
         Long id = usernameIdMapper.map(principal);

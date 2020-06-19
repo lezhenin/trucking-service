@@ -62,6 +62,15 @@ public class ManagerService {
         return DataObjectMapper.dataFromContract(contract);
     }
 
+    public ContractData removeContract(Long managerId, Long contractId) throws Exception {
+        Manager manager = managerRepository.findById(managerId).get();
+        Contract contract = contractRepository.findById(contractId).get();
+        manager.removeContract(contract);
+        orderRepository.save(contract.getOrder());
+        contractRepository.delete(contract);
+        return DataObjectMapper.dataFromContract(contract);
+    }
+
     public ContractData completeContract(Long managerId, Long contractId) throws Exception {
         Manager manager = managerRepository.findById(managerId).get();
         Contract contract = contractRepository.findById(contractId).get();
