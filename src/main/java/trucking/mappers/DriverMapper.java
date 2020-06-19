@@ -31,7 +31,13 @@ public class DriverMapper extends AbstractMapper<Driver> {
 
     @Override
     protected Driver collectValues(ResultSet resultSet) throws SQLException {
-        Vehicle vehicle = vehicleMapper.selectById(resultSet.getLong(6)).get();
+        Vehicle vehicle = new Vehicle(
+                resultSet.getString(8),
+                resultSet.getInt(9),
+                resultSet.getInt(10),
+                resultSet.getInt(11),
+                resultSet.getInt(12));
+        vehicle.setId(resultSet.getLong(7));
         Driver driver = new Driver(
                 resultSet.getString(2),
                 resultSet.getString(3),
@@ -52,17 +58,17 @@ public class DriverMapper extends AbstractMapper<Driver> {
     @Override
     protected String updateTemplate() {
         return "UPDATE Driver SET (firstName, lastName, phoneNumber, email, vehicleId)" +
-                "= VALUES (?, ?, ?, ?, ?) WHERE id = ?;";
+               " = VALUES (?, ?, ?, ?, ?) WHERE id = ?;";
     }
 
     @Override
     protected String selectAllTemplate() {
-        return "SELECT * FROM Driver";
+        return "SELECT * FROM Driver AS d JOIN Vehicle AS v ON d.vehicleId = v.id";
     }
 
     @Override
     protected String selectByIdTemplate() {
-        return "SELECT * FROM Driver WHERE id = ?";
+        return "SELECT * FROM Driver AS d JOIN Vehicle AS v ON d.vehicleId = v.id WHERE d.id = ?";
     }
 
     @Override
