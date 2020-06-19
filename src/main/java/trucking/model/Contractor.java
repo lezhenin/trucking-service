@@ -44,13 +44,13 @@ public abstract class Contractor extends Person {
     private void checkParticipation(Contract contract) throws Exception {
         Contractor participant = contract.getContractors().get(this.role);
         if (!participant.getId().equals(this.getId())) {
-            throw new Exception();
+            throw new Exception("Contractor is not associated with contract");
         }
     }
 
     private void checkAgreementStatus(Contract contract) throws Exception {
         if (contract.getContractorsStatus().get(this.role) != Contract.Status.NONE) {
-            throw new Exception();
+            throw new Exception("Contractor already has approved/refused contract");
         }
     }
 
@@ -58,11 +58,11 @@ public abstract class Contractor extends Person {
 
         Collection<Contract.Status> values = contract.getContractorsStatus().values();
         if (!values.stream().allMatch(s -> s == Contract.Status.APPROVED || s == Contract.Status.COMPLETED)) {
-            throw new Exception();
+            throw new Exception("Contractor hasn't approved contract");
         }
 
         if (contract.getContractorStatus(this.role) == Contract.Status.COMPLETED) {
-            throw new Exception();
+            throw new Exception("Contractor already has completed contract");
         }
     }
 }

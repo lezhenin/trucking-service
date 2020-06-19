@@ -1,6 +1,7 @@
 package trucking.model;
 
 import javax.persistence.Entity;
+import java.util.Objects;
 
 @Entity
 public class Manager extends Person {
@@ -15,7 +16,7 @@ public class Manager extends Person {
         Order order = contract.getOrder();
 
         if (order.getState() == Order.State.COMPLETED) {
-            throw new Exception("Can't create contract: order already was completed");
+            throw new Exception("Order already has been completed");
         }
 
         Vehicle vehicle = contract.getDriver().getVehicle();
@@ -23,16 +24,20 @@ public class Manager extends Person {
                 order.getCargoWidth() > vehicle.getMaxCargoHeight() ||
                 order.getCargoLength() > vehicle.getMaxCargoHeight() ||
                 order.getCargoWeight() > vehicle.getMaxCargoHeight()) {
-            throw new Exception("Can't create contract: cargo doesn't fit driver's vehicle");
+            throw new Exception("Cargo doesn't fit driver's vehicle");
         }
 
         order.setState(Order.State.PROCESSED);
     }
 
-    // todo mb rename: this complete is not the same as Client's or Driver's complete
     public void completeContract(Contract contract) throws Exception {
+
+        if (Objects.equals(contract.getManager().getId(), getId())) {
+            throw new Exception("Manager is not associated with contract");
+        }
+
         if (!contract.isCompleted()) {
-            throw new Exception();
+            throw new Exception("Contractors haven't completed contract yet");
         }
 
         Order order = contract.getOrder();
