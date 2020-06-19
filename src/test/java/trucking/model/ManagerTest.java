@@ -10,7 +10,7 @@ public class ManagerTest {
 
 
     @Test
-    void test_createContract() {
+    void test_createContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -29,7 +29,7 @@ public class ManagerTest {
     }
 
     @Test
-    void test_createContract_afterCompleteContract() {
+    void test_createContract_afterCompleteContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -64,7 +64,7 @@ public class ManagerTest {
     }
 
     @Test
-    void test_completeContract_before_completion() {
+    void test_completeContract_before_completion() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -81,7 +81,7 @@ public class ManagerTest {
     }
 
     @Test
-    void test_completeContract_after_partial_completion() {
+    void test_completeContract_after_partial_completion() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -108,7 +108,7 @@ public class ManagerTest {
     }
 
     @Test
-    void test_completeContract_after_completion() {
+    void test_completeContract_after_completion() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();

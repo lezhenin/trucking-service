@@ -40,7 +40,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    void test_createOrder() {
+    void test_createOrder() throws Exception {
 
         Client client = generateClient();
         clientRepository.save(client);

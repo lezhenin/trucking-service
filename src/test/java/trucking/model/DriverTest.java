@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DriverTest {
 
     @Test
-    void test_approveContract() {
+    void test_approveContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -18,8 +18,7 @@ public class DriverTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-
-        assertDoesNotThrow(() -> manager.createContract(contract));
+        manager.createContract(contract);
 
         assertDoesNotThrow(() -> driver.approveContract(contract));
         assertThrows(Exception.class, () -> driver.approveContract(contract));
@@ -28,7 +27,7 @@ public class DriverTest {
     }
 
     @Test
-    void test_refuseContract() {
+    void test_refuseContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -38,8 +37,7 @@ public class DriverTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-
-        assertDoesNotThrow(() -> manager.createContract(contract));
+        manager.createContract(contract);
 
         assertDoesNotThrow(() -> driver.refuseContract(contract));
         assertThrows(Exception.class, () -> driver.refuseContract(contract));
@@ -48,7 +46,7 @@ public class DriverTest {
     }
 
     @Test
-    void test_completeContract_before_agreement() {
+    void test_completeContract_before_agreement() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -58,8 +56,7 @@ public class DriverTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-
-        assertDoesNotThrow(() -> manager.createContract(contract));
+        manager.createContract(contract);
 
         assertThrows(Exception.class, () -> driver.completeContract(contract));
 
@@ -67,7 +64,7 @@ public class DriverTest {
 
 
     @Test
-    void test_completeContract_after_approveContract() {
+    void test_completeContract_after_approveContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -77,8 +74,7 @@ public class DriverTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-
-        assertDoesNotThrow(() -> manager.createContract(contract));
+        manager.createContract(contract);
 
         assertDoesNotThrow(() -> client.approveContract(contract));
         assertDoesNotThrow(() -> driver.approveContract(contract));
@@ -87,7 +83,7 @@ public class DriverTest {
     }
 
     @Test
-    void test_completeContract_after_refuseContract() {
+    void test_completeContract_after_refuseContract() throws Exception {
 
         Client client = generateClient();
         Driver driver = generateDriver();
@@ -97,8 +93,7 @@ public class DriverTest {
         client.createOrder(order);
 
         Contract contract = generateContract(order, driver, manager);
-
-        assertDoesNotThrow(() -> manager.createContract(contract));
+        manager.createContract(contract);
 
         assertDoesNotThrow(() -> client.refuseContract(contract));
         assertDoesNotThrow(() -> driver.approveContract(contract));

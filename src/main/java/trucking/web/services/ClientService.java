@@ -39,7 +39,7 @@ public class ClientService {
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
-    public OrderData createOrder(Long clientId, NewOrderData newOrderData) {
+    public OrderData createOrder(Long clientId, NewOrderData newOrderData) throws Exception {
         Client client = clientRepository.findById(clientId).get();
         Order order = DataObjectMapper.orderFromData(newOrderData, client);
         client.createOrder(order);

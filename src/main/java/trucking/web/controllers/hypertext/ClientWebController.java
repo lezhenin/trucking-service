@@ -41,7 +41,7 @@ public class ClientWebController {
 
 
     @RequestMapping(value = {"/orders"}, params = {"create"})
-    public String createOrder(Principal principal, NewOrderData newOrderData) {
+    public String createOrder(Principal principal, NewOrderData newOrderData) throws Exception {
         Long id = usernameIdMapper.map(principal);
         clientService.createOrder(id, newOrderData);
         return "redirect:/client/orders";

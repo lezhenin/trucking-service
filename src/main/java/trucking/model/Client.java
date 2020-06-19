@@ -14,14 +14,17 @@ public class Client extends Contractor {
     }
 
 
-    public void createOrder(Order order) {
+    public void createOrder(Order order) throws Exception {
+        if (order.getState() != Order.State.PUBLISHED) {
+            throw new Exception("Order already has been processed");
+        }
     }
 
-    // can remove only unprocessed order
     public void removeOrder(Order order) throws Exception {
         if (order.getState() != Order.State.PUBLISHED) {
-            throw new Exception();
+            throw new Exception("Order already has been processed");
         }
+        order.setState(Order.State.REMOVED);
     }
 
 }

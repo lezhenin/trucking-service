@@ -44,7 +44,7 @@ public class ClientController {
     }
 
     @PostMapping("/orders")
-    OrderData createOrder(Principal principal, @RequestBody NewOrderData orderData) {
+    OrderData createOrder(Principal principal, @RequestBody NewOrderData orderData) throws Exception {
         Long id = usernameIdMapper.map(principal);
         return clientService.createOrder(id, orderData);
     }

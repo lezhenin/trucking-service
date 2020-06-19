@@ -19,6 +19,10 @@ public class Manager extends Person {
             throw new Exception("Order already has been completed");
         }
 
+        if (order.getState() == Order.State.REMOVED) {
+            throw new Exception("Order already has been removed");
+        }
+
         Vehicle vehicle = contract.getDriver().getVehicle();
         if (order.getCargoHeight() > vehicle.getMaxCargoHeight() ||
                 order.getCargoWidth() > vehicle.getMaxCargoWidth() ||

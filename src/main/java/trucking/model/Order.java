@@ -9,7 +9,8 @@ public class Order extends Entity {
     public enum State {
         PUBLISHED,
         PROCESSED,
-        COMPLETED
+        COMPLETED,
+        REMOVED
     }
 
     @ManyToOne private Client client;
@@ -80,7 +81,7 @@ public class Order extends Entity {
         return orderState;
     }
 
-    public void setState(State orderState) {
+    void setState(State orderState) {
         this.orderState = orderState;
     }
 }
