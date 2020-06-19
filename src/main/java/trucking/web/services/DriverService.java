@@ -2,6 +2,7 @@ package trucking.web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import trucking.model.Contract;
 import trucking.model.Driver;
 import trucking.model.Order;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class DriverService {
 
     private final DriverRepository driverRepository;

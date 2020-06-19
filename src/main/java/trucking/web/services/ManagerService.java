@@ -3,6 +3,7 @@ package trucking.web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import trucking.model.*;
 import trucking.repository.ContractRepository;
 import trucking.repository.DriverRepository;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ManagerService {
 
     private final OrderRepository orderRepository;
