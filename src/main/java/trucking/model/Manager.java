@@ -32,7 +32,7 @@ public class Manager extends Person {
 
     public void completeContract(Contract contract) throws Exception {
 
-        if (Objects.equals(contract.getManager().getId(), getId())) {
+        if (!Objects.equals(contract.getManager().getId(), getId())) {
             throw new Exception("Manager is not associated with contract");
         }
 

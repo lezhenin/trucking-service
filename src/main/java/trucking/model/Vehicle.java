@@ -1,10 +1,8 @@
 package trucking.model;
 
-import javax.persistence.*;
 
-
-@Entity
-public class Vehicle extends BaseEntity {
+@javax.persistence.Entity
+public class Vehicle extends Entity {
 
     private String model;
 

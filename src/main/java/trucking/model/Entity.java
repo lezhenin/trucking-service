@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class Entity {
 
     @Id @GeneratedValue private Long id;
 
@@ -20,7 +20,7 @@ public abstract class BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BaseEntity that = (BaseEntity) o;
+        Entity that = (Entity) o;
         return Objects.equals(id, that.id);
     }
 

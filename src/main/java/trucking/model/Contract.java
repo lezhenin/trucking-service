@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-@Entity
-public  class Contract extends BaseEntity {
+@javax.persistence.Entity
+public  class Contract extends Entity {
 
     public enum Role {
         CLIENT, DRIVER

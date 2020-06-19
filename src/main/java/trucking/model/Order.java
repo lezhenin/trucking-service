@@ -2,9 +2,9 @@ package trucking.model;
 
 import javax.persistence.*;
 
-@Entity
+@javax.persistence.Entity
 @Table(name="ClientOrder")
-public class Order extends BaseEntity {
+public class Order extends Entity {
 
     public enum State {
         PUBLISHED,

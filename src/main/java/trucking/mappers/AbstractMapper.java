@@ -1,11 +1,11 @@
 package trucking.mappers;
 
-import trucking.model.BaseEntity;
+import trucking.model.Entity;
 
 import java.sql.*;
 import java.util.*;
 
-public abstract class AbstractMapper<T extends BaseEntity> {
+public abstract class AbstractMapper<T extends Entity> {
 
     protected final Connection connection;
     protected final Map<Long, T> identityMap = new HashMap<>();

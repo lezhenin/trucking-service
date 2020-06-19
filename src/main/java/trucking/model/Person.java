@@ -1,12 +1,11 @@
 package trucking.model;
 
-import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-@Entity
+@javax.persistence.Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Person extends BaseEntity {
+public class Person extends Entity {
 
     private String firstName;
     private String lastName;
