@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VehicleMapperTest {
 
     static final String JDBC_DRIVER = "org.h2.Driver";
-    static final String DB_URL = "jdbc:h2:~/testmapper";
+    static final String DB_URL = "jdbc:h2:~/testvehiclemapper";
 
     static final String USER = "sa";
     static final String PASS = "";
@@ -69,6 +69,8 @@ public class VehicleMapperTest {
         VehicleMapper mapper = new VehicleMapper(connection);
         mapper.insert(vehicle);
 
+        assertNotNull(vehicle.getId());
+
         assertEquals(5, vehicle.getMaxCargoWeight());
         assertEquals(10, vehicle.getMaxCargoHeight());
         assertEquals(15, vehicle.getMaxCargoWidth());
@@ -94,10 +96,10 @@ public class VehicleMapperTest {
         assertTrue(optional.isPresent());
         vehicle = optional.get();
 
-        assertEquals(3, vehicle.getMaxCargoWeight());
-        assertEquals(15, vehicle.getMaxCargoHeight());
-        assertEquals(17, vehicle.getMaxCargoWidth());
-        assertEquals(21, vehicle.getMaxCargoLength());
+        assertEquals(newVehicle.getMaxCargoWeight(), vehicle.getMaxCargoWeight());
+        assertEquals(newVehicle.getMaxCargoHeight(), vehicle.getMaxCargoHeight());
+        assertEquals(newVehicle.getMaxCargoWidth(), vehicle.getMaxCargoWidth());
+        assertEquals(newVehicle.getMaxCargoLength(), vehicle.getMaxCargoLength());
 
     }
 
