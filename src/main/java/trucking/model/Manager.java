@@ -13,7 +13,12 @@ public class Manager extends Person {
     protected Manager() { super(); }
 
     public void createContract(Contract contract) throws Exception {
+
         Order order = contract.getOrder();
+
+//        if (!Objects.equals(contract.getDriver().getId(), order.getOffer().getDriver().getId())) {
+//            throw new Exception("Driver's offer wasn't accepted");
+//        };
 
         if (order.getState() != Order.State.PUBLISHED) {
             throw new Exception("Order already has been processed/completed");

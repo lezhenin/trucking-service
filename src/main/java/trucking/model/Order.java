@@ -1,5 +1,6 @@
 package trucking.model;
 
+
 import javax.persistence.*;
 
 @javax.persistence.Entity
@@ -14,6 +15,7 @@ public class Order extends Entity {
     }
 
     @ManyToOne private Client client;
+    @OneToOne private Offer offer = null;
 
     private int cargoWeight;
     private int cargoHeight;
@@ -75,6 +77,18 @@ public class Order extends Entity {
 
     public String getDeadline() {
         return deadline;
+    }
+
+    public boolean hasAcceptedOffer() {
+        return offer != null;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 
     public State getState() {
