@@ -16,7 +16,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/client/**").hasAnyRole("CLIENT")
-                .antMatchers("/api/client/").hasAnyRole("CLIENT")
+                .antMatchers("/api/client/**").hasAnyRole("CLIENT")
+                .antMatchers("/react/client/**").hasAnyRole("CLIENT")
                 .antMatchers("/driver/**").hasAnyRole("DRIVER")
                 .antMatchers("/api/driver/**").hasAnyRole("DRIVER")
                 .antMatchers("/manager/**").hasAnyRole("MANAGER")

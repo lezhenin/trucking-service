@@ -12,6 +12,12 @@ public class LoginWebController {
         return "/index";
     }
 
+
+    @RequestMapping(value = {"/react/client/index", })
+    public String ReactIndex() {
+        return "/react/index";
+    }
+
     @RequestMapping("/login")
     public String login() {
         return "/login";

@@ -40,6 +40,7 @@ public class ClientController {
     @GetMapping("/orders")
     List<OrderData> getOrders(Principal principal) {
         Long id = usernameIdMapper.map(principal);
+        System.out.println(id);
         return clientService.getOrders(id);
     }
 
