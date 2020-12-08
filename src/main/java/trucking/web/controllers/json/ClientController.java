@@ -40,8 +40,13 @@ public class ClientController {
     @GetMapping("/orders")
     List<OrderData> getOrders(Principal principal) {
         Long id = usernameIdMapper.map(principal);
-        System.out.println(id);
         return clientService.getOrders(id);
+    }
+
+    @GetMapping("/orders/{orderId}")
+    OrderData getOrders(Principal principal, @PathVariable Long orderId) {
+        Long id = usernameIdMapper.map(principal);
+        return clientService.getOrder(id, orderId).get();
     }
 
     @PostMapping("/orders")

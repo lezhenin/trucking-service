@@ -13,6 +13,8 @@ import trucking.web.datatransfer.NewOrderData;
 import trucking.web.datatransfer.OrderData;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +40,14 @@ public class ClientService {
         List<Order> orders = orderRepository.findAllByClient(client);
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
+
+
+    public Optional<OrderData> getOrder(Long clientId, Long orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        order = order.filter((o) -> Objects.equals(o.getClient().getId(), clientId));
+        return order.map(DataObjectMapper::dataFromOrder);
+    }
+
 
     public OrderData createOrder(Long clientId, NewOrderData newOrderData) throws Exception {
         Client client = clientRepository.findById(clientId).get();

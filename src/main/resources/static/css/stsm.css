@@ -91,6 +91,11 @@ div.truckingitemlist {
     
 }
 
+div.truckingitemlist > table > tbody > tr > td > button {
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
 div.truckingitemlist > table {
   width: 100%;
   border: 1px solid #000;

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-import '../resources/static/css/stsm.css'
+//import '../resources/static/css/stsm.css'
 
 class App extends React.Component {
 
@@ -11,70 +11,221 @@ class App extends React.Component {
         this.state = {orders: []};
     }
 
-    componentDidMount() {
-        console.log("mount")
+    getOrders() {
         axios.get('/api/client/orders')
             .then((response) => {
-                console.log(this)
-                console.log(response.data);
-                this.setState({
-                    orders: response.data
-                })
+                this.setState({ orders: response.data })
             })
             .catch(function (error) {
-                // handle error
                 console.log(error);
             })
-            .then(function () {
-                // always executed
-            });
+    }
+
+    deleteOrder(id) {
+        axios.delete('/api/client/orders/' + id)
+            .then((response) => {
+                const orders = this.state.orders.filter((o) => o.id !== id)
+                this.setState({ orders: orders })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    postOrder(order) {
+        axios.post('/api/client/orders/', order)
+            .then((response) => {
+                const orders = this.state.orders.concat(response.data)
+                this.setState({ orders: orders })
+        })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    componentDidMount() {
+        this.getOrders()
     }
 
     render() {
         return (
-            <OrderList orders={this.state.orders}/>
+            <div>
+
+            <div className="truckingitemlist">
+                <h2>List of orders</h2>
+                <OrderTable
+                    orders={this.state.orders}
+                    handleDelete={(id) => {this.deleteOrder(id)}}
+                />
+            </div>
+
+            <div>
+            <h2>Create new order</h2>
+                <OrderForm
+                    handleCreate={(o) => {this.postOrder(o)}}
+                />
+            </div>
+
+            </div>
         )
     }
 }
 
-class OrderList extends React.Component {
-    render() {
-        const orders = this.props.orders.map(o =>
-            <Order key={o.id} order={o}/>
+class OrderTable extends React.Component {
+
+    renderHeader() {
+        const fields = [
+            'Identificator', 'Cargo weight', 'Cargo size',
+            'Loading address', 'Shipping address', 'State',
+            'Actions'
+        ].map((f, id) => { return <th key={id}>{f}</th> })
+        return (
+            <tr>
+                {fields}
+            </tr>
+        )
+    }
+
+    renderBody() {
+        return this.props.orders.map(o =>
+            <tr key={o.id}>
+                <td>{o.id}</td>
+                <td>{o.cargoWeight}</td>
+                <td>({o.cargoWidth}, {o.cargoLength}, {o.cargoHeight})</td>
+                <td>{o.loadingAddress}</td>
+                <td>{o.shippingAddress}</td>
+                <td>{o.orderState}</td>
+                <td>
+                    {(o.orderState !== 'PUBLISHED')
+                        ? <button disabled>Delete</button>
+                        : <button onClick={() => this.props.handleDelete(o.id)}>Delete</button>
+                    }
+                </td>
+
+            </tr>
         );
+    }
+
+    render() {
+
         return (
             <table>
                 <thead>
-                <tr>
-                    <th>Identificator</th>
-                    <th>Cargo weight</th>
-                    {/*<th>Cargo size</th>*/}
-                    <th>Loading address</th>
-                    <th>Shipping address</th>
-                    <th>State</th>
-                </tr>
+                    {this.renderHeader()}
                 </thead>
                 <tbody>
-                {orders}
+                    {this.renderBody()}
                 </tbody>
             </table>
         )
     }
 }
 
-class Order extends React.Component{
+class OrderForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cargoWeight: 10,
+            cargoWidth: 10,
+            cargoLength: 10,
+            cargoHeight: 10,
+            loadingAddress: '',
+            shippingAddress: '',
+            deadline: 'yesterday'
+        }
+    }
+
+    handleChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
+
+        console.log(this.state)
+    }
+
+    handleSubmit(event) {
+        console.log(this.state)
+        event.preventDefault();
+        this.props.handleCreate(this.state)
+    }
+
     render() {
         return (
-            <tr>
-                <td>{this.props.order.id}</td>
-                <td>{this.props.order.cargoWeight}</td>
-                <td>{this.props.order.loadingAddress}</td>
-                <td>{this.props.order.shippingAddress}</td>
-                <td>{this.props.order.orderState}</td>
-            </tr>
+
+            <form onSubmit={(e) => this.handleSubmit(e)}>
+
+                <fieldset>
+
+                    <div>
+                        <label>Cargo weight:</label>
+                        <input
+                            name="cargoWeight"
+                            type="number"
+                            value={this.state.cargoWeight}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
+
+                    <div>
+                        <label>Cargo size:</label>
+                        <input
+                            name="cargoWidth"
+                            type="number"
+                            size="2"
+                            value={this.state.cargoWidth}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                        <input
+                            name="cargoLength"
+                            type="number"
+                            size="2"
+                            value={this.state.cargoLength}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                        <input
+                            name="cargoHeight"
+                            type="number"
+                            size="2"
+                            value={this.state.cargoHeight}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
+
+                    <div>
+                        <label>Loading Address:</label>
+                        <input
+                            name="loadingAddress"
+                            type="text"
+                            value={this.state.loadingAddress}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
+
+                    <div>
+                        <label>Shipping Address:</label>
+                        <input
+                            name="shippingAddress"
+                            type="text"
+                            value={this.state.shippingAddress}
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    </div>
+
+                    <div className="submit">
+                        <button type="submit" name="create">Create Order</button>
+                    </div>
+
+                    </fieldset>
+
+            </form>
+
         )
     }
 }
+
 
 ReactDOM.render(
     <App />,
