@@ -14,7 +14,8 @@ class App extends React.Component {
     getOrders() {
         axios.get('/api/client/orders')
             .then((response) => {
-                this.setState({ orders: response.data })
+                console.log(response)
+                this.setState({ orders: response.data._embedded.orderDatas })
             })
             .catch(function (error) {
                 console.log(error);

@@ -70,6 +70,12 @@ public class ClientService {
         return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
     }
 
+    public Optional<ContractData> getContract(Long clientId, Long contractId) {
+        Optional<Contract> contract = contractRepository.findById(contractId);
+        contract = contract.filter((o) -> Objects.equals(o.getClient().getId(), clientId));
+        return contract.map(DataObjectMapper::dataFromContract);
+    }
+
     public ContractData approveContract(Long clientId, Long contractId) throws Exception {
         Client client = clientRepository.findById(clientId).get();
         Contract contract = contractRepository.findById(contractId).get();

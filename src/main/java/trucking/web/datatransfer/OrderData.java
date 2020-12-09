@@ -1,8 +1,9 @@
 package trucking.web.datatransfer;
 
+import org.springframework.hateoas.RepresentationModel;
 import trucking.model.Order;
 
-public class OrderData {
+public class OrderData extends RepresentationModel<OrderData> {
 
     private Long id;
 
