@@ -3,14 +3,9 @@ package trucking.web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import trucking.model.Client;
-import trucking.model.Contract;
-import trucking.model.Order;
+import trucking.model.*;
 import trucking.repository.*;
-import trucking.web.datatransfer.ContractData;
-import trucking.web.datatransfer.DataObjectMapper;
-import trucking.web.datatransfer.NewOrderData;
-import trucking.web.datatransfer.OrderData;
+import trucking.web.datatransfer.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,15 +19,18 @@ public class ClientService {
     private final OrderRepository orderRepository;
     private final ClientRepository clientRepository;
     private final ContractRepository contractRepository;
+    private final OfferRepository offerRepository;
 
     public ClientService(
             @Autowired OrderRepository orderRepository,
             @Autowired ClientRepository clientRepository,
-            @Autowired ContractRepository contractRepository
+            @Autowired ContractRepository contractRepository,
+            @Autowired OfferRepository offerRepository
     ) {
         this.orderRepository = orderRepository;
         this.clientRepository = clientRepository;
         this.contractRepository = contractRepository;
+        this.offerRepository = offerRepository;
     }
 
     public List<OrderData> getOrders(Long clientId) {
@@ -48,6 +46,21 @@ public class ClientService {
         return order.map(DataObjectMapper::dataFromOrder);
     }
 
+    public List<OfferData> getOffers(Long clientId, Long orderId)  {
+        Client client = clientRepository.findById(clientId).get();
+        Order order = orderRepository.findById(orderId).get();
+        List<Offer> offers = offerRepository.findAllByOrder(order);
+        return offers.stream().map(DataObjectMapper::dataFromOffer).collect(Collectors.toList());
+    }
+
+    public OfferData acceptOffer(Long clientId, Long offerId) throws Exception {
+        Client client = clientRepository.findById(clientId).get();
+        Offer offer = offerRepository.findById(offerId).get();
+        client.acceptOffer(offer);
+        offerRepository.save(offer);
+        orderRepository.save(offer.getOrder());
+        return DataObjectMapper.dataFromOffer(offer);
+    }
 
     public OrderData createOrder(Long clientId, NewOrderData newOrderData) throws Exception {
         Client client = clientRepository.findById(clientId).get();

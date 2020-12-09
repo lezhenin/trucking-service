@@ -10,6 +10,13 @@ public class Offer extends Entity {
     private int price;
     private boolean accepted;
 
+    public Offer(Order order, Driver driver, int price, boolean accepted) {
+        this.order = order;
+        this.driver = driver;
+        this.price = price;
+        this.accepted = accepted;
+    }
+
     public Order getOrder() {
         return order;
     }
@@ -26,7 +33,7 @@ public class Offer extends Entity {
         return accepted;
     }
 
-    public void setAccepted(boolean accepted) {
+    protected void setAccepted(boolean accepted) {
         this.accepted = accepted;
     }
 }

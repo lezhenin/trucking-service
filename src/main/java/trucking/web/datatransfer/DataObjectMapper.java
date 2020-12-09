@@ -34,4 +34,13 @@ public class DataObjectMapper {
                 dataFromVehicle(driver.getVehicle()));
     }
 
+    public static OfferData dataFromOffer(Offer offer) {
+        return new OfferData(offer.getId(), offer.getDriver().getId(), offer.getOrder().getId(),
+                offer.getOrder().getClient().getId(), offer.getPrice(), offer.isAccepted());
+    }
+
+    public static Offer offerFromData(NewOfferData offer, Order order, Driver driver) {
+        return new Offer(order, driver, offer.getPrice(), false);
+    }
+
 }

@@ -26,7 +26,7 @@ public class Driver extends Contractor {
     }
 
 
-    public void makeOffer(Offer offer) throws Exception {
+    public void createOffer(Offer offer) throws Exception {
 
         Order order = offer.getOrder();
         Driver driver = offer.getDriver();

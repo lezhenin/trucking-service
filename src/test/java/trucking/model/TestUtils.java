@@ -19,8 +19,23 @@ class TestUtils {
         return order;
     }
 
+    static Offer generateOffer(Order order, Driver driver, int payment) {
+        Offer offer = new Offer(order, driver, payment, false);
+        offer.setId(idCounter++);
+        return offer;
+    }
+
+
+    static Offer generateOffer(Order order, Driver driver) {
+        return generateOffer(order, driver, 1000);
+    }
+
     static Contract generateContract(Order order, Driver driver, Manager manager) {
-        Contract contract = new Contract(order, driver, manager, 1000);
+        return generateContract(order, driver, manager, 1000);
+    }
+
+    static Contract generateContract(Order order, Driver driver, Manager manager, int payment) {
+        Contract contract = new Contract(order, driver, manager, payment);
         contract.setId(idCounter++);
         return contract;
     }

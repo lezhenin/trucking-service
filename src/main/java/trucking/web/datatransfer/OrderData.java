@@ -20,6 +20,8 @@ public class OrderData extends RepresentationModel<OrderData> {
 
     private Order.State orderState;
 
+    private String offer = null;
+
     public OrderData() { }
 
     public OrderData(
@@ -124,5 +126,13 @@ public class OrderData extends RepresentationModel<OrderData> {
 
     public void setOrderState(Order.State orderState) {
         this.orderState = orderState;
+    }
+
+    public String getOffer() {
+        return offer;
+    }
+
+    public void setOffer(String offer) {
+        this.offer = offer;
     }
 }

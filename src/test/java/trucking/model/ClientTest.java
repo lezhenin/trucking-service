@@ -18,6 +18,55 @@ public class ClientTest {
     }
 
     @Test
+    void test_acceptOffer() throws Exception {
+
+        Client client = generateClient();
+        Driver driver = generateDriver();
+
+        Order order = generateOrder(client);
+        client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+
+        assertNull(order.getOffer());
+        assertFalse(offer.isAccepted());
+
+        assertDoesNotThrow(() -> client.acceptOffer(offer));
+
+        assertNotNull(order.getOffer());
+        assertEquals(order.getOffer().getId(), offer.getId());
+        assertTrue(order.getOffer().isAccepted());
+        assertTrue(offer.isAccepted());
+    }
+
+    @Test
+    void test_acceptOffer_after_accept() throws Exception {
+
+        Client client = generateClient();
+        Driver driver = generateDriver();
+
+        Order order = generateOrder(client);
+        client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+
+        Offer second_offer = generateOffer(order, driver);
+        driver.createOffer(second_offer);
+
+        assertDoesNotThrow(() -> client.acceptOffer(offer));
+
+        assertThrows(Exception.class, () -> client.acceptOffer(second_offer));
+
+        assertNotNull(order.getOffer());
+        assertEquals(order.getOffer().getId(), offer.getId());
+        assertTrue(offer.isAccepted());
+        assertFalse(second_offer.isAccepted());
+
+    }
+
+    @Test
     void test_removeOrder_before_processing() throws Exception {
 
         Client client = generateClient();
@@ -41,6 +90,10 @@ public class ClientTest {
         Order order = generateOrder(client);
         client.createOrder(order);
 
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+
         Contract contract = generateContract(order, driver, manager);
 
         assertDoesNotThrow(() -> manager.createContract(contract));
@@ -59,6 +112,10 @@ public class ClientTest {
 
         Order order = generateOrder(client);
         client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
@@ -79,6 +136,10 @@ public class ClientTest {
         Order order = generateOrder(client);
         client.createOrder(order);
 
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
@@ -98,6 +159,10 @@ public class ClientTest {
         Order order = generateOrder(client);
         client.createOrder(order);
 
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
@@ -115,6 +180,10 @@ public class ClientTest {
 
         Order order = generateOrder(client);
         client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
@@ -134,6 +203,10 @@ public class ClientTest {
 
         Order order = generateOrder(client);
         client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);

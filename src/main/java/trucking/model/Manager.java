@@ -15,10 +15,21 @@ public class Manager extends Person {
     public void createContract(Contract contract) throws Exception {
 
         Order order = contract.getOrder();
+        Offer offer = order.getOffer();
+        Driver driver = contract.getDriver();
 
-//        if (!Objects.equals(contract.getDriver().getId(), order.getOffer().getDriver().getId())) {
-//            throw new Exception("Driver's offer wasn't accepted");
-//        };
+
+        if (offer == null) {
+            throw new Exception("There is no accepted offer");
+        }
+
+        if (!Objects.equals(driver.getId(), offer.getDriver().getId())) {
+            throw new Exception("Driver's offer wasn't accepted");
+        }
+
+        if (offer.getPrice() > contract.getPayment()) {
+            throw new Exception("The payment is lower than was offered");
+        }
 
         if (order.getState() != Order.State.PUBLISHED) {
             throw new Exception("Order already has been processed/completed");
@@ -28,7 +39,7 @@ public class Manager extends Person {
             throw new Exception("Order already has been removed");
         }
 
-        Vehicle vehicle = contract.getDriver().getVehicle();
+        Vehicle vehicle = driver.getVehicle();
         if (order.getCargoHeight() > vehicle.getMaxCargoHeight() ||
                 order.getCargoWidth() > vehicle.getMaxCargoWidth() ||
                 order.getCargoLength() > vehicle.getMaxCargoLength() ||

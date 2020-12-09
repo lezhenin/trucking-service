@@ -8,6 +8,43 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DriverTest {
 
     @Test
+    void test_createOffer() throws Exception {
+
+        Client client = generateClient();
+        Driver driver = generateDriver();
+
+        Order order = generateOrder(client);
+        client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        assertDoesNotThrow(() -> driver.createOffer(offer));
+
+    }
+
+    @Test
+    void test_createOffer_after_accept() throws Exception {
+
+        Client client = generateClient();
+        Driver driver = generateDriver();
+
+        Order order = generateOrder(client);
+        client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        assertDoesNotThrow(() -> driver.createOffer(offer));
+
+        Offer second_offer = generateOffer(order, driver);
+        assertDoesNotThrow(() -> driver.createOffer(second_offer));
+
+        client.acceptOffer(offer);
+
+        Offer third_offer = generateOffer(order, driver);
+        assertThrows(Exception.class, () -> driver.createOffer(third_offer));
+
+    }
+
+
+    @Test
     void test_approveContract() throws Exception {
 
         Client client = generateClient();
@@ -16,6 +53,10 @@ public class DriverTest {
 
         Order order = generateOrder(client);
         client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
@@ -36,6 +77,10 @@ public class DriverTest {
         Order order = generateOrder(client);
         client.createOrder(order);
 
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
@@ -55,6 +100,10 @@ public class DriverTest {
         Order order = generateOrder(client);
         client.createOrder(order);
 
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
 
@@ -72,6 +121,10 @@ public class DriverTest {
 
         Order order = generateOrder(client);
         client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
@@ -91,6 +144,10 @@ public class DriverTest {
 
         Order order = generateOrder(client);
         client.createOrder(order);
+
+        Offer offer = generateOffer(order, driver);
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
