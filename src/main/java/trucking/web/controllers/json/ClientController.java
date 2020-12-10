@@ -5,6 +5,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import trucking.web.datatransfer.OfferData;
 import trucking.web.security.UsernameIdMapper;
 import trucking.web.datatransfer.ContractData;
 import trucking.web.datatransfer.NewOrderData;
@@ -25,12 +26,24 @@ public class ClientController {
     private final ClientService clientService;
     private final UsernameIdMapper usernameIdMapper;
 
-    private OrderData addLinksToOrder(Principal principal, OrderData order) {
+    private OrderData addLinksToOrder(Principal principal, OrderData order) throws Exception {
         Link selfLink = linkTo(methodOn(ClientController.class)
                 .getOrder(principal, order.getId())).withSelfRel();
         Link allLink = linkTo(methodOn(ClientController.class)
                 .getOrders(principal)).withRel("orders");
-        return order.add(selfLink, allLink);
+        Link offersLink = linkTo(methodOn(ClientController.class)
+                .getOffers(principal, order.getId())).withRel("offers");
+        return order.add(selfLink, allLink, offersLink);
+    }
+
+    private OfferData addLinksToOffer(Principal principal, OfferData offer) throws Exception {
+        Link selfLink = linkTo(methodOn(ClientController.class)
+                .getOffer(principal, offer.getId())).withSelfRel();
+        Link acceptLink = linkTo(methodOn(ClientController.class)
+                .acceptOffer(principal, offer.getId())).withRel("accept");
+        Link orderLink = linkTo(methodOn(ClientController.class)
+                .getOrder(principal, offer.getOrderId())).withRel("order");
+        return offer.add(selfLink, acceptLink, orderLink);
     }
 
     private ContractData addLinksToContract(Principal principal, ContractData contract) throws Exception {
@@ -44,7 +57,9 @@ public class ClientController {
                 .refuseContract(principal, contract.getId())).withRel("refuse");
         Link completeLink = linkTo(methodOn(ClientController.class)
                 .completeContract(principal, contract.getId())).withRel("complete");
-        return contract.add(allLink, approveLink, refuseLink, completeLink);
+        Link orderLink = linkTo(methodOn(ClientController.class)
+                .getOrder(principal, contract.getOrderId())).withRel("order");
+        return contract.add(selfLink, allLink, approveLink, refuseLink, completeLink, orderLink);
     }
 
     public ClientController(
@@ -56,7 +71,7 @@ public class ClientController {
     }
 
     @GetMapping("/orders")
-    CollectionModel<OrderData> getOrders(Principal principal) {
+    CollectionModel<OrderData> getOrders(Principal principal) throws Exception {
         Long id = usernameIdMapper.map(principal);
         List<OrderData> orders = clientService.getOrders(id);
         for (OrderData order: orders) {
@@ -68,7 +83,7 @@ public class ClientController {
     }
 
     @GetMapping("/orders/{orderId}")
-    OrderData getOrder(Principal principal, @PathVariable Long orderId) {
+    OrderData getOrder(Principal principal, @PathVariable Long orderId) throws Exception {
         Long id = usernameIdMapper.map(principal);
         OrderData order = clientService.getOrder(id, orderId).get();
         return addLinksToOrder(principal, order);
@@ -85,6 +100,29 @@ public class ClientController {
     void removeOrder(Principal principal, @PathVariable Long orderId) throws Exception {
         Long id = usernameIdMapper.map(principal);
         clientService.removeOrder(id, orderId);
+    }
+
+    @GetMapping("/offers")
+    CollectionModel<OfferData> getOffers(Principal principal, @RequestParam Long orderId) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        List<OfferData> offers = clientService.getOffers(id, orderId);
+        for (OfferData offer: offers) {
+            addLinksToOffer(principal, offer);
+        }
+        Link selfLink = linkTo(methodOn(ClientController.class).getOffers(principal, orderId)).withSelfRel();
+        return CollectionModel.of(offers, selfLink);
+    }
+
+    @GetMapping("/offers/{offerId}")
+    OfferData getOffer(Principal principal, @PathVariable Long offerId) {
+        Long id = usernameIdMapper.map(principal);
+        return clientService.getOffer(id, offerId).get();
+    }
+
+    @GetMapping("/offers/{offerId}/accept")
+    OfferData acceptOffer(Principal principal, @PathVariable Long offerId) throws Exception {
+        Long id = usernameIdMapper.map(principal);
+        return clientService.acceptOffer(id, offerId);
     }
 
     @GetMapping("/contracts")

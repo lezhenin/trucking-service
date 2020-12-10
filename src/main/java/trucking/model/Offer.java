@@ -17,6 +17,8 @@ public class Offer extends Entity {
         this.accepted = accepted;
     }
 
+    public Offer() { }
+
     public Order getOrder() {
         return order;
     }

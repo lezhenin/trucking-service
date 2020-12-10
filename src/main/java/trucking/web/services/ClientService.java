@@ -53,6 +53,12 @@ public class ClientService {
         return offers.stream().map(DataObjectMapper::dataFromOffer).collect(Collectors.toList());
     }
 
+    public Optional<OfferData> getOffer(Long clientId, Long offerId)  {
+        Optional<Offer> offer = offerRepository.findById(offerId);
+        offer = offer.filter((o) -> Objects.equals(o.getOrder().getClient().getId(), clientId));
+        return offer.map(DataObjectMapper::dataFromOffer);
+    }
+
     public OfferData acceptOffer(Long clientId, Long offerId) throws Exception {
         Client client = clientRepository.findById(clientId).get();
         Offer offer = offerRepository.findById(offerId).get();

@@ -17,6 +17,7 @@ public class TruckingApplication {
             OrderRepository orderRepository, ClientRepository clientRepository,
             DriverRepository driverRepository, ContractRepository contractRepository,
             ManagerRepository managerRepository, VehicleRepository vehicleRepository,
+            OfferRepository offerRepository,
             UsernameIdMapper usernameIdMapper
     ) {
         return args -> {
@@ -42,6 +43,14 @@ public class TruckingApplication {
             Manager manager = new Manager("manager", "number1", "c", "d");
             managerRepository.save(manager);
             usernameIdMapper.put("manager", manager.getId());
+
+            Offer offer = new Offer(order, driver, 1000, false);
+            offerRepository.save(offer);
+
+            driver.createOffer(offer);
+            client.acceptOffer(offer);
+            orderRepository.save(order);
+            offerRepository.save(offer);
 
             Contract contract = new Contract(order, driver, manager, 1000);
             manager.createContract(contract);
