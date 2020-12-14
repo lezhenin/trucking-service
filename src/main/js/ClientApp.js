@@ -1,17 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import { Route, Switch, Link, BrowserRouter } from 'react-router-dom';
+
 import Orders from './orders'
 import Contracts from './contracts'
-import ClientApp from "./ClientApp";
 
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
-
-import { BrowserRouter } from 'react-router-dom';
-
-class App extends React.Component {
+class ClientApp extends React.Component {
     render() {
         return (
-            <BrowserRouter basename="/react/client/index">
+                <BrowserRouter basename="/react/client/index">
                 <div>
                 You are logged in as client:
                 <div className="hlist">
@@ -33,7 +29,4 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(
-    <ClientApp />,
-    document.getElementById('react')
-)
+export default ClientApp;

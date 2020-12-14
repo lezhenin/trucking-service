@@ -10,7 +10,7 @@ body {
   border: 1px solid #cccccc;
   margin: 0px auto; 
   padding: 20px 20px; 
-  width: 850px;
+  width: 900px;
 }
 
 h2 {
@@ -87,8 +87,17 @@ form div.submit button {
   font-variant: small-caps;
 }
 
+div.hlist {
+
+}
+
+div.hlist > ul li {
+  float: left;
+  text-align: center;
+}
+
 div.truckingitemlist {
-    
+
 }
 
 div.truckingitemlist > table > tbody > tr > td > button {
