@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import ItemTable from "./ItemTable";
 
 class Orders extends React.Component {
 
@@ -72,51 +73,34 @@ class Orders extends React.Component {
 
 class OrderTable extends React.Component {
 
-    renderHeader() {
-        const fields = [
+    render() {
+        const header = [
             'Identificator', 'Cargo weight', 'Cargo size',
             'Loading address', 'Shipping address', 'State',
-            'Offer', 'Actions'
-        ].map((f, id) => { return <th key={id}>{f}</th> })
-        return (
-            <tr>
-                {fields}
-            </tr>
-        )
-    }
+            'Offer Id', 'Actions'
+        ]
 
-    renderBody() {
-        return this.props.orders.map(o =>
-            <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.cargoWeight}</td>
-                <td>({o.cargoWidth}, {o.cargoLength}, {o.cargoHeight})</td>
-                <td>{o.loadingAddress}</td>
-                <td>{o.shippingAddress}</td>
-                <td>{o.orderState}</td>
-                <td>{o.offerId}</td>
-                <td>
-                    {(o.orderState !== 'PUBLISHED')
+        const data = this.props.orders.map((o) => {
+            return {
+                key: o.id,
+                values: [
+                    o.id, o.cargoWeight,
+                    <>({o.cargoWidth}, {o.cargoLength}, {o.cargoHeight})</>,
+                    o.loadingAddress, o.shippingAddress,
+                    o.orderState, o.offerId,
+                    <>{(o.orderState !== 'PUBLISHED')
                         ? <button disabled>D</button>
                         : <button onClick={() => this.props.handleDelete(o.id)}>D</button>
-                    }
-                </td>
-
-            </tr>
-        );
-    }
-
-    render() {
+                    }</>,
+                ]
+            }
+        })
 
         return (
-            <table>
-                <thead>
-                {this.renderHeader()}
-                </thead>
-                <tbody>
-                {this.renderBody()}
-                </tbody>
-            </table>
+            <ItemTable
+                header={header}
+                data={data}
+            />
         )
     }
 }

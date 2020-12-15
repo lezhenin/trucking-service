@@ -4,35 +4,11 @@ class ItemTable extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            items: []
-        }
     }
-
-    // addItem(item) {
-    //     const items = this.state.contracts.concat(item)
-    //     this.setState({ items: items })
-    // }
-    //
-    // updateItem(item) {
-    //     const items = this.state.items.map((i) => {
-    //         if (i.id === item.id) {
-    //             return item
-    //         } else {
-    //             return i
-    //         }
-    //     })
-    //     this.setState({ items: items })
-    // }
-    //
-    // removeItem(id) {
-    //     const items = this.state.items.filter((i) => i.id !== id)
-    //     this.setState({ items: items })
-    // }
 
     renderHeader() {
         const columns = this.props.header.map((f, id) => {
-            return <th key={columns}>{f}</th>
+            return <th key={id}>{f}</th>
         })
         return (
             <tr>
@@ -42,12 +18,12 @@ class ItemTable extends React.Component {
     }
 
     renderBody() {
-        return this.state.items.map(i => {
-            const row = this.props.row(i).map((value, id) => {
-                return <th key={id}>{value}</th>
+        return this.props.data.map(data => {
+            const row = data.values.map((value, id) => {
+                return <td key={id}>{value}</td>
             })
             return (
-                <tr key={i.id}>
+                <tr key={data.key}>
                     {row}
                 </tr>
             )
@@ -69,3 +45,5 @@ class ItemTable extends React.Component {
     }
 
 }
+
+export default ItemTable;

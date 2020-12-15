@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import ItemTable from "./ItemTable";
 
 class Offers extends React.Component {
 
@@ -80,43 +81,29 @@ class OfferFilter extends React.Component {
 
 class OfferTable extends React.Component {
 
-    renderHeader() {
-        const fields = [
-            'Identificator',
-            'Order Id', 'Driver Id', 'Client id',
-            'Price', 'Accepted'
-        ].map((f, id) => { return <th key={id}>{f}</th> })
-        return (
-            <tr>
-                {fields}
-            </tr>
-        )
-    }
-
-    renderBody() {
-        return this.props.offers.map(o =>
-            <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.orderId}</td>
-                <td>{o.driverId}</td>
-                <td>{o.clientId}</td>
-                <td>{o.price}</td>
-                <td>{o.accepted}</td>
-            </tr>
-        );
-    }
-
     render() {
+        const header = [
+            'Identificator', 'Order Id',
+            'Driver Id', 'Client id',
+            'Price', 'Accepted'
+        ]
+
+        const data = this.props.offers.map((o) => {
+            return {
+                key: o.id,
+                values: [
+                    o.id, o.orderId,
+                    o.driverId, o.clientId,
+                    o.price, o.accepted
+                ]
+            }
+        })
 
         return (
-            <table>
-                <thead>
-                {this.renderHeader()}
-                </thead>
-                <tbody>
-                {this.renderBody()}
-                </tbody>
-            </table>
+            <ItemTable
+                header={header}
+                data={data}
+            />
         )
     }
 }

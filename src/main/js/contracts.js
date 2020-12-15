@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import ItemTable from "./ItemTable";
 
 class Contracts extends React.Component {
 
@@ -119,53 +120,39 @@ class Contracts extends React.Component {
 
 class ContractTable extends React.Component {
 
-    renderHeader() {
-        const fields = [
+    render() {
+
+        const header = [
             'Contract Id', 'Manager Id', 'Order Id',
             'Client Id', 'Client status', 'Driver Id', 'Driver Status',
             'Payment', 'Actions'
-        ].map((f, id) => { return <th key={id}>{f}</th> })
-        return (
-            <tr>
-                {fields}
-            </tr>
-        )
-    }
+        ]
 
-    renderBody() {
-        return this.props.contracts.map(c =>
-            <tr key={c.id}>
-                <td>{c.id}</td>
-                <td>{c.managerId}</td>
-                <td>{c.orderId}</td>
-                <td>{c.clientId}</td>
-                <td>{c.clientStatus}</td>
-                <td>{c.driverId}</td>
-                <td>{c.driverStatus}</td>
-                <td>{c.payment}</td>
-                <td>
-                    <button onClick={() => this.props.handleApprove(c.id)}>A</button>
-                    <button onClick={() => this.props.handleRefuse(c.id)}>R</button>
-                    <button onClick={() => this.props.handleComplete(c.id)}>C</button>
-                </td>
-
-            </tr>
-        );
-    }
-
-    render() {
+        const data = this.props.contracts.map((c) => {
+            return {
+                key: c.id,
+                values: [
+                    c.id, c.managerId, c.orderId,
+                    c.clientId, c.clientStatus,
+                    c.driverId, c.driverStatus,
+                    c.payment,
+                    <>
+                        <button onClick={() => this.props.handleApprove(c.id)}>A</button>
+                        <button onClick={() => this.props.handleRefuse(c.id)}>R</button>
+                        <button onClick={() => this.props.handleComplete(c.id)}>C</button>
+                    </>,
+                ]
+            }
+        })
 
         return (
-            <table>
-                <thead>
-                {this.renderHeader()}
-                </thead>
-                <tbody>
-                {this.renderBody()}
-                </tbody>
-            </table>
+            <ItemTable
+                header={header}
+                data={data}
+            />
         )
     }
 }
+
 
 export default Contracts;
