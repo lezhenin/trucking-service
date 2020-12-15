@@ -15,10 +15,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
 public class DriverService {
+
+    public enum OrderView {
+        ACCEPTED,
+        AVAILABLE
+    }
 
     private final DriverRepository driverRepository;
     private final ContractRepository contractRepository;
@@ -38,10 +44,28 @@ public class DriverService {
     }
 
     public List<OrderData> getOrders(Long driverId) {
+        return getAcceptedOrders(driverId);
+    }
+
+    public List<OrderData> getOrders(Long driverId, OrderView view) {
+        if (view == null || view == OrderView.ACCEPTED) {
+            return getAcceptedOrders(driverId);
+        } else {
+            return getAvailableOrders(driverId);
+        }
+    }
+
+    public List<OrderData> getAcceptedOrders(Long driverId) {
         Driver driver = driverRepository.findById(driverId).get();
         List<Contract> contracts = contractRepository.findAllByContractors(driver);
         List<Order> orders = contracts.stream().map(Contract::getOrder).collect(Collectors.toList());
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
+    }
+
+    public List<OrderData> getAvailableOrders(Long driverId) {
+        Driver driver = driverRepository.findById(driverId).get();
+        Stream<Order> orders = orderRepository.findAll().stream().filter(o -> o.getOffer() == null);
+        return orders.map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
     public Optional<OrderData> getOrder(Long driverId, Long orderId) {

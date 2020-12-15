@@ -42,11 +42,13 @@ public class DriverController {
     private OrderData addLinksToOrder(Principal principal, OrderData order) throws Exception {
         Link selfLink = linkTo(methodOn(DriverController.class)
                 .getOrder(principal, order.getId())).withSelfRel();
-        Link allLink = linkTo(methodOn(DriverController.class)
-                .getOrders(principal)).withRel("orders");
+        Link allAvailableLink = linkTo(methodOn(DriverController.class)
+                .getOrders(principal, "available")).withRel("availableOrders");
+        Link allAcceptedLink = linkTo(methodOn(DriverController.class)
+                .getOrders(principal, "accepted")).withRel("availableOrders");
         Link offersLink = linkTo(methodOn(DriverController.class)
                 .getOffers(principal, order.getId())).withRel("offers");
-        return order.add(selfLink, allLink, offersLink);
+        return order.add(selfLink, allAcceptedLink, allAvailableLink, offersLink);
     }
 
     private OfferData addLinksToOffer(Principal principal, OfferData offer) throws Exception {
@@ -74,13 +76,21 @@ public class DriverController {
     }
 
     @GetMapping("/orders")
-    CollectionModel<OrderData> getOrders(Principal principal) throws Exception {
+    CollectionModel<OrderData> getOrders(Principal principal, @RequestParam(required = false) String view) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        List<OrderData> orders = driverService.getOrders(id);
+
+        DriverService.OrderView orderView = null;
+        if (view.equals("accepted")) {
+            orderView = DriverService.OrderView.ACCEPTED;
+        } else if (view.equals("available")) {
+            orderView = DriverService.OrderView.AVAILABLE;
+        }
+
+        List<OrderData> orders = driverService.getOrders(id, orderView);
         for (OrderData order: orders) {
             addLinksToOrder(principal, order);
         }
-        Link selfLink = linkTo(methodOn(DriverController.class).getOrders(principal)).withSelfRel();
+        Link selfLink = linkTo(methodOn(DriverController.class).getOrders(principal, view)).withSelfRel();
         return CollectionModel.of(orders, selfLink);
     }
 

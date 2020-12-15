@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Orders from './Orders'
-import Offers from "./offers";
+import Offers from "./Offers";
 import Contracts from './Contracts'
 
 class ClientApp extends React.Component {

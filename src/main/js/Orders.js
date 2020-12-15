@@ -6,11 +6,17 @@ class Orders extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { orders: [] };
+        this.state = {
+            orders: []
+        };
     }
 
-    getOrders() {
-        axios.get(this.props.collectionUrl)
+    getOrders(viewOption) {
+        const url = viewOption
+            ? `${this.props.collectionUrl}?view=${viewOption}`
+            : this.props.collectionUrl
+
+        axios.get(url)
             .then((response) => {
                 console.log(response)
                 this.setState({ orders: response.data._embedded.orderDatas })
@@ -43,7 +49,7 @@ class Orders extends React.Component {
     }
 
     componentDidMount() {
-        this.getOrders()
+        this.getOrders(null)
     }
 
     render() {
@@ -52,6 +58,11 @@ class Orders extends React.Component {
 
                 <div className="truckingitemlist">
                     <h2>List of orders</h2>
+
+                    {this.props.viewOptions && this.props.viewOptions.map((o) => {
+                        return <button onClick={() => {this.getOrders(o)}}>{o}</button>
+                    })}
+
                     <OrderTable
                         orders={this.state.orders}
                         actions={this.props.actions}

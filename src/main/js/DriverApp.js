@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Orders from './Orders'
-import Offers from "./offers";
+import Offers from "./Offers";
 import Contracts from './Contracts'
 
 class DriverApp extends React.Component {
@@ -35,10 +35,11 @@ class DriverApp extends React.Component {
                     <Route exact path='/driver'>
                         <Redirect to={'/driver/orders'} />
                     </Route>
-                    <Route path='/driver/orders'>
+                    <Route exact path='/driver/orders'>
                         <Orders
                             collectionUrl={`${apiUrl}/orders`}
                             actions={orderActions}
+                            viewOptions={['accepted', 'available']}
                         />
                     </Route>
                     <Route path='/driver/offers'>
