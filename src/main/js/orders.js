@@ -76,7 +76,7 @@ class OrderTable extends React.Component {
         const fields = [
             'Identificator', 'Cargo weight', 'Cargo size',
             'Loading address', 'Shipping address', 'State',
-            'Actions'
+            'Offer', 'Actions'
         ].map((f, id) => { return <th key={id}>{f}</th> })
         return (
             <tr>
@@ -94,6 +94,7 @@ class OrderTable extends React.Component {
                 <td>{o.loadingAddress}</td>
                 <td>{o.shippingAddress}</td>
                 <td>{o.orderState}</td>
+                <td>{o.offerId}</td>
                 <td>
                     {(o.orderState !== 'PUBLISHED')
                         ? <button disabled>D</button>
@@ -223,6 +224,7 @@ class OrderForm extends React.Component {
 
         )
     }
+
 }
 
 export default Orders;

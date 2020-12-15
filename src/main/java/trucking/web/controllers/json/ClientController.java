@@ -114,9 +114,10 @@ public class ClientController {
     }
 
     @GetMapping("/offers/{offerId}")
-    OfferData getOffer(Principal principal, @PathVariable Long offerId) {
+    OfferData getOffer(Principal principal, @PathVariable Long offerId) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        return clientService.getOffer(id, offerId).get();
+        OfferData offer = clientService.getOffer(id, offerId).get();
+        return addLinksToOffer(principal, offer);
     }
 
     @GetMapping("/offers/{offerId}/accept")

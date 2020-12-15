@@ -7,6 +7,7 @@ import trucking.model.*;
 import trucking.repository.*;
 import trucking.web.datatransfer.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -48,7 +49,13 @@ public class ClientService {
 
     public List<OfferData> getOffers(Long clientId, Long orderId)  {
         Client client = clientRepository.findById(clientId).get();
-        Order order = orderRepository.findById(orderId).get();
+
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if (!optionalOrder.isPresent()) {
+            return Collections.emptyList();
+        }
+
+        Order order = optionalOrder.get();
         List<Offer> offers = offerRepository.findAllByOrder(order);
         return offers.stream().map(DataObjectMapper::dataFromOffer).collect(Collectors.toList());
     }
