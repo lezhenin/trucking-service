@@ -10,7 +10,7 @@ class Contracts extends React.Component {
     }
 
     getContracts() {
-        axios.get('/api/client/contracts')
+        axios.get(this.props.collectionUrl)
             .then((response) => {
                 console.log(response)
                 this.setState({ contracts: response.data._embedded.contractDatas })
@@ -21,7 +21,7 @@ class Contracts extends React.Component {
     }
 
     deleteContract(id) {
-        axios.delete('/api/client/contracts/' + id)
+        axios.delete(`${this.props.collectionUrl}/${id}`)
             .then((response) => {
                 const contracts = this.state.contracts.filter((c) => c.id !== id)
                 this.setState({ contracts: contracts })
@@ -32,7 +32,7 @@ class Contracts extends React.Component {
     }
 
     postContract(contract) {
-        axios.post('/api/client/contracts/', contract)
+        axios.post(this.props.collectionUrl, contract)
             .then((response) => {
                 const contracts = this.state.contracts.concat(response.data)
                 this.setState({ contracts: contracts })
@@ -43,7 +43,7 @@ class Contracts extends React.Component {
     }
 
     approveContract(id) {
-        axios.get('/api/client/contracts/' + id + '/approve')
+        axios.get(`${this.props.collectionUrl}/${id}/approve`)
             .then((response) => {
                 console.log(response)
                 const contracts = this.state.contracts.map((c) => {
@@ -61,7 +61,7 @@ class Contracts extends React.Component {
     }
 
     refuseContract(id) {
-        axios.get('/api/client/contracts/' + id + '/refuse')
+        axios.get(`${this.props.collectionUrl}/${id}/refuse`)
             .then((response) => {
                 const contracts = this.state.contracts.map((c) => {
                     if (c.id === id) {
@@ -78,7 +78,7 @@ class Contracts extends React.Component {
     }
 
     completeContract(id) {
-        axios.get('/api/client/contracts/' + id + '/complete')
+        axios.get(`${this.props.collectionUrl}/${id}/complete`)
             .then((response) => {
                 const contracts = this.state.contracts.map((c) => {
                     if (c.id === id) {

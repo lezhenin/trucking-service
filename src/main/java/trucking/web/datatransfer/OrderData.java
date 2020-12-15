@@ -20,7 +20,7 @@ public class OrderData extends RepresentationModel<OrderData> {
 
     private Order.State orderState;
 
-    private String offer = null;
+    private Long offerId = null;
 
     public OrderData() { }
 
@@ -34,7 +34,8 @@ public class OrderData extends RepresentationModel<OrderData> {
             String loadingAddress,
             String deadline,
             Long clientId,
-            Order.State orderState
+            Order.State orderState,
+            Long offerId
     ) {
         this.id = id;
         this.cargoWeight = cargoWeight;
@@ -46,6 +47,7 @@ public class OrderData extends RepresentationModel<OrderData> {
         this.deadline = deadline;
         this.clientId = clientId;
         this.orderState = orderState;
+        this.offerId = offerId;
     }
 
     public Long getId() {
@@ -128,11 +130,11 @@ public class OrderData extends RepresentationModel<OrderData> {
         this.orderState = orderState;
     }
 
-    public String getOffer() {
-        return offer;
+    public Long getOfferId() {
+        return offerId;
     }
 
-    public void setOffer(String offer) {
-        this.offer = offer;
+    public void setOfferId(Long offerId) {
+        this.offerId = offerId;
     }
 }

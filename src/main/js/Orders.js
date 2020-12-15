@@ -6,11 +6,11 @@ class Orders extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {orders: []};
+        this.state = { orders: [] };
     }
 
     getOrders() {
-        axios.get('/api/client/orders')
+        axios.get(this.props.collectionUrl)
             .then((response) => {
                 console.log(response)
                 this.setState({ orders: response.data._embedded.orderDatas })
@@ -21,7 +21,7 @@ class Orders extends React.Component {
     }
 
     deleteOrder(id) {
-        axios.delete('/api/client/orders/' + id)
+        axios.delete(`${this.props.collectionUrl}/${id}`)
             .then((response) => {
                 const orders = this.state.orders.filter((o) => o.id !== id)
                 this.setState({ orders: orders })
@@ -32,7 +32,7 @@ class Orders extends React.Component {
     }
 
     postOrder(order) {
-        axios.post('/api/client/orders/', order)
+        axios.post(this.props.collectionUrl, order)
             .then((response) => {
                 const orders = this.state.orders.concat(response.data)
                 this.setState({ orders: orders })
@@ -54,16 +54,19 @@ class Orders extends React.Component {
                     <h2>List of orders</h2>
                     <OrderTable
                         orders={this.state.orders}
+                        actions={this.props.actions}
                         handleDelete={(id) => {this.deleteOrder(id)}}
                     />
                 </div>
 
-                <div>
-                    <h2>Create new order</h2>
-                    <OrderForm
-                        handleCreate={(o) => {this.postOrder(o)}}
-                    />
-                </div>
+                {this.props.actions.create &&
+                    <div>
+                        <h2>Create new order</h2>
+                        <OrderForm
+                            handleCreate={(o) => {this.postOrder(o)}}
+                        />
+                    </div>
+                }
 
             </div>
         )
@@ -73,33 +76,56 @@ class Orders extends React.Component {
 
 class OrderTable extends React.Component {
 
-    render() {
-        const header = [
+    makeHeader() {
+
+        let header = [
             'Identificator', 'Cargo weight', 'Cargo size',
             'Loading address', 'Shipping address', 'State',
-            'Offer Id', 'Actions'
+            'Offer Id'
         ]
 
-        const data = this.props.orders.map((o) => {
-            return {
+        if (this.props.actions.delete) {
+            header = header.concat('Actions')
+        }
+
+        return header;
+    }
+
+    makeData() {
+
+        return this.props.orders.map((o) => {
+
+            let item = {
                 key: o.id,
                 values: [
                     o.id, o.cargoWeight,
                     <>({o.cargoWidth}, {o.cargoLength}, {o.cargoHeight})</>,
                     o.loadingAddress, o.shippingAddress,
-                    o.orderState, o.offerId,
-                    <>{(o.orderState !== 'PUBLISHED')
-                        ? <button disabled>D</button>
-                        : <button onClick={() => this.props.handleDelete(o.id)}>D</button>
-                    }</>,
+                    o.orderState, o.offerId
                 ]
             }
+
+            if (this.props.actions.delete) {
+                item.values = item.values.concat(
+                    <>
+                        {(o.orderState !== 'PUBLISHED')
+                            ? <button disabled>D</button>
+                            : <button onClick={() => this.props.handleDelete(o.id)}>D</button>
+                        }
+                    </>
+                )
+            }
+
+            return item
         })
 
+    }
+
+    render() {
         return (
             <ItemTable
-                header={header}
-                data={data}
+                header={this.makeHeader()}
+                data={this.makeData()}
             />
         )
     }

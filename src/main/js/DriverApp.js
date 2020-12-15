@@ -1,8 +1,8 @@
 import React from "react";
 import {
+    Link,
     Route,
     Switch,
-    Link,
     Redirect
 } from 'react-router-dom';
 
@@ -10,47 +10,47 @@ import Orders from './Orders'
 import Offers from "./offers";
 import Contracts from './Contracts'
 
-class ClientApp extends React.Component {
+class DriverApp extends React.Component {
     render() {
 
-        const apiUrl = "/api/client"
+        const apiUrl = "/api/driver"
 
         const orderActions = {
-            create: true,
-            delete: true
+            create: false,
+            delete: false
         }
 
         return (
-                <div>
+            <div>
                 You are logged in as client:
                 <div className="hlist">
                     <ul>
-                        <li><Link to="/client/orders">Orders</Link></li>
-                        <li><Link to="/client/offers">Offers</Link></li>
-                        <li><Link to="/client/contracts">Contracts</Link></li>
+                        <li><Link to="/driver/orders">Orders</Link></li>
+                        <li><Link to="/driver/offers">Offers</Link></li>
+                        <li><Link to="/driver/contracts">Contracts</Link></li>
                     </ul>
                 </div>
                 <hr />
                 <Switch>
-                    <Route exact path='/client'>
-                        <Redirect to={'/client/orders'} />
+                    <Route exact path='/driver'>
+                        <Redirect to={'/driver/orders'} />
                     </Route>
-                    <Route path='/client/orders'>
+                    <Route path='/driver/orders'>
                         <Orders
                             collectionUrl={`${apiUrl}/orders`}
                             actions={orderActions}
                         />
                     </Route>
-                    <Route path='/client/offers'>
+                    <Route path='/driver/offers'>
                         <Offers collectionUrl={`${apiUrl}/offers`} />
                     </Route>
-                    <Route path='/client/contracts'>
+                    <Route path='/driver/contracts'>
                         <Contracts collectionUrl={`${apiUrl}/contracts`} />
                     </Route>
                 </Switch>
-                </div>
+            </div>
         )
     }
 }
 
-export default ClientApp;
+export default DriverApp;

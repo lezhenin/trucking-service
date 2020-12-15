@@ -94,7 +94,8 @@ class OfferTable extends React.Component {
                 values: [
                     o.id, o.orderId,
                     o.driverId, o.clientId,
-                    o.price, o.accepted
+                    o.price,
+                    o.accepted ? 'true' : 'false'
                 ]
             }
         })

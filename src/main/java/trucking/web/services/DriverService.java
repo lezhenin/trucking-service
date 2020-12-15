@@ -10,7 +10,9 @@ import trucking.repository.OfferRepository;
 import trucking.repository.OrderRepository;
 import trucking.web.datatransfer.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,12 +44,30 @@ public class DriverService {
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
+    public Optional<OrderData> getOrder(Long driverId, Long orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        return order.map(DataObjectMapper::dataFromOrder);
+    }
+
     public List<OfferData> getOffers(Long driverId, Long orderId)  {
         Driver driver = driverRepository.findById(driverId).get();
-        Order order = orderRepository.findById(orderId).get();
+
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if (!optionalOrder.isPresent()) {
+            return Collections.emptyList();
+        }
+
+        Order order = optionalOrder.get();
         List<Offer> offers = offerRepository.findAllByOrder(order);
         return offers.stream().map(DataObjectMapper::dataFromOffer).collect(Collectors.toList());
     }
+
+    public Optional<OfferData> getOffer(Long driverId, Long offerId)  {
+        Optional<Offer> offer = offerRepository.findById(offerId);
+        offer = offer.filter((o) -> Objects.equals(o.getDriver().getId(), driverId));
+        return offer.map(DataObjectMapper::dataFromOffer);
+    }
+
 
     public OfferData createOffer(Long driverId, NewOfferData newOfferData) throws Exception {
         Driver driver = driverRepository.findById(driverId).get();
@@ -62,6 +82,12 @@ public class DriverService {
         Driver driver = driverRepository.findById(driverId).get();
         List<Contract> contracts = contractRepository.findAllByContractors(driver);
         return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
+    }
+
+    public Optional<ContractData> getContract(Long driverId, Long contractId) {
+        Optional<Contract> contract = contractRepository.findById(contractId);
+        contract = contract.filter((o) -> Objects.equals(o.getDriver().getId(), driverId));
+        return contract.map(DataObjectMapper::dataFromContract);
     }
 
     public ContractData approveContract(Long driverId, Long contractId) throws Exception {

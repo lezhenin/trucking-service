@@ -123,7 +123,8 @@ public class ClientController {
     @GetMapping("/offers/{offerId}/accept")
     OfferData acceptOffer(Principal principal, @PathVariable Long offerId) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        return clientService.acceptOffer(id, offerId);
+        OfferData offer = clientService.acceptOffer(id, offerId);
+        return addLinksToOffer(principal, offer);
     }
 
     @GetMapping("/contracts")

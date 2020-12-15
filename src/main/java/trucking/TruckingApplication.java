@@ -49,8 +49,8 @@ public class TruckingApplication {
 
             driver.createOffer(offer);
             client.acceptOffer(offer);
-            orderRepository.save(order);
             offerRepository.save(offer);
+            orderRepository.save(order);
 
             Contract contract = new Contract(order, driver, manager, 1000);
             manager.createContract(contract);

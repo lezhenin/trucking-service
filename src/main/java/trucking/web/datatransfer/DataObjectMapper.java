@@ -7,7 +7,8 @@ public class DataObjectMapper {
     public static OrderData dataFromOrder(Order order) {
         return new OrderData(order.getId(), order.getCargoWeight(), order.getCargoHeight(), order.getCargoWidth(),
                 order.getCargoLength(), order.getShippingAddress(), order.getLoadingAddress(), order.getDeadline(),
-                order.getClient().getId(), order.getState());
+                order.getClient().getId(), order.getState(),
+                order.getOffer() != null ? order.getOffer().getId() : null);
     }
 
     public static Order orderFromData(NewOrderData data, Client client) {
