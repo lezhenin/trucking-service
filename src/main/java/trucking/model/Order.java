@@ -15,7 +15,7 @@ public class Order extends Entity {
     }
 
     @ManyToOne private Client client;
-    @OneToOne private Offer offer = null;
+    @OneToOne(orphanRemoval = true) private Offer offer = null;
 
     private int cargoWeight;
     private int cargoHeight;

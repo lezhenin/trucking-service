@@ -27,6 +27,7 @@ public class ClientServiceTest {
     @Autowired private OrderRepository orderRepository;
     @Autowired private ContractRepository contractRepository;
     @Autowired private VehicleRepository vehicleRepository;
+    @Autowired private OfferRepository offerRepository;
 
     @BeforeEach
     void prepareData() {
@@ -36,6 +37,7 @@ public class ClientServiceTest {
         driverRepository.deleteAll();
         vehicleRepository.deleteAll();
         managerRepository.deleteAll();
+        offerRepository.deleteAll();
         clientRepository.deleteAll();
     }
 
@@ -103,6 +105,14 @@ public class ClientServiceTest {
         client.createOrder(order);
         orderRepository.save(order);
 
+        Offer offer = generateOffer(order, driver);
+        offerRepository.save(offer);
+
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+        orderRepository.save(order);
+        offerRepository.save(offer);
+
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
         contractRepository.save(contract);
@@ -132,6 +142,14 @@ public class ClientServiceTest {
 
         client.createOrder(order);
         orderRepository.save(order);
+
+        Offer offer = generateOffer(order, driver);
+        offerRepository.save(offer);
+
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+        orderRepository.save(order);
+        offerRepository.save(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
@@ -167,6 +185,14 @@ public class ClientServiceTest {
         client.createOrder(order);
         orderRepository.save(order);
 
+        Offer offer = generateOffer(order, driver);
+        offerRepository.save(offer);
+
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+        orderRepository.save(order);
+        offerRepository.save(offer);
+
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);
         contractRepository.save(contract);
@@ -200,6 +226,14 @@ public class ClientServiceTest {
 
         client.createOrder(order);
         orderRepository.save(order);
+
+        Offer offer = generateOffer(order, driver);
+        offerRepository.save(offer);
+
+        driver.createOffer(offer);
+        client.acceptOffer(offer);
+        orderRepository.save(order);
+        offerRepository.save(offer);
 
         Contract contract = generateContract(order, driver, manager);
         manager.createContract(contract);

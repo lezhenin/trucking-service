@@ -17,6 +17,10 @@ class TestUtils {
         );
     }
 
+    static Offer generateOffer(Order order, Driver driver) {
+        return new Offer(order, driver, 1000, false);
+    }
+
     static Contract generateContract(Order order, Driver driver, Manager manager) {
         return new Contract(order, driver, manager, 1000);
     }
