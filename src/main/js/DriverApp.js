@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Orders from './Orders'
-import Offers from "./Offers";
+import OfferPage from "./offers/OfferPage";
 import Contracts from './Contracts'
 
 class DriverApp extends React.Component {
@@ -48,7 +48,7 @@ class DriverApp extends React.Component {
                         />
                     </Route>
                     <Route path='/driver/offers'>
-                        <Offers
+                        <OfferPage
                             collectionUrl={`${apiUrl}/offers`}
                             actions={offerActions}
                         />
