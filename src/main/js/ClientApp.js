@@ -20,6 +20,11 @@ class ClientApp extends React.Component {
             delete: true
         }
 
+        const offerActions = {
+            accept: true,
+            create: false
+        }
+
         return (
                 <div>
                 You are logged in as client:
@@ -42,10 +47,15 @@ class ClientApp extends React.Component {
                         />
                     </Route>
                     <Route path='/client/offers'>
-                        <Offers collectionUrl={`${apiUrl}/offers`} />
+                        <Offers
+                            collectionUrl={`${apiUrl}/offers`}
+                            actions={offerActions}
+                        />
                     </Route>
                     <Route path='/client/contracts'>
-                        <Contracts collectionUrl={`${apiUrl}/contracts`} />
+                        <Contracts
+                            collectionUrl={`${apiUrl}/contracts`}
+                        />
                     </Route>
                 </Switch>
                 </div>

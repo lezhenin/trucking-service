@@ -48,13 +48,10 @@ public class ClientService {
     }
 
     public List<OfferData> getOffers(Long clientId, Long orderId)  {
-        Client client = clientRepository.findById(clientId).get();
-
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        if (!optionalOrder.isPresent()) {
+        if (!optionalOrder.isPresent() || !Objects.equals(optionalOrder.get().getClient().getId(), clientId)) {
             return Collections.emptyList();
         }
-
         Order order = optionalOrder.get();
         List<Offer> offers = offerRepository.findAllByOrder(order);
         return offers.stream().map(DataObjectMapper::dataFromOffer).collect(Collectors.toList());

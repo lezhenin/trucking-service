@@ -80,10 +80,12 @@ public class DriverController {
         Long id = usernameIdMapper.map(principal);
 
         DriverService.OrderView orderView = null;
-        if (view.equals("accepted")) {
-            orderView = DriverService.OrderView.ACCEPTED;
-        } else if (view.equals("available")) {
-            orderView = DriverService.OrderView.AVAILABLE;
+        if (view != null) {
+            if (view.equals("accepted")) {
+                orderView = DriverService.OrderView.ACCEPTED;
+            } else if (view.equals("available")) {
+                orderView = DriverService.OrderView.AVAILABLE;
+            }
         }
 
         List<OrderData> orders = driverService.getOrders(id, orderView);

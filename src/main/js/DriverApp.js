@@ -20,6 +20,11 @@ class DriverApp extends React.Component {
             delete: false
         }
 
+        const offerActions = {
+            accept: false,
+            create: true
+        }
+
         return (
             <div>
                 You are logged in as client:
@@ -43,7 +48,10 @@ class DriverApp extends React.Component {
                         />
                     </Route>
                     <Route path='/driver/offers'>
-                        <Offers collectionUrl={`${apiUrl}/offers`} />
+                        <Offers
+                            collectionUrl={`${apiUrl}/offers`}
+                            actions={offerActions}
+                        />
                     </Route>
                     <Route path='/driver/contracts'>
                         <Contracts collectionUrl={`${apiUrl}/contracts`} />

@@ -10,6 +10,8 @@ public class NewOfferData {
         this.orderId = orderId;
     }
 
+    public NewOfferData() { }
+
     public int getPrice() {
         return price;
     }
