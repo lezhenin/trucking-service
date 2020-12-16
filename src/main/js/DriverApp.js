@@ -35,15 +35,16 @@ class DriverApp extends React.Component {
 
         return (
             <div>
-                You are logged in as driver:
-                <div className="hlist">
-                    <ul>
-                        <li><Link to="/driver/orders">Orders</Link></li>
-                        <li><Link to="/driver/offers">Offers</Link></li>
-                        <li><Link to="/driver/contracts">Contracts</Link></li>
-                    </ul>
+
+                <div>
+                    You are logged in as driver:
+                    <Link to="/driver/orders">Orders</Link>
+                    <Link to="/driver/offers">Offers</Link>
+                    <Link to="/driver/contracts">Contracts</Link>
                 </div>
+
                 <hr />
+
                 <Switch>
                     <Route exact path='/driver'>
                         <Redirect to={'/driver/orders'} />

@@ -3,12 +3,13 @@ import {
     Route,
     Switch,
     Link,
-    Redirect
+    Redirect, NavLink
 } from 'react-router-dom';
 
 import OrderPage from './order/OrderPage'
 import OfferPage from "./offers/OfferPage";
 import ContractPage from './contracts/ContractPage'
+import DriverPage from "./drivers/DriverPage";
 
 class ManagerApp extends React.Component {
 
@@ -38,15 +39,17 @@ class ManagerApp extends React.Component {
 
         return (
             <div>
-                You are logged in as manager:
-                <div className="hlist">
-                    <ul>
-                        <li><Link to="/manager/orders">Orders</Link></li>
-                        <li><Link to="/manager/offers">Offers</Link></li>
-                        <li><Link to="/manager/contracts">Contracts</Link></li>
-                    </ul>
+
+                <div>
+                    You are logged in as manager:
+                    <Link to="/manager/orders">Orders</Link>
+                    <Link to="/manager/offers">Offers</Link>
+                    <Link to="/manager/contracts">Contracts</Link>
+                    <Link to="/manager/drivers">Drivers</Link>
                 </div>
+
                 <hr />
+
                 <Switch>
                     <Route exact path='/manager'>
                         <Redirect to={'/manager/contracts'} />
@@ -67,6 +70,11 @@ class ManagerApp extends React.Component {
                         <ContractPage
                             collectionUrl={`${apiUrl}/contracts`}
                             actions={contractActions}
+                        />
+                    </Route>
+                    <Route path='/manager/drivers'>
+                        <DriverPage
+                            collectionUrl={`${apiUrl}/drivers`}
                         />
                     </Route>
                 </Switch>

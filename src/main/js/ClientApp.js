@@ -35,16 +35,17 @@ class ClientApp extends React.Component {
 
         return (
                 <div>
-                You are logged in as client:
-                <div className="hlist">
-                    <ul>
-                        <li><Link to="/client/orders">Orders</Link></li>
-                        <li><Link to="/client/offers">Offers</Link></li>
-                        <li><Link to="/client/contracts">Contracts</Link></li>
-                    </ul>
-                </div>
-                <hr />
-                <Switch>
+
+                    <div>
+                        You are logged in as client:
+                        <Link to="/client/orders">Orders</Link>
+                        <Link to="/client/offers">Offers</Link>
+                        <Link to="/client/contracts">Contracts</Link>
+                    </div>
+
+                    <hr />
+
+                    <Switch>
                     <Route exact path='/client'>
                         <Redirect to={'/client/orders'} />
                     </Route>

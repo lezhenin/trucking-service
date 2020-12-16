@@ -52,25 +52,25 @@ class ContractTable extends React.Component {
 
         if (this.props.actions.delete) {
             buttons.push(
-                <button onClick={() => this.props.handleDelete(c.id)}>D</button>
+                <button key={0} onClick={() => this.props.handleDelete(c.id)}>D</button>
             )
         }
 
         if (this.props.actions.approve) {
             buttons.push(
-                <button onClick={() => this.props.handleApprove(c.id)}>A</button>
+                <button key={1}  onClick={() => this.props.handleApprove(c.id)}>A</button>
             )
         }
 
         if (this.props.actions.refuse) {
             buttons.push(
-                <button onClick={() => this.props.handleRefuse(c.id)}>R</button>
+                <button key={2}  onClick={() => this.props.handleRefuse(c.id)}>R</button>
             )
         }
 
         if (this.props.actions.complete) {
             buttons.push(
-                <button onClick={() => this.props.handleComplete(c.id)}>C</button>
+                <button key={3}  onClick={() => this.props.handleComplete(c.id)}>C</button>
             )
         }
 
