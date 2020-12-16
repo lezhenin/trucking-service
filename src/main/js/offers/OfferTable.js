@@ -1,5 +1,5 @@
 import React from "react";
-import ItemTable from "../ItemTable";
+import ItemTable from "../utils/ItemTable";
 
 class OfferTable extends React.Component {
 

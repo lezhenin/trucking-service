@@ -1,9 +1,11 @@
 import React from "react";
-import axios from "axios";
 
 import OfferFilter from "./OfferFilter";
 import OfferTable from "./OfferTable";
 import OfferForm from "./OfferForm";
+
+import axios from "axios";
+
 
 class OfferPage extends React.Component {
 

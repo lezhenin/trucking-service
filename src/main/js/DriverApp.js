@@ -6,9 +6,9 @@ import {
     Redirect
 } from 'react-router-dom';
 
-import Orders from './Orders'
+import OrderPage from './order/OrderPage'
 import OfferPage from "./offers/OfferPage";
-import Contracts from './Contracts'
+import ContractPage from './contracts/ContractPage'
 
 class DriverApp extends React.Component {
     render() {
@@ -41,7 +41,7 @@ class DriverApp extends React.Component {
                         <Redirect to={'/driver/orders'} />
                     </Route>
                     <Route exact path='/driver/orders'>
-                        <Orders
+                        <OrderPage
                             collectionUrl={`${apiUrl}/orders`}
                             actions={orderActions}
                             viewOptions={['accepted', 'available']}
@@ -54,7 +54,7 @@ class DriverApp extends React.Component {
                         />
                     </Route>
                     <Route path='/driver/contracts'>
-                        <Contracts collectionUrl={`${apiUrl}/contracts`} />
+                        <ContractPage collectionUrl={`${apiUrl}/contracts`} />
                     </Route>
                 </Switch>
             </div>

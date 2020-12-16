@@ -6,9 +6,9 @@ import {
     Redirect
 } from 'react-router-dom';
 
-import Orders from './Orders'
+import OrderPage from './order/OrderPage'
 import OfferPage from "./offers/OfferPage";
-import Contracts from './Contracts'
+import ContractPage from './contracts/ContractPage'
 
 class ClientApp extends React.Component {
     render() {
@@ -41,7 +41,7 @@ class ClientApp extends React.Component {
                         <Redirect to={'/client/orders'} />
                     </Route>
                     <Route path='/client/orders'>
-                        <Orders
+                        <OrderPage
                             collectionUrl={`${apiUrl}/orders`}
                             actions={orderActions}
                         />
@@ -53,7 +53,7 @@ class ClientApp extends React.Component {
                         />
                     </Route>
                     <Route path='/client/contracts'>
-                        <Contracts
+                        <ContractPage
                             collectionUrl={`${apiUrl}/contracts`}
                         />
                     </Route>
