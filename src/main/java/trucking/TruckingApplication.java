@@ -40,6 +40,14 @@ public class TruckingApplication {
             driverRepository.save(driver);
             usernameIdMapper.put("driver", driver.getId());
 
+            Vehicle secondVehicle = new Vehicle("mercedes", 6500, 200, 200, 350);
+            vehicleRepository.save(secondVehicle);
+
+            Driver secondDriver = new Driver("driver", "number2", "f", "e", secondVehicle);
+            driverRepository.save(secondDriver);
+            usernameIdMapper.put("other-driver", secondDriver.getId());
+
+
             Manager manager = new Manager("manager", "number1", "c", "d");
             managerRepository.save(manager);
             usernameIdMapper.put("manager", manager.getId());

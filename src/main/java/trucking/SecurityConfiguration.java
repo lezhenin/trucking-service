@@ -39,6 +39,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("manager").password("{noop}manager123").roles("MANAGER");
         auth.inMemoryAuthentication().withUser("driver").password("{noop}driver123").roles("DRIVER");
+        auth.inMemoryAuthentication().withUser("other-driver").password("{noop}driver123").roles("DRIVER");
         auth.inMemoryAuthentication().withUser("client").password("{noop}client123").roles("CLIENT");
     }
 
