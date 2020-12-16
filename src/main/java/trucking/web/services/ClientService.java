@@ -40,7 +40,6 @@ public class ClientService {
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
-
     public Optional<OrderData> getOrder(Long clientId, Long orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
         order = order.filter((o) -> Objects.equals(o.getClient().getId(), clientId));

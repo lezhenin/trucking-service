@@ -1,6 +1,8 @@
 package trucking.web.datatransfer;
 
-public class DriverData {
+import org.springframework.hateoas.RepresentationModel;
+
+public class DriverData extends RepresentationModel<DriverData> {
 
     private final Long id;
 
