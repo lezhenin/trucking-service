@@ -55,7 +55,7 @@ class App extends React.Component {
         console.log(path)
 
         return path && (
-            <BrowserRouter basename="/react">
+            <BrowserRouter>
                 <Switch>
                     <Route exact path="/">
                         <Redirect to={path} />

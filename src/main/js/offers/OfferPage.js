@@ -18,8 +18,11 @@ class OfferPage extends React.Component {
     getOffers(orderId) {
         axios.get(`${this.props.collectionUrl}?orderId=${orderId}`)
             .then((response) => {
-                console.log(response)
-                this.setState({ offers: response.data._embedded.offerDatas })
+                const data = response.data
+                const offers = data.hasOwnProperty('_embedded')
+                    ? data._embedded.offerDatas
+                    : []
+                this.setState({ offers: offers })
             })
             .catch((error) => {
                 this.setState({ offers: [] })

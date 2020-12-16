@@ -41,6 +41,7 @@ class ClientApp extends React.Component {
                         <Link to="/client/orders">Orders</Link>
                         <Link to="/client/offers">Offers</Link>
                         <Link to="/client/contracts">Contracts</Link>
+                        <a href="/logout">LogOut</a>
                     </div>
 
                     <hr />

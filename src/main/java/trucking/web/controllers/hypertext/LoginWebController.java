@@ -15,14 +15,14 @@ public class LoginWebController {
 
     @RequestMapping(value = {"/index", "/"})
     public String index() {
-        return "/index";
+        return "react/index";
     }
 
 
-    @RequestMapping(value = {"/react", })
-    public String react() {
-        return "/react/index";
-    }
+//    @RequestMapping(value = {"/react", })
+//    public String react() {
+//        return "/react/index";
+//    }
 
     @RequestMapping("/login")
     public String login() {

@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/driver")
+@RequestMapping("/old/driver")
 public class DriverWebController {
 
     private final DriverService driverService;

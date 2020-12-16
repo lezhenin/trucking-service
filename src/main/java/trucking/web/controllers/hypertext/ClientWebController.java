@@ -13,7 +13,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/old/client")
 public class ClientWebController {
 
     private final ClientService clientService;

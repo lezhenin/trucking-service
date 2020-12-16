@@ -41,6 +41,7 @@ class DriverApp extends React.Component {
                     <Link to="/driver/orders">Orders</Link>
                     <Link to="/driver/offers">Offers</Link>
                     <Link to="/driver/contracts">Contracts</Link>
+                    <a href="/logout">LogOut</a>
                 </div>
 
                 <hr />

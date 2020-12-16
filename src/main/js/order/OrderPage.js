@@ -21,8 +21,11 @@ class OrderPage extends React.Component {
 
         axios.get(url)
             .then((response) => {
-                console.log(response)
-                this.setState({ orders: response.data._embedded.orderDatas })
+                const data = response.data
+                const orders = data.hasOwnProperty('_embedded')
+                    ? data._embedded.orderDatas
+                    : []
+                this.setState({ orders: orders })
             })
             .catch(function (error) {
                 console.log(error);

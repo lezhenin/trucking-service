@@ -46,6 +46,7 @@ class ManagerApp extends React.Component {
                     <Link to="/manager/offers">Offers</Link>
                     <Link to="/manager/contracts">Contracts</Link>
                     <Link to="/manager/drivers">Drivers</Link>
+                    <a href="/logout">LogOut</a>
                 </div>
 
                 <hr />
