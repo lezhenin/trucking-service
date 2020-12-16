@@ -3,6 +3,8 @@ import React from "react";
 import ContractTable from "./ContractTable";
 
 import axios from "axios";
+import OrderForm from "../order/OrderForm";
+import ContractForm from "./ContractForm";
 
 
 class ContractPage extends React.Component {
@@ -109,12 +111,22 @@ class ContractPage extends React.Component {
                     <h2>List of contracts</h2>
                     <ContractTable
                         contracts={this.state.contracts}
+                        actions={this.props.actions}
                         handleDelete={(id) => {this.deleteContract(id)}}
                         handleApprove={(id) => {this.approveContract(id)}}
                         handleRefuse={(id) => {this.refuseContract(id)}}
                         handleComplete={(id) => {this.completeContract(id)}}
                     />
                 </div>
+
+                {this.props.actions.create &&
+                <div>
+                    <h2>Create new contract</h2>
+                    <ContractForm
+                        handleCreate={(c) => {this.postContract(c)}}
+                    />
+                </div>
+                }
 
             </div>
         )

@@ -8,9 +8,10 @@ import ReactDOM from 'react-dom';
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 
 import ClientApp from "./ClientApp";
+import DriverApp from "./DriverApp";
+import ManagerApp from "./ManagerApp";
 
 import axios from "axios";
-import DriverApp from "./DriverApp";
 
 class App extends React.Component {
 
@@ -53,7 +54,6 @@ class App extends React.Component {
         console.log(this.state)
         console.log(path)
 
-
         return path && (
             <BrowserRouter basename="/react">
                 <Switch>
@@ -62,6 +62,9 @@ class App extends React.Component {
                     </Route>
                     <Route path="/client">
                         <ClientApp />
+                    </Route>
+                    <Route path="/manager">
+                        <ManagerApp />
                     </Route>
                     <Route path="/driver">
                         <DriverApp />

@@ -25,9 +25,17 @@ class DriverApp extends React.Component {
             create: true
         }
 
+        const contractActions = {
+            create: false,
+            delete: false,
+            approve: true,
+            refuse: true,
+            complete: true
+        }
+
         return (
             <div>
-                You are logged in as client:
+                You are logged in as driver:
                 <div className="hlist">
                     <ul>
                         <li><Link to="/driver/orders">Orders</Link></li>
@@ -54,7 +62,10 @@ class DriverApp extends React.Component {
                         />
                     </Route>
                     <Route path='/driver/contracts'>
-                        <ContractPage collectionUrl={`${apiUrl}/contracts`} />
+                        <ContractPage
+                            collectionUrl={`${apiUrl}/contracts`}
+                            actions={contractActions}
+                        />
                     </Route>
                 </Switch>
             </div>

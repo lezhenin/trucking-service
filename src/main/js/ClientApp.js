@@ -25,6 +25,14 @@ class ClientApp extends React.Component {
             create: false
         }
 
+        const contractActions = {
+            create: false,
+            delete: false,
+            approve: true,
+            refuse: true,
+            complete: true
+        }
+
         return (
                 <div>
                 You are logged in as client:
@@ -55,6 +63,7 @@ class ClientApp extends React.Component {
                     <Route path='/client/contracts'>
                         <ContractPage
                             collectionUrl={`${apiUrl}/contracts`}
+                            actions={contractActions}
                         />
                     </Route>
                 </Switch>
