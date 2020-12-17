@@ -87,6 +87,43 @@ form div.submit button {
   font-variant: small-caps;
 }
 
+form div.ofilter {
+  background-color: #99cc33;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #000000;
+}
+
+form div.ofilter > label {
+  width: auto;
+  height: auto;
+  line-height: 30px;
+  display: block;
+  float: left;
+  text-align: left;
+  margin-right: 5px;
+  /*padding: 0;*/
+  /*font-weight: bold;*/
+}
+
+form div.ofilter button {
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
+div.vbs {
+  background-color: #99cc33;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #000000;
+}
+
+div.vbs button {
+  font-weight: bold;
+  font-variant: small-caps;
+  margin-left: 5px;
+}
+
 div.hlist {
 
 }
@@ -94,6 +131,10 @@ div.hlist {
 div.hlist > ul li {
   float: left;
   text-align: center;
+}
+
+div.lline > a {
+  margin-left: 5px;
 }
 
 div.truckingitemlist {

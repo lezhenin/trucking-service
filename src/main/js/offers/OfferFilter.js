@@ -27,13 +27,16 @@ class OfferFilter extends React.Component {
     render() {
         return (
             <form onSubmit={(e) => this.handleSubmit(e)}>
-                <label>Order Id:</label>
-                <input
-                    name="orderId"
-                    type="number"
-                    value={this.state.orderId}
-                    onChange={(e) => this.handleChange(e)}
-                />
+                <div className="ofilter">
+                    <label>Order Id:</label>
+                    <input
+                        name="orderId"
+                        type="number"
+                        value={this.state.orderId}
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <button type="submit">Search offers</button>
+                </div>
             </form>
         )
     }

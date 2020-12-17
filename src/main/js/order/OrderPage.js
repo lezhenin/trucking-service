@@ -65,9 +65,13 @@ class OrderPage extends React.Component {
                 <div className="truckingitemlist">
                     <h2>List of orders</h2>
 
-                    {this.props.viewOptions && this.props.viewOptions.map((o) => {
-                        return <button onClick={() => {this.getOrders(o)}}>{o}</button>
-                    })}
+                    {this.props.viewOptions &&
+                        <div className="vbs">
+                            {this.props.viewOptions.map((o) => {
+                                return <button onClick={() => {this.getOrders(o)}}>{o}</button>
+                            })}
+                        </div>
+                    }
 
                     <OrderTable
                         orders={this.state.orders}

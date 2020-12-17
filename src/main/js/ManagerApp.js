@@ -40,7 +40,7 @@ class ManagerApp extends React.Component {
         return (
             <div>
 
-                <div>
+                <div className="lline">
                     You are logged in as manager:
                     <Link to="/manager/orders">Orders</Link>
                     <Link to="/manager/offers">Offers</Link>

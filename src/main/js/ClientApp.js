@@ -36,7 +36,7 @@ class ClientApp extends React.Component {
         return (
                 <div>
 
-                    <div>
+                    <div className="lline">
                         You are logged in as client:
                         <Link to="/client/orders">Orders</Link>
                         <Link to="/client/offers">Offers</Link>

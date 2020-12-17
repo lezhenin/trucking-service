@@ -36,7 +36,7 @@ class DriverApp extends React.Component {
         return (
             <div>
 
-                <div>
+                <div className="lline">
                     You are logged in as driver:
                     <Link to="/driver/orders">Orders</Link>
                     <Link to="/driver/offers">Offers</Link>
