@@ -3,6 +3,8 @@ package trucking.web.controllers.json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import trucking.web.datatransfer.OfferData;
@@ -14,6 +16,7 @@ import trucking.web.services.ClientService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -62,6 +65,18 @@ public class ClientController {
         return contract.add(selfLink, allLink, approveLink, refuseLink, completeLink, orderLink);
     }
 
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity handleException(Exception ex) {
+        System.out.println(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({NoSuchElementException.class})
+    public ResponseEntity handleNoSuchElementException(Exception ex) {
+        System.out.println(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
     public ClientController(
             @Autowired ClientService clientService,
             @Autowired UsernameIdMapper usernameIdMapper
@@ -90,6 +105,7 @@ public class ClientController {
     }
 
     @PostMapping("/orders")
+    @ResponseStatus(HttpStatus.CREATED)
     OrderData createOrder(Principal principal, @RequestBody NewOrderData orderData) throws Exception {
         Long id = usernameIdMapper.map(principal);
         OrderData order = clientService.createOrder(id, orderData);

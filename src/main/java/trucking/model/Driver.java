@@ -32,11 +32,11 @@ public class Driver extends Contractor {
         Driver driver = offer.getDriver();
 
         if (!Objects.equals(driver.getId(), getId())) {
-            throw new Exception("Driver is not associated with driver");
+            throw new ModelException("Offer is not associated with driver");
         }
 
         if (order.hasAcceptedOffer()) {
-            throw new Exception("There is already accepted offer");
+            throw new ModelException("There is already accepted offer");
         }
 
         Vehicle vehicle = driver.getVehicle();
@@ -44,7 +44,7 @@ public class Driver extends Contractor {
                 order.getCargoWidth() > vehicle.getMaxCargoWidth() ||
                 order.getCargoLength() > vehicle.getMaxCargoLength() ||
                 order.getCargoWeight() > vehicle.getMaxCargoWeight()) {
-            throw new Exception("Cargo doesn't fit driver's vehicle");
+            throw new ModelException("Cargo doesn't fit driver's vehicle");
         }
 
     }

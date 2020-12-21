@@ -17,13 +17,13 @@ public class Client extends Contractor {
 
     public void createOrder(Order order) throws Exception {
         if (order.getState() != Order.State.PUBLISHED) {
-            throw new Exception("Order already has been processed");
+            throw new ModelException("Order already has been processed");
         }
     }
 
     public void removeOrder(Order order) throws Exception {
         if (order.getState() != Order.State.PUBLISHED) {
-            throw new Exception("Order already has been processed");
+            throw new ModelException("Order already has been processed");
         }
         order.setState(Order.State.REMOVED);
     }
@@ -34,11 +34,11 @@ public class Client extends Contractor {
         Order order = offer.getOrder();
 
         if (!Objects.equals(order.getClient().getId(), getId())) {
-            throw new Exception("Client is not associated with order");
+            throw new ModelException("Client is not associated with order");
         }
 
         if (order.hasAcceptedOffer()) {
-            throw new Exception("There is already accepted offer");
+            throw new ModelException("There is already accepted offer");
         }
 
         order.setOffer(offer);
