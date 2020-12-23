@@ -17,11 +17,11 @@ class ContractPage extends React.Component {
     getContracts() {
         axios.get(this.props.collectionUrl)
             .then((response) => {
-                console.log(response)
                 this.setState({ contracts: response.data._embedded.contractDatas })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -31,8 +31,9 @@ class ContractPage extends React.Component {
                 const contracts = this.state.contracts.filter((c) => c.id !== id)
                 this.setState({ contracts: contracts })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -42,15 +43,15 @@ class ContractPage extends React.Component {
                 const contracts = this.state.contracts.concat(response.data)
                 this.setState({ contracts: contracts })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
     approveContract(id) {
         axios.get(`${this.props.collectionUrl}/${id}/approve`)
             .then((response) => {
-                console.log(response)
                 const contracts = this.state.contracts.map((c) => {
                     if (c.id === id) {
                         return response.data
@@ -60,8 +61,9 @@ class ContractPage extends React.Component {
                 })
                 this.setState({ contracts: contracts })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -77,8 +79,9 @@ class ContractPage extends React.Component {
                 })
                 this.setState({ contracts: contracts })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -94,8 +97,9 @@ class ContractPage extends React.Component {
                 })
                 this.setState({ contracts: contracts })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 

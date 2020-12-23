@@ -28,7 +28,6 @@ class OrderPage extends React.Component {
                 this.setState({ orders: orders })
             })
             .catch(function (error) {
-                console.log(error);
             })
     }
 

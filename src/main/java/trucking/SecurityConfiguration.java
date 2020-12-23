@@ -20,8 +20,6 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/**").hasAnyRole("CLIENT", "DRIVER", "MANAGER")
-//                .antMatchers("/react/**").hasAnyRole("CLIENT", "DRIVER", "MANAGER")
-//                .antMatchers("/user/**").hasAnyRole("CLIENT", "DRIVER", "MANAGER")
                 .antMatchers("/client/**").hasAnyRole("CLIENT")
                 .antMatchers("/api/client/**").hasAnyRole("CLIENT")
                 .antMatchers("/driver/**").hasAnyRole("DRIVER")
