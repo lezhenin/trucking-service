@@ -23,38 +23,38 @@ public abstract class Contractor extends Person {
         super();
     }
 
-    public void approveContract(Contract contract) throws Exception {
+    public void approveContract(Contract contract) throws ModelException {
         this.checkParticipation(contract);
         this.checkAgreementStatus(contract);
         contract.setContractorStatus(this.role, Contract.Status.APPROVED);
     }
 
-    public void refuseContract(Contract contract) throws Exception {
+    public void refuseContract(Contract contract) throws ModelException {
         this.checkParticipation(contract);
         this.checkAgreementStatus(contract);
         contract.setContractorStatus(this.role, Contract.Status.REFUSED);
     }
 
-    public void completeContract(Contract contract) throws Exception {
+    public void completeContract(Contract contract) throws ModelException {
         this.checkParticipation(contract);
         this.checkCompletionStatus(contract);
         contract.setContractorStatus(this.role, Contract.Status.COMPLETED);
     }
 
-    private void checkParticipation(Contract contract) throws Exception {
+    private void checkParticipation(Contract contract) throws ModelException {
         Contractor participant = contract.getContractors().get(this.role);
         if (!participant.getId().equals(this.getId())) {
             throw new ModelException("Contractor is not associated with contract");
         }
     }
 
-    private void checkAgreementStatus(Contract contract) throws Exception {
+    private void checkAgreementStatus(Contract contract) throws ModelException {
         if (contract.getContractorsStatus().get(this.role) != Contract.Status.NONE) {
             throw new ModelException("Contractor already has approved/refused contract");
         }
     }
 
-    private void checkCompletionStatus(Contract contract) throws Exception {
+    private void checkCompletionStatus(Contract contract) throws ModelException {
 
         Collection<Contract.Status> values = contract.getContractorsStatus().values();
         if (!values.stream().allMatch(s -> s == Contract.Status.APPROVED || s == Contract.Status.COMPLETED)) {

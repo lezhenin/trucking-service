@@ -14,13 +14,14 @@ class DriverPage extends React.Component {
 
     getDrivers() {
            axios.get(this.props.collectionUrl)
-            .then((response) => {
-                console.log(response)
-                this.setState({ drivers: response.data._embedded.driverDatas })
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+               .then((response) => {
+                   console.log(response)
+                   this.setState({ drivers: response.data._embedded.driverDatas })
+               })
+               .catch((error) => {
+                   const message = error.response.data
+                   alert(`Error: ${message}`);
+               })
     }
 
     componentDidMount() {

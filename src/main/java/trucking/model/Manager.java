@@ -20,11 +20,11 @@ public class Manager extends Person {
 
 
         if (offer == null) {
-            throw new Exception("There is no accepted offer");
+            throw new ModelException("There is no accepted offer");
         }
 
         if (!Objects.equals(driver.getId(), offer.getDriver().getId())) {
-            throw new Exception("Driver's offer wasn't accepted");
+            throw new ModelException("Driver's offer wasn't accepted");
         }
 
         if (offer.getPrice() > contract.getPayment()) {
@@ -32,11 +32,11 @@ public class Manager extends Person {
         }
 
         if (order.getState() != Order.State.PUBLISHED) {
-            throw new Exception("Order already has been processed/completed");
+            throw new ModelException("Order already has been processed/completed");
         }
 
         if (order.getState() == Order.State.REMOVED) {
-            throw new Exception("Order already has been removed");
+            throw new ModelException("Order already has been removed");
         }
 
         Vehicle vehicle = driver.getVehicle();
@@ -44,7 +44,7 @@ public class Manager extends Person {
                 order.getCargoWidth() > vehicle.getMaxCargoWidth() ||
                 order.getCargoLength() > vehicle.getMaxCargoLength() ||
                 order.getCargoWeight() > vehicle.getMaxCargoWeight()) {
-            throw new Exception("Cargo doesn't fit driver's vehicle");
+            throw new ModelException("Cargo doesn't fit driver's vehicle");
         }
 
         order.setState(Order.State.PROCESSED);
@@ -61,11 +61,11 @@ public class Manager extends Person {
     public void completeContract(Contract contract) throws Exception {
 
         if (!Objects.equals(contract.getManager().getId(), getId())) {
-            throw new Exception("Manager is not associated with contract");
+            throw new ModelException("Manager is not associated with contract");
         }
 
         if (!contract.isCompleted()) {
-            throw new Exception("Contractors haven't completed contract yet");
+            throw new ModelException("Contractors haven't completed contract yet");
         }
 
         Order order = contract.getOrder();

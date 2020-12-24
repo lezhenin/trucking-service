@@ -25,8 +25,8 @@ class OfferPage extends React.Component {
                 this.setState({ offers: offers })
             })
             .catch((error) => {
-                this.setState({ offers: [] })
-                console.log(error);
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -38,8 +38,9 @@ class OfferPage extends React.Component {
                     this.setState({offers: offers})
                 }
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -51,8 +52,9 @@ class OfferPage extends React.Component {
                 })
                 this.setState({ offers: offers })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 

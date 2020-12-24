@@ -27,7 +27,9 @@ class OrderPage extends React.Component {
                     : []
                 this.setState({ orders: orders })
             })
-            .catch(function (error) {
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -37,8 +39,9 @@ class OrderPage extends React.Component {
                 const orders = this.state.orders.filter((o) => o.id !== id)
                 this.setState({ orders: orders })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 
@@ -48,8 +51,9 @@ class OrderPage extends React.Component {
                 const orders = this.state.orders.concat(response.data)
                 this.setState({ orders: orders })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                const message = error.response.data
+                alert(`Error: ${message}`);
             })
     }
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import trucking.web.datatransfer.OfferData;
@@ -16,7 +15,6 @@ import trucking.web.services.ClientService;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -65,18 +63,6 @@ public class ClientController {
         return contract.add(selfLink, allLink, approveLink, refuseLink, completeLink, orderLink);
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity handleException(Exception ex) {
-        System.out.println(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-    }
-
-    @ExceptionHandler({NoSuchElementException.class})
-    public ResponseEntity handleNoSuchElementException(Exception ex) {
-        System.out.println(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
-
     public ClientController(
             @Autowired ClientService clientService,
             @Autowired UsernameIdMapper usernameIdMapper
@@ -100,7 +86,7 @@ public class ClientController {
     @GetMapping("/orders/{orderId}")
     OrderData getOrder(Principal principal, @PathVariable Long orderId) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        OrderData order = clientService.getOrder(id, orderId).get();
+        OrderData order = clientService.getOrder(id, orderId);
         return addLinksToOrder(principal, order);
     }
 
@@ -132,7 +118,7 @@ public class ClientController {
     @GetMapping("/offers/{offerId}")
     OfferData getOffer(Principal principal, @PathVariable Long offerId) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        OfferData offer = clientService.getOffer(id, offerId).get();
+        OfferData offer = clientService.getOffer(id, offerId);
         return addLinksToOffer(principal, offer);
     }
 
@@ -158,7 +144,7 @@ public class ClientController {
     @GetMapping("/contracts/{contractId}")
     ContractData getContract(Principal principal, @PathVariable Long contractId) throws Exception {
         Long id = usernameIdMapper.map(principal);
-        ContractData contract = clientService.getContract(id, contractId).get();
+        ContractData contract = clientService.getContract(id, contractId);
         return addLinksToContract(principal, contract);
     }
 

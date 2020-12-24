@@ -7,10 +7,7 @@ import trucking.model.*;
 import trucking.repository.*;
 import trucking.web.datatransfer.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,88 +32,88 @@ public class ClientService {
     }
 
     public List<OrderData> getOrders(Long clientId) {
-        Client client = clientRepository.findById(clientId).get();
+        Client client = clientRepository.findById(clientId).orElseThrow();
         List<Order> orders = orderRepository.findAllByClient(client);
         return orders.stream().map(DataObjectMapper::dataFromOrder).collect(Collectors.toList());
     }
 
-    public Optional<OrderData> getOrder(Long clientId, Long orderId) {
+    public OrderData getOrder(Long clientId, Long orderId) throws NoSuchElementException {
         Optional<Order> order = orderRepository.findById(orderId);
         order = order.filter((o) -> Objects.equals(o.getClient().getId(), clientId));
-        return order.map(DataObjectMapper::dataFromOrder);
+        return order.map(DataObjectMapper::dataFromOrder).orElseThrow();
     }
 
-    public List<OfferData> getOffers(Long clientId, Long orderId)  {
+    public List<OfferData> getOffers(Long clientId, Long orderId) throws NoSuchElementException {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (!optionalOrder.isPresent() || !Objects.equals(optionalOrder.get().getClient().getId(), clientId)) {
             return Collections.emptyList();
         }
-        Order order = optionalOrder.get();
+        Order order = optionalOrder.orElseThrow();
         List<Offer> offers = offerRepository.findAllByOrder(order);
         return offers.stream().map(DataObjectMapper::dataFromOffer).collect(Collectors.toList());
     }
 
-    public Optional<OfferData> getOffer(Long clientId, Long offerId)  {
+    public OfferData getOffer(Long clientId, Long offerId) throws NoSuchElementException {
         Optional<Offer> offer = offerRepository.findById(offerId);
         offer = offer.filter((o) -> Objects.equals(o.getOrder().getClient().getId(), clientId));
-        return offer.map(DataObjectMapper::dataFromOffer);
+        return offer.map(DataObjectMapper::dataFromOffer).orElseThrow();
     }
 
-    public OfferData acceptOffer(Long clientId, Long offerId) throws Exception {
-        Client client = clientRepository.findById(clientId).get();
-        Offer offer = offerRepository.findById(offerId).get();
+    public OfferData acceptOffer(Long clientId, Long offerId) throws NoSuchElementException, ModelException {
+        Client client = clientRepository.findById(clientId).orElseThrow();
+        Offer offer = offerRepository.findById(offerId).orElseThrow();
         client.acceptOffer(offer);
         offerRepository.save(offer);
         orderRepository.save(offer.getOrder());
         return DataObjectMapper.dataFromOffer(offer);
     }
 
-    public OrderData createOrder(Long clientId, NewOrderData newOrderData) throws Exception {
-        Client client = clientRepository.findById(clientId).get();
+    public OrderData createOrder(Long clientId, NewOrderData newOrderData) throws ModelException {
+        Client client = clientRepository.findById(clientId).orElseThrow();
         Order order = DataObjectMapper.orderFromData(newOrderData, client);
         client.createOrder(order);
         orderRepository.save(order);
         return DataObjectMapper.dataFromOrder(order);
     }
 
-    public void removeOrder(Long clientId, Long orderId) throws Exception {
-        Client client = clientRepository.findById(clientId).get();
-        Order order = orderRepository.findById(orderId).get();
+    public void removeOrder(Long clientId, Long orderId) throws NoSuchElementException, ModelException {
+        Client client = clientRepository.findById(clientId).orElseThrow();
+        Order order = orderRepository.findById(orderId).orElseThrow();
         client.removeOrder(order);
         orderRepository.delete(order);
     }
 
     public List<ContractData> getContracts(Long clientId) {
-        Client client = clientRepository.findById(clientId).get();
+        Client client = clientRepository.findById(clientId).orElseThrow();
         List<Contract> contracts = contractRepository.findAllByContractors(client);
         return contracts.stream().map(DataObjectMapper::dataFromContract).collect(Collectors.toList());
     }
 
-    public Optional<ContractData> getContract(Long clientId, Long contractId) {
+    public ContractData getContract(Long clientId, Long contractId) throws NoSuchElementException {
         Optional<Contract> contract = contractRepository.findById(contractId);
         contract = contract.filter((o) -> Objects.equals(o.getClient().getId(), clientId));
-        return contract.map(DataObjectMapper::dataFromContract);
+        return contract.map(DataObjectMapper::dataFromContract).orElseThrow();
     }
 
-    public ContractData approveContract(Long clientId, Long contractId) throws Exception {
-        Client client = clientRepository.findById(clientId).get();
-        Contract contract = contractRepository.findById(contractId).get();
+    public ContractData approveContract(Long clientId, Long contractId) throws NoSuchElementException, ModelException {
+        Client client = clientRepository.findById(clientId).orElseThrow();
+        Contract contract = contractRepository.findById(contractId).orElseThrow();
         client.approveContract(contract);
         contractRepository.save(contract);
         return DataObjectMapper.dataFromContract(contract);
     }
 
-    public ContractData refuseContract(Long clientId, Long contractId) throws Exception {
-        Client client = clientRepository.findById(clientId).get();
-        Contract contract = contractRepository.findById(contractId).get();
+    public ContractData refuseContract(Long clientId, Long contractId) throws NoSuchElementException, ModelException {
+        Client client = clientRepository.findById(clientId).orElseThrow();
+        Contract contract = contractRepository.findById(contractId).orElseThrow();
         client.refuseContract(contract);
         contractRepository.save(contract);
         return DataObjectMapper.dataFromContract(contract);
     }
 
-    public ContractData completeContract(Long clientId, Long contractId) throws Exception {
-        Client client = clientRepository.findById(clientId).get();
-        Contract contract = contractRepository.findById(contractId).get();
+    public ContractData completeContract(Long clientId, Long contractId) throws NoSuchElementException, ModelException {
+        Client client = clientRepository.findById(clientId).orElseThrow();
+        Contract contract = contractRepository.findById(contractId).orElseThrow();
         client.completeContract(contract);
         contractRepository.save(contract);
         return DataObjectMapper.dataFromContract(contract);

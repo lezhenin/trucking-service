@@ -15,13 +15,13 @@ public class Client extends Contractor {
     }
 
 
-    public void createOrder(Order order) throws Exception {
+    public void createOrder(Order order) throws ModelException {
         if (order.getState() != Order.State.PUBLISHED) {
             throw new ModelException("Order already has been processed");
         }
     }
 
-    public void removeOrder(Order order) throws Exception {
+    public void removeOrder(Order order) throws ModelException {
         if (order.getState() != Order.State.PUBLISHED) {
             throw new ModelException("Order already has been processed");
         }
@@ -29,7 +29,7 @@ public class Client extends Contractor {
     }
 
 
-    public void acceptOffer(Offer offer) throws Exception {
+    public void acceptOffer(Offer offer) throws ModelException {
 
         Order order = offer.getOrder();
 
